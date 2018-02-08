@@ -14,6 +14,7 @@ grammar_cjkRuby: true
 [jupyter notebook快捷键速查手册](https://www.cnblogs.com/jackchen-Net/p/7168769.html)
 [27个Jupyter Notebook使用技巧及快捷键](https://www.bbsmax.com/A/A2dmZ0M7ze/)
 [教你搭建一个好看的 Jupyter 环境](http://python.jobbole.com/87691/)
+[另类全家桶](http://clarkchen.github.io/2017/06/05/Jupyter%E5%8F%A6%E7%B1%BB%E5%85%A8%E5%AE%B6%E6%A1%B6/)
 #### 教程·书籍
 [跟老齐学Python](https://www.gitbook.com/book/normanbb/test/details)
 [python3-cookbook](http://python3-cookbook.readthedocs.io/zh_CN/latest/)
