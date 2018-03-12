@@ -7,8 +7,9 @@ grammar_cjkRuby: true
 2018年03月12日 
 ### 环境安装
 http://blog.csdn.net/colourful_sky/article/details/78524382
-
-
+http://blog.csdn.net/lcb_coconut/article/details/79228759
+1.CUDA Toolkit
+https://developer.nvidia.com/cuda-toolkit-archive
 
 HelloWorld
 ``` python
@@ -54,3 +55,6 @@ for step in xrange(0, 201):
 - 使用 tensor 表示数据.
 - 通过 变量 (Variable) 维护状态.
 - 使用 feed 和 fetch 可以为任意的操作(arbitrary operation) 赋值或者从其中获取数据.
+
+
+  [1]: ./images/1520863838670.jpg
