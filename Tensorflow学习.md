@@ -10,7 +10,9 @@ http://blog.csdn.net/colourful_sky/article/details/78524382
 http://blog.csdn.net/lcb_coconut/article/details/79228759
 1.CUDA Toolkit
 https://developer.nvidia.com/cuda-toolkit-archive
+![enter description here][1]
 
+![enter description here][2]
 HelloWorld
 ``` python
 import tensorflow as tf
@@ -57,4 +59,5 @@ for step in xrange(0, 201):
 - 使用 feed 和 fetch 可以为任意的操作(arbitrary operation) 赋值或者从其中获取数据.
 
 
-  [1]: ./images/1520863838670.jpg
+  [1]: ./images/1520867629585.jpg
+  [2]: ./images/1520867763992.jpg
