@@ -7,12 +7,22 @@ grammar_cjkRuby: true
 2018年03月12日 
 ### 环境安装
 http://blog.csdn.net/colourful_sky/article/details/78524382
+http://blog.csdn.net/u010099080/article/details/53418159
 http://blog.csdn.net/lcb_coconut/article/details/79228759
-1.CUDA Toolkit
+一. 安装CUDA Toolkit 9.0
+1. 下载 安装
 https://developer.nvidia.com/cuda-toolkit-archive
+2. 验证CUDA是否安装成功 
 ![enter description here][1]
-
+ 3. 用户环境变量配置
 ![enter description here][2]
+
+二. 安装cuDNN 9.0
+1. 下载
+ https://developer.nvidia.com/rdp/cudnn-download
+ 2. cuDNN安装 
+解压cudnn-9.0-windows10-x64-v7，将文件夹里如下图所示的三个文件夹分别拷贝至CUDA的安装目录的对应的文件夹即可。默认文件夹在： 
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v9.0 
 HelloWorld
 ``` python
 import tensorflow as tf
