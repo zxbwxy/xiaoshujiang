@@ -9,6 +9,7 @@ grammar_cjkRuby: true
 http://blog.csdn.net/colourful_sky/article/details/78524382
 http://blog.csdn.net/u010099080/article/details/53418159
 http://blog.csdn.net/lcb_coconut/article/details/79228759
+http://blog.csdn.net/ipaomi/article/details/78466321
 一. 安装CUDA Toolkit 9.0
 1. 下载 安装
 https://developer.nvidia.com/cuda-toolkit-archive
