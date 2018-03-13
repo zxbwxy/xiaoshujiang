@@ -12,7 +12,7 @@ http://blog.csdn.net/u010099080/article/details/53418159
 http://blog.csdn.net/lcb_coconut/article/details/79228759
 http://blog.csdn.net/ipaomi/article/details/78466321
 http://blog.csdn.net/akon_wang_hkbu/article/details/78478513
-https://www.cnblogs.com/elroye/p/7864988.html
+
 
 #### Anaconda安装
 Anaconda 是一个用于科学计算的 Python 发行版，支持 Linux, Mac, Windows, 包含了众多流行的科学计算、数据分析的 Python 包。
@@ -48,6 +48,7 @@ TUNA 还提供了 Anaconda 仓库的镜像，运行以下命令,即可添加 Ana
 安装好了上述的python3.5的环境之后，先激活python35，我们这里要装的是gpu版
 
 输入：pip install tensorflow-gpu
+若pip下载速度太慢，设置下pip镜像源[^1]
 
 完成后，虽然安装完成了，但是需要GPU加速，还需要安装cuda和cuDnn（专门为deep learning 准备的加速库）
 
@@ -133,3 +134,10 @@ for step in xrange(0, 201):
   [1]: ./images/1520867629585.jpg
   [2]: ./images/1520867763992.jpg
   [3]: https://i.loli.net/2018/03/13/5aa78d29cde7d.jpg
+  
+[^1]: http://blog.csdn.net/ipaomi/article/details/78466321  
+  
+  
+  
+  
+  https://www.cnblogs.com/elroye/p/7864988.html
