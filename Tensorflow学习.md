@@ -27,10 +27,7 @@ TUNA 还提供了 Anaconda 仓库的镜像，运行以下命令,即可添加 Ana
 > --set show_channel_urls yes
 
 2. 创建python3.5运行环境
-  Anaconda3默认安装的是Python3.6，但是目前tensorflow只支持python3.5
-，但是目前的tensorflow只支持python3.5，
-
-这个时候要重新创建一个python3.5的环境，具体步骤：
+  Anaconda3默认安装的是Python3.6，但是目前tensorflow只支持python3.5，但是目前的tensorflow只支持python3.5，这个时候要重新创建一个python3.5的环境，具体步骤：
 
 1创建一个名为python3.5的环境，命名为python35
 
