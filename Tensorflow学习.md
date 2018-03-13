@@ -71,6 +71,16 @@ Win10+Anaconda3下tensorflow-gpu环境配置
 2. 解压文件到CUDA目录
   　解压cudnn-9.0-windows10-x64-v7.zip，将解压的三个文件夹拷贝至CUDA目录，进行覆盖即可。默认文件夹在：  `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v9.0` 
 
+测试是否成功：
+在tensorflow环境里打开python
+
+```python
+import tensorflow as tf
+hello = tf.constant("Hello!TensorFlow")
+sess = tf.Session()
+print(sess.run(hello))
+```
+
 
 
 
