@@ -15,8 +15,8 @@ http://blog.csdn.net/akon_wang_hkbu/article/details/78478513
 
 tensorflow GPU安装
 安装CUDA Toolkit 9.0
- 1. [下载exe文件](https://developer.nvidia.com/cuda-toolkit-archive)
- 
+ 1. [下载安装exe文件](https://developer.nvidia.com/cuda-toolkit-archive)
+    
  2. 验证CUDA是否安装成功 
  
 ![enter description here][1]
@@ -31,6 +31,8 @@ tensorflow GPU安装
   ![enter description here][3]
 2. 解压文件到CUDA目录
   　解压cudnn-9.0-windows10-x64-v7.zip，将解压的三个文件夹拷贝至CUDA目录，进行覆盖即可。默认文件夹在：  `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v9.0` 
+
+
 
 
 HelloWorld
