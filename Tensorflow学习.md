@@ -16,7 +16,7 @@ http://blog.csdn.net/akon_wang_hkbu/article/details/78478513
 tensorflow GPU安装
 安装CUDA Toolkit 9.0
  1. [下载安装exe文件](https://developer.nvidia.com/cuda-toolkit-archive)
-    
+    默认安装即可，会自动在环境变量添加
  2. 验证CUDA是否安装成功 
  
 ![enter description here][1]
