@@ -7,7 +7,7 @@ grammar_cjkRuby: true
 ### python
 #### 环境搭建
 ##### Anaconda
-[Anaconda使用总结](https://www.jianshu.com/p/2f3be7781451)
+[Anaconda使用总结](http://python.jobbole.com/86236/)
 [Anaconda介绍、安装及使用教程](https://www.jianshu.com/p/62f155eb6ac5)
 [致Python初学者们 - Anaconda入门使用指南](https://www.jianshu.com/p/169403f7e40c)
 ##### jupyter notebook
