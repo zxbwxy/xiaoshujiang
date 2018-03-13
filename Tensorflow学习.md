@@ -11,10 +11,13 @@ http://blog.csdn.net/u010099080/article/details/53418159
 http://blog.csdn.net/lcb_coconut/article/details/79228759
 http://blog.csdn.net/ipaomi/article/details/78466321
 http://blog.csdn.net/akon_wang_hkbu/article/details/78478513
-一. 安装CUDA Toolkit 9.0
-1. 下载 安装
-https://developer.nvidia.com/cuda-toolkit-archive
-2. 验证CUDA是否安装成功 
+
+
+tensorflow GPU安装
+安装CUDA Toolkit 9.0
+ 1. [下载安装](https://developer.nvidia.com/cuda-toolkit-archive)
+ 
+ 2. 验证CUDA是否安装成功 
 ![enter description here][1]
  3. 用户环境变量配置
 ![enter description here][2]
