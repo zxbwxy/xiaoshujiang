@@ -12,10 +12,11 @@ http://blog.csdn.net/u010099080/article/details/53418159
 http://blog.csdn.net/lcb_coconut/article/details/79228759
 http://blog.csdn.net/ipaomi/article/details/78466321
 http://blog.csdn.net/akon_wang_hkbu/article/details/78478513
+https://www.cnblogs.com/elroye/p/7864988.html
 
 #### Anaconda安装
 Anaconda 是一个用于科学计算的 Python 发行版，支持 Linux, Mac, Windows, 包含了众多流行的科学计算、数据分析的 Python 包。
-1. 下载
+1. 下载安装
 
 Anaconda 安装包可以到 https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/ 下载。
 
@@ -25,9 +26,32 @@ TUNA 还提供了 Anaconda 仓库的镜像，运行以下命令,即可添加 Ana
 > conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/ conda config
 > --set show_channel_urls yes
 
-2. 创建
+2. 创建python3.5运行环境
+  Anaconda3默认安装的是Python3.6，但是目前tensorflow只支持python3.5
+，但是目前的tensorflow只支持python3.5，
 
-tensorflow GPU安装
+这个时候要重新创建一个python3.5的环境，具体步骤：
+
+1创建一个名为python3.5的环境，命名为python35
+
+打开Anaconda Prompt,输入 conda create --name python35 python=3.5
+
+2安装完成后，激活和取消激活命令
+
+激活：activate python35
+
+取消激活：deactivate
+
+这个时候可以在Anaconda3路径下envs下看到刚才创建的python35，每当我们激活python3.5时，系统的运行环境就在这个文件下面。
+
+#### 安装Tensorflow
+安装好了上述的python3.5的环境之后，先激活python35，我们这里要装的是gpu版
+
+输入：pip install tensorflow-gpu
+
+完成后，虽然安装完成了，但是需要GPU加速，还需要安装cuda和cuDnn（专门为deep learning 准备的加速库）
+
+Win10+Anaconda3下tensorflow-gpu环境配置
 #### 安装CUDA Toolkit 9.0
  1. [下载安装exe文件](https://developer.nvidia.com/cuda-toolkit-archive)
     默认安装即可，会自动在环境变量添加
@@ -35,10 +59,11 @@ tensorflow GPU安装
  
 ![enter description here][1]
 
- 3. 用户环境变量配置
+ 3. 验证用户环境变量
+ CUDA_PATH已经加到环境变量中了，然后把bin和lib/x64加到环境变量中
 ![enter description here][2]
 
-安装cuDNN 7.0.5
+#### CuDnn库下载
 
 1. [下载zip文件](https://developer.nvidia.com/rdp/cudnn-download)
 
