@@ -5,17 +5,11 @@ grammar_cjkRuby: true
 ---
 [toc]
 2018年03月12日 
-### 环境搭建 
-win10+ Tensorflow1.6+ python 3.5 + CUDA 9.0 + CUDNN7.0.5 配置
-http://blog.csdn.net/colourful_sky/article/details/78524382
-http://blog.csdn.net/u010099080/article/details/53418159
-http://blog.csdn.net/lcb_coconut/article/details/79228759
-http://blog.csdn.net/ipaomi/article/details/78466321
-http://blog.csdn.net/akon_wang_hkbu/article/details/78478513
+### 一、环境搭建 
 
 
 #### Anaconda安装
-Anaconda 是一个用于科学计算的 Python 发行版，支持 Linux, Mac, Windows, 包含了众多流行的科学计算、数据分析的 Python 包。
+Anaconda 是一个用于科学计算的 Python，让我们可以方便的进行包管理与环境管理。
 1. 下载安装
 
 Anaconda 安装包可以到 https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/ 下载。
@@ -82,7 +76,12 @@ print(sess.run(hello))
 
 
 
-HelloWorld
+
+
+### 二、基本概念
+
+***HelloWorld***
+
 ``` python
 import tensorflow as tf
 import numpy as np
