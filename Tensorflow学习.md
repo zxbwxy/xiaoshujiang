@@ -5,16 +5,30 @@ grammar_cjkRuby: true
 ---
 [toc]
 2018年03月12日 
-### 环境安装
+### tf 环境搭建 
+win10+ Tensorflow1.6+ python 3.5 + CUDA 9.0 + CUDNN7.0.5 配置
 http://blog.csdn.net/colourful_sky/article/details/78524382
 http://blog.csdn.net/u010099080/article/details/53418159
 http://blog.csdn.net/lcb_coconut/article/details/79228759
 http://blog.csdn.net/ipaomi/article/details/78466321
 http://blog.csdn.net/akon_wang_hkbu/article/details/78478513
 
+#### Anaconda安装
+Anaconda 是一个用于科学计算的 Python 发行版，支持 Linux, Mac, Windows, 包含了众多流行的科学计算、数据分析的 Python 包。
+1. 下载
+
+Anaconda 安装包可以到 https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/ 下载。
+
+TUNA 还提供了 Anaconda 仓库的镜像，运行以下命令,即可添加 Anaconda Python 免费仓库。
+
+> conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/ 
+> conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/ conda config
+> --set show_channel_urls yes
+
+2. 创建
 
 tensorflow GPU安装
-安装CUDA Toolkit 9.0
+#### 安装CUDA Toolkit 9.0
  1. [下载安装exe文件](https://developer.nvidia.com/cuda-toolkit-archive)
     默认安装即可，会自动在环境变量添加
  2. 验证CUDA是否安装成功 
@@ -24,7 +38,7 @@ tensorflow GPU安装
  3. 用户环境变量配置
 ![enter description here][2]
 
-安装cuDNN 9.0
+安装cuDNN 7.0.5
 
 1. [下载zip文件](https://developer.nvidia.com/rdp/cudnn-download)
 
