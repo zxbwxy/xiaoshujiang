@@ -9,7 +9,7 @@ grammar_cjkRuby: true
 
 
 #### Anaconda安装
-Anaconda 是一个用于科学计算的 Python，让我们可以方便的进行包管理与环境管理。
+Anaconda 是一个用于科学计算的 Python发行版，让我们可以方便的进行包管理与环境管理。
 1. 下载安装
 
 Anaconda 安装包可以到 https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/ 下载。
@@ -131,7 +131,7 @@ for step in xrange(0, 201):
   
   
   
-  
+  参考文献：
   https://www.cnblogs.com/elroye/p/7864988.html
   http://blog.csdn.net/lcb_coconut/article/details/79228759
 
