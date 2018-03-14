@@ -1,6 +1,6 @@
 ---
 title: Tensorflow学习
-tags: 新建,模板,小书匠
+tags: tensorflow,machine learn
 grammar_cjkRuby: true
 ---
 [toc]
