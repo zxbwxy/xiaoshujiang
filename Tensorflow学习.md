@@ -1,14 +1,13 @@
 ---
 title: Tensorflow学习
-tags: tensorflow,machine learn
+tags: tensorflow,machine learn,2018/03/14
 grammar_cjkRuby: true
 ---
 [toc]
-2018年03月12日 
 ### 一、环境搭建 
 
 
-#### Anaconda安装
+#### 安装Anaconda
 Anaconda 是一个用于科学计算的 Python发行版，让我们可以方便的进行包管理与环境管理。
 1. 下载安装
 
@@ -43,7 +42,6 @@ TUNA 还提供了 Anaconda 仓库的镜像，运行以下命令,即可添加 Ana
 
 完成后，虽然安装完成了，但是需要GPU加速，还需要安装cuda和cuDnn（专门为deep learning 准备的加速库）
 
-Win10+Anaconda3下tensorflow-gpu环境配置
 #### 安装CUDA Toolkit 9.0
  1. [下载安装exe文件](https://developer.nvidia.com/cuda-toolkit-archive)
     默认安装即可，会自动在环境变量添加
@@ -60,8 +58,9 @@ Win10+Anaconda3下tensorflow-gpu环境配置
 1. [下载zip文件](https://developer.nvidia.com/rdp/cudnn-download)
 
   ![enter description here][3]
+  
 2. 解压文件到CUDA目录
-  　解压cudnn-9.0-windows10-x64-v7.zip，将解压的三个文件夹拷贝至CUDA目录，进行覆盖即可。默认文件夹在：  `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v9.0` 
+    解压cudnn-9.0-windows10-x64-v7.zip，将解压的三个文件夹拷贝至CUDA目录，进行覆盖即可。默认文件夹在：  `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v9.0` 
 
 #### 验证
 在tensorflow环境里打开python
@@ -79,6 +78,13 @@ print(sess.run(hello))
 
 
 ### 二、基本概念
+#### 什么是Tensorflow
+TensorFlow™ 是一个采用数据流图（data flow graphs），用于数值计算的开源软件库。
+
+
+节点（Nodes）在图中表示数学操作，图中的线（edges）则表示在节点间相互联系的多维数据数组，即张量（tensor）。
+#### 什么是数据流图
+数据流图用“结点”（nodes）和“线”(edges)的有向图来描述数学计算。“节点” 一般用来表示施加的数学操作，但也可以表示数据输入（feed in）的起点/输出（push out）的终点，或者是读取/写入持久变量（persistent variable）的终点。“线”表示“节点”之间的输入/输出关系。这些数据“线”可以输运“size可动态调整”的多维数据数组，即“张量”（tensor）。张量从图中流过的直观图像是这个工具取名为“Tensorflow”的原因。一旦输入端的所有张量准备好，节点将被分配到各种计算设备完成异步并行地执行运算。
 
 ***HelloWorld***
 
@@ -127,6 +133,9 @@ for step in xrange(0, 201):
 - 使用 feed 和 fetch 可以为任意的操作(arbitrary operation) 赋值或者从其中获取数据.
 
 
+数据流图
+![enter description here][5]
+
 [^1]: http://blog.csdn.net/ipaomi/article/details/78466321  
   
   
@@ -134,9 +143,17 @@ for step in xrange(0, 201):
   参考文献：
   https://www.cnblogs.com/elroye/p/7864988.html
   http://blog.csdn.net/lcb_coconut/article/details/79228759
+  [TensorFlow 教程 - 深入MNIST完整代码](http://blog.csdn.net/toormi/article/details/53789562)
+  [使用Tensorflow和MNIST识别自己手写的数字](http://blog.csdn.net/sparta_117/article/details/66965760)
+  [TensorFlow_MNIST 保存、恢复模型及参数](http://blog.csdn.net/JerryZhang__/article/details/75535295)
 
 
   [1]: ./images/1520867629585.jpg
   [2]: ./images/1520867763992.jpg
   [3]: https://i.loli.net/2018/03/13/5aa78d29cde7d.jpg
   [4]: https://i.loli.net/2018/03/13/5aa79d428b6e7.jpg
+  [5]: http://www.tensorfly.cn/images/tensors_flowing.gif
+  
+  
+  
+  
