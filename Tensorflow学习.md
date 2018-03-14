@@ -143,7 +143,7 @@ for step in xrange(0, 201):
   参考文献：
   https://www.cnblogs.com/elroye/p/7864988.html
   http://blog.csdn.net/lcb_coconut/article/details/79228759
-  [TensorFlow学习笔记（一）入门][6]
+  [**TensorFlow学习笔记（一）入**门][6]
   [TensorFlow 教程 - 深入MNIST完整代码](http://blog.csdn.net/toormi/article/details/53789562)
   [使用Tensorflow和MNIST识别自己手写的数字](http://blog.csdn.net/sparta_117/article/details/66965760)
   [TensorFlow_MNIST 保存、恢复模型及参数](http://blog.csdn.net/JerryZhang__/article/details/75535295)
