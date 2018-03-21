@@ -125,6 +125,28 @@ for step in xrange(0, 201):
 Tensorflow入门
 ![数据流图][5]
 1.计算模型-计算图
+tensorflow中的所有计算都会转化为图中的节点
+使用：
+①默认计算图（默认已注册）
+``` python
+c = tf.constant(4.0)
+assert c.graph is tf.get_default_graph()
+```
+②设置当前计算图为默认
+``` python
+#Graph上下文管理器，在上下文的生命周期中覆盖当前的默认图形
+# 1. Using Graph.as_default():
+g = tf.Graph()
+with g.as_default():
+  c = tf.constant(5.0)
+  assert c.graph is g
+
+# 2. Constructing and making default:
+with tf.Graph().as_default() as g:
+  c = tf.constant(5.0)
+  assert c.graph is g
+```
+
 2.数据模型-张量
 可以简单理解为多维数组，但是在tensorflow中的实现并不是直接采用数组的形式，它只是对tensorflow中运算结果的引用，在张量中并没有真正保存数字，保存的是如何得到这些数字的计算过程
 
@@ -141,6 +163,43 @@ Tensor("addOp:0", shape=(2,), dtype=float32)
 ①对中间结果的引用,如上面的a节点 
 ②在session会话中，张量可以用来获取计算结果
 3.运行模型-会话
+tensorflow中用会话来执行**定义好的运算**
+
+``` python
+#创建一个会话，并通过python中的上下文管理器来管理这个会话
+with tf.Sessin() as sess:
+    #使用这创建好的绘画来计算关心的结果
+    sess.run(...)
+#不需要再调用 “sess.close()”函数来关闭会话了
+#当上下文退出时会话关闭和资源释放也自动完成
+
+```
+tensorflow会自动生成一个默认的计算图，如果没特殊的指定，计算会自动加入这个计算图中
+但tensorflow中不会自动生成默认的会话，而是需要手动指定，当默认的会话被指定之后，可以通过tf.Tensor.eval函数来计算一个张量的取值
+tensorflow提供了在交互环境下直接构建默认会话的函数 tf.InteractiveSession
+``` python
+sess=tf.Session()
+with sess.as_default():
+    print(result.eval())
+#下面的两个命令有相同的功能
+sess=tf.Session()
+print(sess.run(result))
+print(result.eval(session=sess))
+#
+sess=tf.InteractiveSession()
+print(result.eval())
+[3. 5.]
+sess.close()
+
+```
+
+
+
+
+
+
+
+
 
 
 
