@@ -179,18 +179,16 @@ tensorflow会自动生成一个默认的计算图，如果没特殊的指定，�
 tensorflow提供了在交互环境下直接构建默认会话的函数 tf.InteractiveSession
 ``` python
 sess=tf.Session()
-with sess.as_default():
+with sess.as_default():#指定为默认会话
     print(result.eval())
 #下面的两个命令有相同的功能
 sess=tf.Session()
 print(sess.run(result))
 print(result.eval(session=sess))
-#
+#交互环境下直接构建默认会话
 sess=tf.InteractiveSession()
 print(result.eval())
-[3. 5.]
 sess.close()
-
 ```
 
 
