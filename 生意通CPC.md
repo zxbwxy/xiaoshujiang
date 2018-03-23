@@ -14,17 +14,19 @@ grammar_cjkRuby: true
 | ---    | ---  |
 |   URL  |  aps/new/cpc_new_promotion_by_name.htm | 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
-|   CODE |   [商品推广](#productPromotion)   |
+|   CODE |   [新建计划](#newPromotion)   |
 ## 2.关联推广单元
 
 
 ----------
 
 
-# 页面
-## 我要推广
+### <span id="newPromotion">新建计划</span>
 
-### <h2 id="productPromotion">商品推广&& 店铺推广</h2>
+
+
+
+### <span id="productPromotion">商品推广&& 店铺推广</span>
 
 首页：
 推广基本信息+商品点击等数据(调接口)
