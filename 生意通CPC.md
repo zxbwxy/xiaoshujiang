@@ -6,25 +6,42 @@ grammar_cjkRuby: true
 
 [toc]
 
+
+![推广计划][2]
+
+![计划详情--单元][3]
+
 # 流程
-## 1.新建计划
-![新建计划][1]
+## 1.新建推广计划
 
 | Index  |  Desc    |
-| ---    | ---  |
+| ---    | ---   |
 |   URL  |  aps/new/cpc_new_promotion_by_name.htm <br>{	name，dept，startDate}| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
 |   CODE |   [新建计划](#newPromotion)   |
-## 2.关联推广单元
+## 2.计划关联推广单元
+| Index  |  Desc    |
+| ---    | ---   |
+|   URL  |  /aps-sale-web/aps/new/cpc_promotion_detail.htm?</br>startDate=2018-03-23&endDate=2018-03-23&promotionId=16078106| 
+|   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
+|   CODE |   [关联推广单元](#promotionDetail)   |
 
 
-## 3.开始推广
+## 3.开始推广计划
 
+
+
+## 4.暂停推广计划
+| Index  |  Desc    |
+| ---    | ---  |
+|   URL  |  /aps/new/cpc_pause_promotion.htm <br>{promotionId }| 
+|   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
+|   CODE |   [暂停推广计划](#pausePromotion)   |
 
 ----------
 
-
-### <span id="newPromotion">新建计划</span>
+# 备忘
+## <span id="newPromotion">新建推广计划</span>
 
 最低价：系统参数KEYWORD_DAY_LOWER_PRICE
 USER_TYPE==1 设置事业部编码 默认0
@@ -44,6 +61,35 @@ USER_TYPE==1 设置事业部编码 默认0
 序列：SEQ_T_APS_PROMOTION
 sqlId: standardPromotion.createPromotion   **T_APS_PROMOTION**
 
+记录用户操作日志
+
+
+
+---------
+## <span id="promotionDetail">关联推广单元</span>
+1.获取推广计划信息
+sqlId:standardPromotion.getPromotionByIdAndProductType
+``` sql
+SELECT * FROM
+			T_APS_PROMOTION P
+			WHERE
+			P.PROMOTION_ID = :promotionId
+			AND P.PRODUCT_TYPE = :productType
+			AND P.ISACTIVE = 1
+```
+2.获取当前推广计划的各个广告位的溢价折扣策略 ???
+sqlId:apscommom_cpcBase.queryAllPositionControlInfoByRelId
+
+3.获取推广计划报表数据(从数据平台获取数据 推广计划层次)
+{endDate=2018-03-23, userId=429004445, promotionId=16078106, startDate=2018-03-23, queryType=queryByPromotionId}
+mergeData(promotionKeyIds,queryTodayData(promotionKeyIds,condition,isPromotionUnit),queryHistoryData(promotionKeyIds,condition,isPromotionUnit))
+
+4.获取推广单元
+sqlId: standardPromotion.getPromotionUnitCount、standardPromotion.getPromotionUnits
+{endDate=2018-03-23, keyword=, userId=429004445, promotionId=16078106, startDate=2018-03-23}
+
+5.获取最低日限额
+6.获取推广计划属性
 
 
 
@@ -54,7 +100,10 @@ sqlId: standardPromotion.createPromotion   **T_APS_PROMOTION**
 
 
 
-### <span id="productPromotion">商品推广&& 店铺推广</span>
+
+
+
+## <span id="productPromotion">商品推广&& 店铺推广列表</span>
 
 首页：
 推广基本信息+商品点击等数据(调接口)
@@ -100,12 +149,6 @@ public static final String  KEY_ALL_ORDER_AMOUNT="all_order_amount";//总订单�
  // 如果是商品推广则添加地域和时段的
  apscommom_cpcBase.queryAllPromotionItemByPromotionId
  
- 
- 
- #### 新建计划
- 
-aps/new/cpc_new_promotion_by_name.htm
-
 
 
 ```sql
@@ -185,4 +228,6 @@ FROM
 ```
 
 
-  [1]: https://i.loli.net/2018/03/23/5ab4532ec82b1.jpg
+
+  [2]: https://i.loli.net/2018/03/23/5ab4bcdb77a48.jpg
+  [3]: https://i.loli.net/2018/03/23/5ab4bc4f56c1a.jpg
