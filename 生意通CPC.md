@@ -23,9 +23,8 @@ grammar_cjkRuby: true
 | Index  |  Desc    |
 | ---    | ---   |
 |   URL  |  /aps-sale-web/aps/new/cpc_promotion_detail.htm?</br>startDate=2018-03-23&endDate=2018-03-23&promotionId=16078106| 
-|   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
+|   VIEW |  new/cpc/cpc_promotion_detail.ftl --productType=2(生意通)</br>new/cpc_shop/cpc_promotion_shop_detail.ftl--productType=4(CPC店铺推广)|
 |   CODE |   [关联推广单元](#promotionDetail)   |
-
 
 ## 3.开始推广计划
 
@@ -87,9 +86,66 @@ mergeData(promotionKeyIds,queryTodayData(promotionKeyIds,condition,isPromotionUn
 4.获取推广单元
 sqlId: standardPromotion.getPromotionUnitCount、standardPromotion.getPromotionUnits
 {endDate=2018-03-23, keyword=, userId=429004445, promotionId=16078106, startDate=2018-03-23}
+根据推广单元ID查询推广单元投放数据
+``` sql
+--获取推广单元{endDate=2018-03-23, rowNum=1, pageSize=10, keyword=, userId=429004445, promotionId=16078106, startDate=2018-03-23}
+			SELECT 
+		       	COUNT(1)
+			FROM 
+		       	T_APS_PROMOTION_CPC U, T_APS_PROMOTION P
+			WHERE 
+		        U.PROMOTION_ID = :promotionId
+		    AND 
+		    	P.USER_ID = :userId
+		    AND P.ISACTIVE=1
+		    AND U.ISACTIVE=1
+			AND 
+		        P.PROMOTION_ID = U.PROMOTION_ID
+			<#if keyword?? && keyword != ''>
+	        AND 
+	        	U.GOODS_NAME LIKE '%${keyword}%' escape '!'
+			</#if>
+		   	WITH UR
+```
+
+```sql
+    SELECT
+      ROW_NUMBER()
+      OVER (
+        ORDER BY U.UPDATE_TIME DESC ) AS ROW_NUM,
+      P.PAY_TYPE,
+      U.CPC_PROMOTION_ID,
+      U.STATUS,
+      U.GOODS_CODE,
+      U.LINK_URL,
+      U.GOODS_NAME,
+      U.NAME                          AS UNIT_NAME,
+      S.SHOP_NAME,
+      S.SHOP_URL,
+      0                               AS SHOW_NUM,
+      0                                  CLICK_NUM,
+      0                                  DAY_COST,
+      0                               AS CLICK_PERCENT,
+      it.ITEM_VALUE
+    FROM
+      T_APS_PROMOTION_CPC U
+      LEFT JOIN
+      T_APS_PROMOTION_CPC_SHOP S ON U.CPC_PROMOTION_ID = S.CPC_PROMOTION_ID
+      LEFT JOIN APSADMIN.T_APS_PROMOTION_CPC_ITEM it  ON it.CPC_PROMOTION_ID = U.CPC_PROMOTION_ID AND it.ITEM_CODE = '1001',
+      T_APS_PROMOTION P
+    WHERE
+      P.PROMOTION_ID = U.PROMOTION_ID
+      AND U.PROMOTION_ID = 16078106
+      AND P.USER_ID = 429004445
+      AND P.ISACTIVE = 1
+      AND U.ISACTIVE = 1
+```
 
 5.获取最低日限额
 6.获取推广计划属性
+ Map<String, String> itemMap = cpcCommonService.queryAllPromotionItemMapByPromotionId(pager.getPromotionId());
+ sqlId:apscommom_cpcBase.queryAllPromotionItemByPromotionId
+ 7.图层控制 HOT_POSITION_CTRL_VERSION
 
 
 
