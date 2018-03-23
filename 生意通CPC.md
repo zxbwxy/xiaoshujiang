@@ -98,8 +98,8 @@ dataExchangeInfo {
   terminalType: "1"
 }
 http://admdspre.cnsuning.com/admdso/goods/textprice
-自营旗舰店账户(USER_TYPE=4)
-sop外部商户(USER_TYPE=2)
+自营旗舰店账户(USER_TYPE=4)&& 系统参数AD_QUERY_STATUS=1
+sop外部商户(USER_TYPE=2)&& 系统参数AD_QUERY_STATUS=1
  需要查询商品状态信息 supplierType=C  [!=LT联营特卖商户]
     {
     type=00,   00：子码   01：通码 的商品编码不符合要求
