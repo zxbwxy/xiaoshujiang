@@ -75,7 +75,7 @@ proInfo={PROMOTION_ID=16078106, NAME=zxbTest, START_DATE=2018-03-24 00:00:00.0, 
 商户编码 18（左补0
 /ajax/unit/queryProduct.htm
 data : "date=1521804144793&productNum=000000011051101634&productType=2"
-
+该商品是否已被计划占用
 ``` sql
 	    	SELECT 
 	    		A.NAME
@@ -90,7 +90,21 @@ data : "date=1521804144793&productNum=000000011051101634&productType=2"
 				AND A.ISACTIVE=1 
 				AND B.ISACTIVE=1
 ```
-
+businessType: "priceText"
+dataExchangeInfo {
+  goodsCode: "000000011051101634"
+  cityCode: "025"
+  shopCode: "0070057240"
+  terminalType: "1"
+}
+http://admdspre.cnsuning.com/admdso/goods/textprice
+自营旗舰店账户(USER_TYPE=4)
+sop外部商户(USER_TYPE=2)
+ 需要查询商品状态信息 supplierType=C  [!=LT联营特卖商户]
+    {
+    type=00,   00：子码   01：通码 的商品编码不符合要求
+    status=Y 商品编码与商户匹配&&在售
+    }
 
 2.
 
