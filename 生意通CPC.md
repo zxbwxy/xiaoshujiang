@@ -6,9 +6,25 @@ grammar_cjkRuby: true
 
 [toc]
 
+# 流程
+## 1.新建计划
+![新建计划][1]
+
+| Index       |  Desc    |
+| ---    | ---  |
+|   URL  |  aps/new/cpc_new_promotion_by_name.htm | 
+|   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
+|   CODE |   [商品推广](#productPromotion)   |
+## 2.关联推广单元
+
+
+----------
+
+
+# 页面
 ## 我要推广
 
-### 商品推广&& 店铺推广
+### <h2 id="productPromotion">商品推广&& 店铺推广</h2>
 
 首页：
 推广基本信息+商品点击等数据(调接口)
@@ -139,6 +155,4 @@ FROM
 ```
 
 
-
-
-  [1]: https://i.loli.net/2018/03/22/5ab3ad5d1aa94.jpg
+  [1]: https://i.loli.net/2018/03/23/5ab4532ec82b1.jpg
