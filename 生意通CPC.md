@@ -7,27 +7,28 @@ grammar_cjkRuby: true
 [toc]
 
 
-![推广计划][2]
-
-![计划详情--单元][3]
-
 # 流程
 ## 1.新建推广计划
-
 | Index  |  Desc    |
 | ---    | ---   |
 |   URL  |  aps/new/cpc_new_promotion_by_name.htm <br>{	name，dept，startDate}| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
-|   CODE |   [新建计划](#newPromotion)   |
-## 2.计划关联推广单元
+|  TABLE | t_aps_promotion  |
+|   CODE |   [新建计划](#newPromotion) |
+## 2.计划下的推广单元展示
 | Index  |  Desc    |
 | ---    | ---   |
-|   URL  |  /aps-sale-web/aps/new/cpc_promotion_detail.htm?</br>startDate=2018-03-23&endDate=2018-03-23&promotionId=16078106| 
+|   URL  |  aps-sale-web/aps/new/cpc_promotion_detail.htm?</br>startDate=2018-03-23&endDate=2018-03-23&promotionId=16078106| 
 |   VIEW |  new/cpc/cpc_promotion_detail.ftl --productType=2(生意通)</br>new/cpc_shop/cpc_promotion_shop_detail.ftl--productType=4(CPC店铺推广)|
-|   CODE |   [关联推广单元](#promotionDetail)   |
+|   CODE |   [计划下单元展示](#promotionDetail)   |
 
-## 3.开始推广计划
-
+## 3.新建推广单元
+| Index  |  Desc    |
+| ---    | ---   |
+|   URL  |  aps-sale-web/new/unit/selectProduct.htm?promotionId=16078106| 
+|   VIEW |  /new/cpc/cpc_unit_select_product.ftl |
+|  TABLE | t_aps_promotion  |
+|   CODE |   [新建推广单元](#newPromotionUnit) |
 
 
 ## 4.暂停推广计划
@@ -61,6 +62,38 @@ USER_TYPE==1 设置事业部编码 默认0
 sqlId: standardPromotion.createPromotion   **T_APS_PROMOTION**
 
 记录用户操作日志
+
+
+
+---------
+## <span id="newPromotionUnit">新建推广单元</span>
+1.选择商品
+{promotionId=16078106,  userType=1, supplierType=C, shopId=0070057240, searchUrl=http://csearchpre.cnsuning.com/emall/cshop/queryByKeyword.do, 
+productPicUrl=http://uimgpre.cnsuning.com,
+productPicLinkUrl=http://productpre.cnsuning.com, 
+proInfo={PROMOTION_ID=16078106, NAME=zxbTest, START_DATE=2018-03-24 00:00:00.0, END_DATE=null, USER_LIMIT_AMOUNT=1000, CREATE_DATE=2018-03-23 16:11:05.741}}
+商户编码 18（左补0
+/ajax/unit/queryProduct.htm
+data : "date=1521804144793&productNum=000000011051101634&productType=2"
+
+``` sql
+	    	SELECT 
+	    		A.NAME
+	    	FROM 
+	    		T_APS_PROMOTION A,T_APS_PROMOTION_CPC B 
+			WHERE 
+				A.PROMOTION_ID=B.PROMOTION_ID 
+				AND A.USER_ID=:userId
+				<#if productType?exists>AND A.PRODUCT_TYPE = :productType</#if>
+				AND A.PROMOTION_STATUS !=8
+				AND B.GOODS_CODE=:productNum
+				AND A.ISACTIVE=1 
+				AND B.ISACTIVE=1
+```
+
+
+2.
+
 
 
 
@@ -284,6 +317,12 @@ FROM
 ```
 
 
+![推广计划][1]
 
-  [2]: https://i.loli.net/2018/03/23/5ab4bcdb77a48.jpg
-  [3]: https://i.loli.net/2018/03/23/5ab4bc4f56c1a.jpg
+![计划详情--单元][2]
+
+![新建推广单元][3]
+
+  [1]: https://i.loli.net/2018/03/23/5ab4bcdb77a48.jpg
+  [2]: https://i.loli.net/2018/03/23/5ab4bc4f56c1a.jpg
+  [3]: https://i.loli.net/2018/03/23/5ab4e33269d89.jpg
