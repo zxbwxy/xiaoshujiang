@@ -10,9 +10,9 @@ grammar_cjkRuby: true
 ## 1.新建计划
 ![新建计划][1]
 
-| Index       |  Desc    |
+| Index  |  Desc    |
 | ---    | ---  |
-|   URL  |  aps/new/cpc_new_promotion_by_name.htm | 
+|   URL  |  aps/new/cpc_new_promotion_by_name.htm <br>{	name，dept，startDate}| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
 |   CODE |   [新建计划](#newPromotion)   |
 ## 2.关联推广单元
@@ -22,6 +22,15 @@ grammar_cjkRuby: true
 
 
 ### <span id="newPromotion">新建计划</span>
+
+最低价：系统参数KEYWORD_DAY_LOWER_PRICE
+USER_TYPE==1 设置事业部编码 默认0
+开始时间不能小于今天
+   // 该名称推广计划已经存在
+根据开始时间判断推广计划的状态
+
+
+
 
 
 
