@@ -28,15 +28,16 @@ grammar_cjkRuby: true
 | ---    | ---   |
 |   URL  |  aps-sale-web/new/unit/selectProduct.htm?promotionId=16078106| 
 |   VIEW |  /new/cpc/cpc_unit_select_product.ftl|
-|  TABLE | t_aps_promotion  |
 |   CODE |   [新建推广单元](#newPromotionUnit) |
-
-
-| 选择商品图片    |  Desc    |
-| ---    | ---   |
+|    *  |
+| **选择商品图片**    |  **Desc**    |
 |   URL  |  aps-sale-web/new/unit/selectProduct.htm?promotionId=16078106| 
 |   VIEW |  /new/cpc/cpc_unit_select_picture.ftl|
-|  TABLE | t_aps_promotion  |
+|   CODE |   [新建推广单元](#newPromotionUnit) |
+|    *  |
+| **设置投放位置**    |  **Desc**    |
+|   URL  | aps-sale-web/new/unit/selectKeywordAndCatalog.htm?imgIndex=2&promotionId=16078106&productNum=000000011051101634&src=| 
+|   VIEW |  /new/cpc/cpc_unit_select_keyword.ftl|
 |   CODE |   [新建推广单元](#newPromotionUnit) |
 
 
@@ -82,6 +83,7 @@ sqlId: standardPromotion.createPromotion   **T_APS_PROMOTION**
 productPicUrl=http://uimgpre.cnsuning.com,
 productPicLinkUrl=http://productpre.cnsuning.com, 
 proInfo={PROMOTION_ID=16078106, NAME=zxbTest, START_DATE=2018-03-24 00:00:00.0, END_DATE=null, USER_LIMIT_AMOUNT=1000, CREATE_DATE=2018-03-23 16:11:05.741}}
+**商品查询**
 商户编码 18（左补0
 /ajax/unit/queryProduct.htm
 data : "date=1521804144793&productNum=000000011051101634&productType=2"
@@ -131,6 +133,11 @@ result：
 
 二、选择商品图片
  cpcPromotionInfoProcessService.getProductPicUrl(productNum, user.get("shopId")))
+ RSF查询商品图片版本信息，未查询到则按默认规则拼凑
+ ![enter description here][1]
+ aps-sale-web/new/unit/selectKeywordAndCatalog.htm?imgIndex=2&promotionId=16078106&productNum=000000011051101634&src=
+
+
  
 
 
@@ -354,12 +361,14 @@ FROM
 ```
 
 
-![推广计划][1]
+![推广计划][2]
 
-![计划详情--单元][2]
+![计划详情--单元][3]
 
-![新建推广单元][3]
+![新建推广单元][4]
 
-  [1]: https://i.loli.net/2018/03/23/5ab4bcdb77a48.jpg
-  [2]: https://i.loli.net/2018/03/23/5ab4bc4f56c1a.jpg
-  [3]: https://i.loli.net/2018/03/23/5ab4e33269d89.jpg
+
+  [1]: https://i.loli.net/2018/03/26/5ab85fb16c743.jpg
+  [2]: https://i.loli.net/2018/03/23/5ab4bcdb77a48.jpg
+  [3]: https://i.loli.net/2018/03/23/5ab4bc4f56c1a.jpg
+  [4]: https://i.loli.net/2018/03/23/5ab4e33269d89.jpg
