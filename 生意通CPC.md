@@ -257,29 +257,38 @@ WITH BASE (KEYWORD,SCORE,SEARCH_NUM,POSITION_ID,PERCENT,AVGPRICE) AS (
  selectWord.goSubmit('/ajax/unit/savePromotionUnit.htm');
 请求：
 {
-  "datas": "[{w:258004,pId:100001033,p:0.38},{w:笔记本,p:0.10},{w:联想笔记本,p:0.10}]",
+  "datas": "[{w:258004//类目,pId:100001033//广告位id,p:0.38//用户出价},{w:笔记本,p:0.10},{w:联想笔记本,p:0.10}]",
   "productNum": "000000011051101634",
   "promotionId": "16078106",
   "needTodayRec": true,
   "cpcUnitItemListJson": [
     {
       "itemCode": "1002",
-      "itemValue": "top3"//前三名
+      "itemValue": "top3"
+      //前三名
     },
     {
       "itemCode": "1003",
-      "itemValue": "10"//溢价系数
+      "itemValue": "10"
+      //溢价系数
     },
     {
       "itemCode": "1004",
-      "itemValue": "1"//一键抢 1：checked
+      "itemValue": "1"
+      //一键抢 1：checked
     },
     {
       "itemCode": "1001",
-      "itemValue": "2"// 1：精准匹配 2：广泛匹配
+      "itemValue": "2"
+      // 1：精准匹配 2：广泛匹配
     }
   ]
 }
+
+质量得分计算结果：
+{relateScore=10, qualityScore=10, detailList=[{score=10, qualityType=1, percent=1.0}], standardScore=1}
+
+
 
 分类编码层级
 
@@ -304,6 +313,10 @@ WITH BASE (KEYWORD,SCORE,SEARCH_NUM,POSITION_ID,PERCENT,AVGPRICE) AS (
 
 相关度得分
 质量得分==cataMap跟goodsMap中目录匹配后(关联scoreMap)得分*权重
+
+
+temp:{258004={positionId=100001033, price=38, relateScore=10, qualityScore=10, detailList=[{score=10, qualityType=1, percent=1.0}], standardScore=1}}
+
 
 
 ---------
