@@ -281,8 +281,29 @@ WITH BASE (KEYWORD,SCORE,SEARCH_NUM,POSITION_ID,PERCENT,AVGPRICE) AS (
   ]
 }
 
+分类编码层级
 
- 
+``` sql
+ 	SELECT LIST_SEQ  FROM T_APS_CPC_POSITION_REL WHERE STATUS=1 
+                                                     AND CODE_SEQ=258004 AND POSITION_ID = 100001033
+01_157122_258003_258004
+```
+
+
+根节点_一级目录_二级目录_三级目录
+**cataMap:**{FIRST_PAGE_CODE=157122, THIRD_PAGE_CODE=258004, SECOND_PAGE_CODE=258003}
+
+字典表AD_QUALITY_MATCH_SCORE 配置 质量得分分段及分数
+**scoreMap:**{1=10, 2=8, 3=4, 4=1}
+**goodsMap:**{brandName=海尔(Haier), THIRD_PAGE_CODE=258004, catentryId=null, catentryName=11位商品编码测试003, categoryCode=R2403004, published=null, lastCatagoryId=258004, returnCode=0, FIRST_PAGE_CODE=157122, brandId=000070743, partNumber=000000011051101634, isInStock=false, goodsName=11位商品编码测试003, SECOND_PAGE_CODE=258003, desc=3333333333333测试, priceUrl=http://price1.suning.cn/webapp/wcs/stores/prdprice/11051101634_9173_0070057240_9-1.png}
+
+> 得分 三级目录》二级目录》一级目录
+
+**weight：** 字典表 AD_QUALITY_PERCENT 配置权重 key==1对应的value/100
+
+
+相关度得分
+质量得分==cataMap跟goodsMap中目录匹配后(关联scoreMap)得分*权重
 
 
 ---------
@@ -504,6 +525,12 @@ FROM
 
 ```
 
+| Name  | Desc    |
+| --- | --- |
+| T_APS_KEYWORD_PAGE_REL |     |
+|     |     |
+|     |     |
+|     |     |
 
 ![推广计划][2]
 
