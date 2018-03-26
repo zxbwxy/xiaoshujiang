@@ -113,7 +113,11 @@ productQueryService.getProductStatus(GoodsCodeUtil.getValidGoodsCode(productNum)
 
 productQueryService.getProduct(productNum, appliCode)
 scm上的scm.goodsinfo.intftype配置如果不存在或者配的是rsf，就使用商品中心的rsf接口查询商品信息
-返回：{returnCode=0, brandName=海尔(Haier), brandId=000070743, catentryId=null, partNumber=000000011051101634, catentryName=11位商品编码测试003, categoryCode=R2403004, published=null, goodsName=11位商品编码测试003, lastCatagoryId=258004, desc=3333333333333测试}
+接口返回：
+{returnCode=0, brandName=海尔(Haier), brandId=000070743, catentryId=null, partNumber=000000011051101634, catentryName=11位商品编码测试003, categoryCode=R2403004, published=null, goodsName=11位商品编码测试003, lastCatagoryId=258004, desc=3333333333333测试}
+
+result：
+{flag=true, datas={brandName=海尔(Haier), THIRD_PAGE_CODE=258004, catentryId=null, catentryName=11位商品编码测试003, categoryCode=R2403004, published=null, lastCatagoryId=258004, returnCode=0, FIRST_PAGE_CODE=157122, brandId=000070743, partNumber=000000011051101634, isInStock=false, goodsName=11位商品编码测试003, SECOND_PAGE_CODE=258003, desc=3333333333333测试, priceUrl=http://price1.suning.cn/webapp/wcs/stores/prdprice/11051101634_9173_0070057240_9-1.png}}
 
 
 
