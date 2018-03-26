@@ -42,6 +42,14 @@ grammar_cjkRuby: true
 |   CODE |   [新建推广单元](#newPromotionUnit) |
 
 
+| 删除推广单元  |  Desc    |
+| ---    | ---   |
+|   URL  |  /aps-sale-web/aps/new/cpc_delete_promotion_unit.htm</br>$.param({</br>	promotionId : '16078106',</br>	unitId : unitId</br>	}| 
+|   VIEW |  /new/cpc/cpc_unit_select_product.ftl|
+|   CODE |   [新建推广单元](#newPromotionUnit) |
+
+
+
 
 ## 4.暂停推广计划
 | Index  |  Desc    |
@@ -229,8 +237,10 @@ WITH BASE (KEYWORD,SCORE,SEARCH_NUM,POSITION_ID,PERCENT,AVGPRICE) AS (
 4.查询系统限制的三级类目,若该商品为限制类目下面的商品，
 则其投放的关键词不能夸三级类目，投放类目只能是该三级类目
 数据字典配置：THIRD_PAGE_LIMIT
+
+关键词系统最低出价KEYWORD_LOWER_PRICE
+类目系统最低出价LOCATION_LOWER_PRICE
  
- 关键词系统最低出价KEYWORD_DAY_LOWER_PRICE
      @ApsScmConf("scm.cpc.isShowYJQ")
     private String isShowYJQ;
 
@@ -244,13 +254,33 @@ WITH BASE (KEYWORD,SCORE,SEARCH_NUM,POSITION_ID,PERCENT,AVGPRICE) AS (
 "cpcPositionControlGroup",cpcCommonService.queryAllPositionControlInfoByRelId(Long.parseLong(promotionId),1)
 
 **提交**
+ selectWord.goSubmit('/ajax/unit/savePromotionUnit.htm');
 请求：
 {
   "datas": "[{w:258004,pId:100001033,p:0.38},{w:笔记本,p:0.10},{w:联想笔记本,p:0.10}]",
   "productNum": "000000011051101634",
   "promotionId": "16078106",
-  "needTodayRec": true
+  "needTodayRec": true,
+  "cpcUnitItemListJson": [
+    {
+      "itemCode": "1002",
+      "itemValue": "top3"//前三名
+    },
+    {
+      "itemCode": "1003",
+      "itemValue": "10"//溢价系数
+    },
+    {
+      "itemCode": "1004",
+      "itemValue": "1"//一键抢 1：checked
+    },
+    {
+      "itemCode": "1001",
+      "itemValue": "2"// 1：精准匹配 2：广泛匹配
+    }
+  ]
 }
+
 
  
 
