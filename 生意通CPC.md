@@ -38,6 +38,7 @@ grammar_cjkRuby: true
 | **设置投放位置**    |  **Desc**    |
 |   URL  | aps-sale-web/new/unit/selectKeywordAndCatalog.htm?imgIndex=2&promotionId=16078106&productNum=000000011051101634&src=| 
 |   VIEW |  /new/cpc/cpc_unit_select_keyword.ftl|
+|  TABLE | t_aps_promotion  |
 |   CODE |   [新建推广单元](#newPromotionUnit) |
 
 
@@ -135,8 +136,25 @@ result：
  cpcPromotionInfoProcessService.getProductPicUrl(productNum, user.get("shopId")))
  RSF查询商品图片版本信息，未查询到则按默认规则拼凑
  ![enter description here][1]
+ 
+ 三、设置投放位置
  aps-sale-web/new/unit/selectKeywordAndCatalog.htm?imgIndex=2&promotionId=16078106&productNum=000000011051101634&src=
 
+```java
+   Map<String, Object> proInfo = (Map<String, Object>) user.get(Aps.PRO_INFO);
+        if (null == proInfo || proInfo.isEmpty()) {
+            proInfo = unitService.queryPromotionInfoById(promotionId);
+        }
+```
+```sql
+ SELECT A.PROMOTION_ID,A.NAME,A.CREATE_DATE,B.START_DATE,B.END_DATE,B.USER_LIMIT_AMOUNT FROM T_APS_PROMOTION A,T_APS_PROMOTION_CPC B 
+		 WHERE A.PROMOTION_ID = :promotionId AND A.PROMOTION_ID= B.PROMOTION_ID
+```
+ 判断是否切换到从数据平台获取推荐词：系统参数 KEYWORD_TOOLS_METHOD--1：数据平台
+
+List<Map<String, Object>> querySysRecWordsFromDataPlat(String thirdCataId) 
+ dataPlatService.queryDataByParam(QueryReport.KEYWORD_TOOL, paramMap, Aps.INT_1, Aps.INT_20)
+ T_APS_PAGE_POSITION
 
  
 
@@ -365,10 +383,13 @@ FROM
 
 ![计划详情--单元][3]
 
-![新建推广单元][4]
+![新建推广单元--选择商品][4]
+
+![新建推广单元--选择商品图片][5]
 
 
   [1]: https://i.loli.net/2018/03/26/5ab85fb16c743.jpg
   [2]: https://i.loli.net/2018/03/23/5ab4bcdb77a48.jpg
   [3]: https://i.loli.net/2018/03/23/5ab4bc4f56c1a.jpg
   [4]: https://i.loli.net/2018/03/23/5ab4e33269d89.jpg
+  [5]: https://i.loli.net/2018/03/26/5ab861ce6b9dc.jpg
