@@ -23,12 +23,22 @@ grammar_cjkRuby: true
 |   CODE |   [计划下单元展示](#promotionDetail)   |
 
 ## 3.新建推广单元
-| Index  |  Desc    |
+
+| 选择商品  |  Desc    |
 | ---    | ---   |
 |   URL  |  aps-sale-web/new/unit/selectProduct.htm?promotionId=16078106| 
-|   VIEW |  /new/cpc/cpc_unit_select_product.ftl |
+|   VIEW |  /new/cpc/cpc_unit_select_product.ftl|
 |  TABLE | t_aps_promotion  |
 |   CODE |   [新建推广单元](#newPromotionUnit) |
+
+
+| 选择商品图片    |  Desc    |
+| ---    | ---   |
+|   URL  |  aps-sale-web/new/unit/selectProduct.htm?promotionId=16078106| 
+|   VIEW |  /new/cpc/cpc_unit_select_picture.ftl|
+|  TABLE | t_aps_promotion  |
+|   CODE |   [新建推广单元](#newPromotionUnit) |
+
 
 
 ## 4.暂停推广计划
@@ -67,7 +77,7 @@ sqlId: standardPromotion.createPromotion   **T_APS_PROMOTION**
 
 ---------
 ## <span id="newPromotionUnit">新建推广单元</span>
-1.选择商品
+一.选择商品
 {promotionId=16078106,  userType=1, supplierType=C, shopId=0070057240, searchUrl=http://csearchpre.cnsuning.com/emall/cshop/queryByKeyword.do, 
 productPicUrl=http://uimgpre.cnsuning.com,
 productPicLinkUrl=http://productpre.cnsuning.com, 
@@ -119,7 +129,9 @@ scm上的scm.goodsinfo.intftype配置如果不存在或者配的是rsf，就使�
 result：
 {flag=true, datas={brandName=海尔(Haier), THIRD_PAGE_CODE=258004, catentryId=null, catentryName=11位商品编码测试003, categoryCode=R2403004, published=null, lastCatagoryId=258004, returnCode=0, FIRST_PAGE_CODE=157122, brandId=000070743, partNumber=000000011051101634, isInStock=false, goodsName=11位商品编码测试003, SECOND_PAGE_CODE=258003, desc=3333333333333测试, priceUrl=http://price1.suning.cn/webapp/wcs/stores/prdprice/11051101634_9173_0070057240_9-1.png}}
 
-
+二、选择商品图片
+ cpcPromotionInfoProcessService.getProductPicUrl(productNum, user.get("shopId")))
+ 
 
 
 ---------
