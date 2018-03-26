@@ -139,7 +139,7 @@ result：
  
  三、设置投放位置
  aps-sale-web/new/unit/selectKeywordAndCatalog.htm?imgIndex=2&promotionId=16078106&productNum=000000011051101634&src=
-
+1.获取session中保存的商品信息
 ```java
    Map<String, Object> proInfo = (Map<String, Object>) user.get(Aps.PRO_INFO);
         if (null == proInfo || proInfo.isEmpty()) {
@@ -147,14 +147,110 @@ result：
         }
 ```
 ```sql
- SELECT A.PROMOTION_ID,A.NAME,A.CREATE_DATE,B.START_DATE,B.END_DATE,B.USER_LIMIT_AMOUNT FROM T_APS_PROMOTION A,T_APS_PROMOTION_CPC B 
-		 WHERE A.PROMOTION_ID = :promotionId AND A.PROMOTION_ID= B.PROMOTION_ID
+ SELECT A.PROMOTION_ID,A.NAME,A.CREATE_DATE,B.START_DATE,B.END_DATE,B.USER_LIMIT_AMOUNT 
+ FROM T_APS_PROMOTION A,T_APS_PROMOTION_CPC B 
+ WHERE A.PROMOTION_ID = :promotionId AND A.PROMOTION_ID= B.PROMOTION_ID
 ```
- 判断是否切换到从数据平台获取推荐词：系统参数 KEYWORD_TOOLS_METHOD--1：数据平台
+2.查询系统推荐词：系统参数 KEYWORD_TOOLS_METHOD--1：数据平台
+三级目录关键词不够+二级目录关键词
+``` java
+     if ("1".equals(isNew)) {
+                //按照类目相关度、search_num降序排列(取20条)
+                recWordList = unitService.querySysRecWordsFromDataPlat(thirdCataId);
+            } else {
+                recWordList = unitService.querySysRecWords(thirdCataId);
+            }
+```
+``` sql
+WITH BASE (KEYWORD,SCORE,SEARCH_NUM,POSITION_ID,PERCENT,AVGPRICE) AS (
+			        SELECT 
+			                DISTINCT A.KEYWORD,
+			                ${score} SCORE,
+			                C.SEARCH_NUM,
+			                '100000001' AS POSITION_ID,
+			                decimal(ROUND(NVL(C.CLICK_PERCENT*100.0,0.0),2),10,2) AS percent,
+			                decimal(round(NVL(C.AVG_PRICE,0)/100.0,2),10,2) AS avgPrice
+			        FROM T_APS_KEYWORD_PAGE_REL A,T_APS_KEYWORD_TOOL_DATA_FRONT C 
+			        WHERE A.KEYWORD=C.KEYWORD 
+			                AND A.STATUS=1
+			                <#if thirdCode?exists && thirdCode != ''>
+								AND A.THIRD_PAGE_CODE = :thirdCode
+							</#if> 
+							<#if secondCode?exists && secondCode != ''>
+								AND A.SECOND_PAGE_CODE = :secondCode
+							</#if> 
+							<#if keywrods?exists && keywrods != ''>
+								AND A.KEYWORD NOT IN(:keywrods)
+							</#if> 
+			                AND EXISTS(SELECT 'X' FROM T_APS_SEARCH_KEYWORD B WHERE B.KEYWORD_NAME=A.KEYWORD)
+			        ORDER BY C.SEARCH_NUM DESC
+			        FETCH FIRST ${rowNum} ROWS ONLY
+			)
+			
+			SELECT E.*,NVL(P.COMPET_NUM,0) AS COMPET_NUM
+			FROM BASE E LEFT JOIN
+			(SELECT 
+			        D.NAME,COUNT(1) COMPET_NUM 
+			        FROM T_APS_CPC_PROMOTION_DATA D
+			        WHERE D.PROMOTION_TYPE=0  
+			        AND D.PROMOTION_DATE= CURRENT DATE 
+			        GROUP BY D.NAME
+			) P
+			ON E.KEYWORD = P.NAME WITH UR
+```
 
-List<Map<String, Object>> querySysRecWordsFromDataPlat(String thirdCataId) 
- dataPlatService.queryDataByParam(QueryReport.KEYWORD_TOOL, paramMap, Aps.INT_1, Aps.INT_20)
- T_APS_PAGE_POSITION
+3.查询系统推荐类目：系统参数  CATALOG_TOOLS_METHOD
+ 
+
+``` sql
+     --	{thirdCode=258004, saleObj=1, secondCode='%!_258003!_%', status=1}
+     		SELECT A.LIST_SEQ,
+			        A.SCORE,
+			        A.LIST_SEQ as KEYWORD,
+			        A.NAME_SEQ,
+			        A.CODE_SEQ AS CODE,
+			        A.POSITION_ID,
+			        NVL(B.SEARCH_NUM,0) SEARCH_NUM,
+			        decimal(ROUND(NVL(B.CLICK_PERCENT*100.0,0.0),2),10,2) AS percent,
+			        decimal(round(NVL(B.AVG_PRICE,0)/100.0,2),10,2) AS avgPrice
+			FROM 
+			        (SELECT T1.LIST_SEQ,(CASE WHEN T1.CODE_SEQ=${thirdCode} THEN '100' ELSE '80' END ) SCORE,
+			        		T1.NAME_SEQ,T1.CODE_SEQ,T2.POSITION_ID 
+			         FROM T_APS_CPC_POSITION_REL T1,T_APS_ADS_POSITION T2 
+			         WHERE T1.LIST_SEQ LIKE ${secondCode} ESCAPE '!' AND T1.POSITION_ID=T2.POSITION_ID AND T1.STATUS = 1 
+			        AND T1.EFFECT_DATE <= current timestamp AND (T2.SALE_OBJ=2 OR T2.SALE_OBJ=:saleObj)) A 
+			LEFT JOIN
+			        (SELECT KEYWORD,SEARCH_NUM,CLICK_PERCENT,AVG_PRICE FROM T_APS_KEYWORD_TOOL_DATA_FRONT WHERE PROMOTION_TYPE=1) B
+			ON A.CODE_SEQ=B.KEYWORD
+			WITH UR
+```
+
+
+4.查询系统限制的三级类目,若该商品为限制类目下面的商品，
+则其投放的关键词不能夸三级类目，投放类目只能是该三级类目
+数据字典配置：THIRD_PAGE_LIMIT
+ 
+ 关键词系统最低出价KEYWORD_DAY_LOWER_PRICE
+     @ApsScmConf("scm.cpc.isShowYJQ")
+    private String isShowYJQ;
+
+    @ApsScmConf("scm.cpc.isShowYJQ")
+    private String isShowYJQ;
+  一键抢排名功能展示开关SCM配置
+    @ApsScmConf("scm.cpc.isShowMorePositionRank")
+    private String isShowMorePostionRank;
+  是否开启多广告位的预估排名
+  
+"cpcPositionControlGroup",cpcCommonService.queryAllPositionControlInfoByRelId(Long.parseLong(promotionId),1)
+
+**提交**
+请求：
+{
+  "datas": "[{w:258004,pId:100001033,p:0.38},{w:笔记本,p:0.10},{w:联想笔记本,p:0.10}]",
+  "productNum": "000000011051101634",
+  "promotionId": "16078106",
+  "needTodayRec": true
+}
 
  
 
