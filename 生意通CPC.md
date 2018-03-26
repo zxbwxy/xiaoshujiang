@@ -98,15 +98,22 @@ dataExchangeInfo {
   terminalType: "1"
 }
 http://admdspre.cnsuning.com/admdso/goods/textprice
-自营旗舰店账户(USER_TYPE=4)&& 系统参数AD_QUERY_STATUS=1
-sop外部商户(USER_TYPE=2)&& 系统参数AD_QUERY_STATUS=1
+1.自营旗舰店账户：(USER_TYPE=4)&& 系统参数AD_QUERY_STATUS=1
+
+2.sop外部商户需要查询商品状态信息：(USER_TYPE=2)&& 系统参数AD_QUERY_STATUS=1
+appliCode:供应商编码
+productQueryService.getProductStatus(GoodsCodeUtil.getValidGoodsCode(productNum),appliCode.substring(2))
  需要查询商品状态信息 supplierType=C  [!=LT联营特卖商户]
     {
     type=00,   00：子码   01：通码 的商品编码不符合要求
     status=Y 商品编码与商户匹配&&在售
     }
+3.非自营旗舰店USER_TYPE!=4 
+调用rsf或esb接口查询商品相关信息
 
-2.
+productQueryService.getProduct(productNum, appliCode)
+scm上的scm.goodsinfo.intftype配置如果不存在或者配的是rsf，就使用商品中心的rsf接口查询商品信息
+返回：{returnCode=0, brandName=海尔(Haier), brandId=000070743, catentryId=null, partNumber=000000011051101634, catentryName=11位商品编码测试003, categoryCode=R2403004, published=null, goodsName=11位商品编码测试003, lastCatagoryId=258004, desc=3333333333333测试}
 
 
 
