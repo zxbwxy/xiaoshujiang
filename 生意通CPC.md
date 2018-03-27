@@ -58,6 +58,17 @@ grammar_cjkRuby: true
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
 |   CODE |   [暂停推广计划](#pausePromotion)   |
 
+
+
+# 投放报表
+## 4.推广计划报表
+| Index  |  Desc    |
+| ---    | ---  |
+|   URL  |  aps/new/report_promotion_plan.htm| 
+|   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
+|   CODE |   [暂停推广计划](#pausePromotion)   |
+
+
 ----------
 
 # 备忘
@@ -284,7 +295,7 @@ WITH BASE (KEYWORD,SCORE,SEARCH_NUM,POSITION_ID,PERCENT,AVGPRICE) AS (
     }
   ]
 }
-
+1.类目
 质量得分计算结果：
 {relateScore=10, qualityScore=10, detailList=[{score=10, qualityType=1, percent=1.0}], standardScore=1}
 
@@ -315,8 +326,26 @@ WITH BASE (KEYWORD,SCORE,SEARCH_NUM,POSITION_ID,PERCENT,AVGPRICE) AS (
 质量得分==cataMap跟goodsMap中目录匹配后(关联scoreMap)得分*权重
 
 
-temp:{258004={positionId=100001033, price=38, relateScore=10, qualityScore=10, detailList=[{score=10, qualityType=1, percent=1.0}], standardScore=1}}
 
+2.关键词
+
+
+temp:{258004={positionId=100001033, price=38, relateScore=10, qualityScore=10, detailList=[{score=10, qualityType=1, percent=1.0}], standardScore=1}, 
+笔记本={positionId=100000001, price=10, relateScore=10, qualityScore=10, detailList=[{score=10, qualityType=1, percent=1.0}], standardScore=1, keyword=笔记本}}
+
+调用评价系统接口
+
+                maxSize = this.getReviewSizeConfig("MAX_CMMDTY_REVIEW_SIZE", 22);
+                minSize = this.getReviewSizeConfig("MIN_CMMDTY_REVIEW_SIZE", 8);
+                // 通过调用评价系统接口，推广商品的评价标签拼接信息，保存至pInfo中，准备下一步入库到推广单元表中 end
+                pInfo.put("jsonArr", jsonArr);
+                // 调用搜索商品中心ESB接口，查询子码对应的通码数据 start
+                String generalCmmdtyCode = generalCmmdtyCodeQueryService.getGeneralCmmdtyCodeByGoodsCode(productNum);
+
+保存推广单元数据
+seqId:SEQ_T_APS_PROMOTION_CPC
+
+暂停一键推广中的商品
 
 
 ---------
@@ -537,6 +566,47 @@ FROM
   ) T
 
 ```
+
+
+----------
+
+
+## <span id="promotionDetail">推广计划报表</span>
+推广计划报表
+new/report/report_cpc_promotion.ftl
+总览和时间趋势图：aps/new/report_promotion_plan.htm
+表格数据：aps/new/report_promotion/form_data.htm
+详情：aps/new/report/promotion_detail.htm
+?throwType='+throwType+"&productType="+productType+'&promotionId='+promotionId+'&promotionName='+promotionName+'&startDate=${startDate}&endDate=${endDate}&orderTimeType=${orderTimeType!""}">分日详情</a>
+ new/report/report_cpc_promotion_detail.ftl
+下载：
+aps/ajax/report/promotion/down/form_data.htm
+?startDate="+startDate+"&endDate="+endDate+"&reportName="+reportName+"&throwType="+throwType+"&orderTimeType="+orderTimeTypeSelect.val()
+
+
+系统参数：DATA_PLAT_FLAG
+
+-------------------------------------------------
+总览：mysql/db2（promotionPlanReport.getPromotionDataKpi）
+	{endDate=2018-03-26, orderTimeType=null, userId=429004445, startDate=2018-03-20, queryType=queryPromotionRepOverview}
+	String rst = dataPlatService.queryMapDataByParam(QueryReport.CPC_PROMOTION_REP：19, paramMap);
+	data = JsonUtil.readJson2Object(rst, Map.class);
+
+时间趋势数据：mysql/db2（promotionPlanReport.getChartData）
+	{endDate=2018-03-26, orderTimeType=null, userId=429004445, startDate=2018-03-20, queryType=queryPromotionChartData}
+	String rst = dataPlatService.queryMapDataByParam(QueryReport.CPC_PROMOTION_REP, paramMap);
+	data = JsonUtil.readJson2Object(rst, Map.class);
+
+表格数据+下载：mysql
+	条数：
+		{throwType=null, endDate=2018-03-26, orderBy=null, orderTimeType=, userId=429004445, startDate=2018-03-20, productType=, queryType=countPromotionTableData}
+		int count = dataPlatService.queryCountData(QueryReport.CPC_PROMOTION_REP, paramMap)
+    数据：
+		{throwType=null, endDate=2018-03-26, orderBy=null, orderTimeType=, pageSize=10, userId=429004445, startDate=2018-03-20, productType=, queryType=queryPromotionTableData}
+		dataPlatService.queryDataByParam(QueryReport.CPC_PROMOTION_REP, paramMap, pager.getPageNumber(), pager.getPageSize());
+	推广计划详情：mysql （promotionId）
+		{endDate=2018-03-26, orderTimeType=null, userId=429004445, startDate=2018-03-20, promotionId=XXX,queryType=queryPromotionChartData}
+		String rst = dataPlatService.queryChartData(QueryReport.CPC_PROMOTION_REP, paramMap);
 
 | Name  | Desc    |
 | --- | --- |
