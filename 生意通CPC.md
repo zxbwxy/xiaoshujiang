@@ -583,11 +583,11 @@ COST
 TOTAL_SUBMIT_AMOUNT--总提交金额（单位：分）
 COUNT_DATE--统计时间—for时间趋势按日分组
 1.	数据总览
-点击量 CLICK_NUM
-点击率 CLICK_NUM/SHOW_NUM
-花费 COST
-平均点击花费 COST/CLICK_NUM
-投入产出比 TOTAL_SUBMIT_AMOUNT/COST
+    点击量 CLICK_NUM
+    点击率 CLICK_NUM/SHOW_NUM
+    花费 COST
+    平均点击花费 COST/CLICK_NUM
+    投入产出比 TOTAL_SUBMIT_AMOUNT/COST
 2.	时间趋势图
 3.	表格:各计划数据概览+下载（底部添加合计行）
 4.	详情[promotionId]
