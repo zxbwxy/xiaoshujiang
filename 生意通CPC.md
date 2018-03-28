@@ -572,41 +572,31 @@ FROM
 
 
 ## <span id="promotionDetail">推广计划报表</span>
-推广计划报表
-new/report/report_cpc_promotion.ftl
-总览和时间趋势图：aps/new/report_promotion_plan.htm
-表格数据：aps/new/report_promotion/form_data.htm
-详情：aps/new/report/promotion_detail.htm
-?throwType='+throwType+"&productType="+productType+'&promotionId='+promotionId+'&promotionName='+promotionName+'&startDate=${startDate}&endDate=${endDate}&orderTimeType=${orderTimeType!""}">分日详情</a>
- new/report/report_cpc_promotion_detail.ftl
-下载：
-aps/ajax/report/promotion/down/form_data.htm
-?startDate="+startDate+"&endDate="+endDate+"&reportName="+reportName+"&throwType="+throwType+"&orderTimeType="+orderTimeTypeSelect.val()
+Table:
+t_cpc_yxb_promotion_7day、_15day
+t_cpc_promotion_hour_7day、_15day
+ 
+Column：
+SHOW_NUM
+CLICK_NUM
+COST
+TOTAL_SUBMIT_AMOUNT--总提交金额（单位：分）
+COUNT_DATE--统计时间—for时间趋势按日分组
+1.	数据总览
+点击量 CLICK_NUM
+点击率 CLICK_NUM/SHOW_NUM
+花费 COST
+平均点击花费 COST/CLICK_NUM
+投入产出比 TOTAL_SUBMIT_AMOUNT/COST
+2.	时间趋势图
+3.	表格:各计划数据概览+下载（底部添加合计行）
+4.	详情[promotionId]
+------
+4.1分时
+
+4.2分日
 
 
-系统参数：DATA_PLAT_FLAG
-
--------------------------------------------------
-总览：mysql/db2（promotionPlanReport.getPromotionDataKpi）
-	{endDate=2018-03-26, orderTimeType=null, userId=429004445, startDate=2018-03-20, queryType=queryPromotionRepOverview}
-	String rst = dataPlatService.queryMapDataByParam(QueryReport.CPC_PROMOTION_REP：19, paramMap);
-	data = JsonUtil.readJson2Object(rst, Map.class);
-
-时间趋势数据：mysql/db2（promotionPlanReport.getChartData）
-	{endDate=2018-03-26, orderTimeType=null, userId=429004445, startDate=2018-03-20, queryType=queryPromotionChartData}
-	String rst = dataPlatService.queryMapDataByParam(QueryReport.CPC_PROMOTION_REP, paramMap);
-	data = JsonUtil.readJson2Object(rst, Map.class);
-
-表格数据+下载：mysql
-	条数：
-		{throwType=null, endDate=2018-03-26, orderBy=null, orderTimeType=, userId=429004445, startDate=2018-03-20, productType=, queryType=countPromotionTableData}
-		int count = dataPlatService.queryCountData(QueryReport.CPC_PROMOTION_REP, paramMap)
-    数据：
-		{throwType=null, endDate=2018-03-26, orderBy=null, orderTimeType=, pageSize=10, userId=429004445, startDate=2018-03-20, productType=, queryType=queryPromotionTableData}
-		dataPlatService.queryDataByParam(QueryReport.CPC_PROMOTION_REP, paramMap, pager.getPageNumber(), pager.getPageSize());
-	推广计划详情：mysql （promotionId）
-		{endDate=2018-03-26, orderTimeType=null, userId=429004445, startDate=2018-03-20, promotionId=XXX,queryType=queryPromotionChartData}
-		String rst = dataPlatService.queryChartData(QueryReport.CPC_PROMOTION_REP, paramMap);
 
 | Name  | Desc    |
 | --- | --- |
