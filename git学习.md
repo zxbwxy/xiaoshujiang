@@ -35,7 +35,9 @@ $ git config --global color.branch auto
  - 您提交更改。如果一切正常，则将更改推送到存储库。
  - 提交之后，如果您意识到有问题，则更正上次提交并将更改推送到存储库。
 ![工作流程][1]
-## git-基本概念
+## git-创建操作
+
+https://www.cnblogs.com/sumuncle/p/6362697.html
 ## git-基本概念
 ## git-基本概念
 ## git-基本概念
@@ -53,4 +55,4 @@ $ git config --global color.branch auto
 https://blog.csdn.net/txl199106/article/details/40266345
 
 
-  [1]: https://www.tutorialspoint.com/git/images/life_cycle.png
+  [1]: http://owx51rlyb.bkt.clouddn.com/%E5%B0%8F%E4%B9%A6%E5%8C%A0/1522377453975.jpg
