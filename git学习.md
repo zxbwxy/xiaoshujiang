@@ -36,22 +36,28 @@ $ git config --global color.branch auto
  - 提交之后，如果您意识到有问题，则更正上次提交并将更改推送到存储库。
 ![工作流程][1]
 ## git-创建操作
+1.创建本地git服务器
+
+2.创建一个裸仓库
+## git-克隆操作
+我们在Git服务器上有一个裸仓库，汤姆也推出了他的第一个版本。现在，杰瑞可以查看他的变化。克隆操作创建远程存储库的一个实例。
+Jerry在他的主目录中创建一个新目录并执行克隆操作。
+$ mkdir jerry_repo
+$ cd jerry_repo
+$ git clone gituser@git.server.com:project.git
+## git-基本概念
+## git-基本概念
+## git-基本概念
+## git-基本概念
+## git-基本概念
+## git-基本概念
+## git-基本概念
+
+
+
 
 https://www.cnblogs.com/sumuncle/p/6362697.html
-## git-基本概念
-## git-基本概念
-## git-基本概念
-## git-基本概念
-## git-基本概念
-## git-基本概念
-## git-基本概念
-## git-基本概念
-
-
-
-
-
-
+https://www.cnblogs.com/wangmingshun/p/5424767.html
 https://blog.csdn.net/txl199106/article/details/40266345
 
 
