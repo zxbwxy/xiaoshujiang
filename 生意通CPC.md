@@ -344,6 +344,31 @@ temp:{258004={positionId=100001033, price=38, relateScore=10, qualityScore=10, d
 
 保存推广单元数据
 seqId:SEQ_T_APS_PROMOTION_CPC
+sqlId:proUnit.persistCpcPromotion   INSERT INTO T_APS_PROMOTION_CPC
+	UPDATE T_APS_PROMOTION SET UPDATE_DATE = CURRENT TIMESTAMP,STATUS_UPDATE_TIME = CURRENT TIMESTAMP WHERE PROMOTION_ID = :promotionId
+ 更新推广单元属性 proUnit.insertUnitItemList
+
+``` sql
+			INSERT
+			INTO
+			    T_APS_PROMOTION_CPC_ITEM
+			    (
+			        ID,
+			        CPC_PROMOTION_ID,
+			        ITEM_CODE,
+			        ITEM_VALUE,
+			        CREATE_DT
+			    )
+			    VALUES
+			    (
+			        nextval FOR SEQ_T_APS_CPC_UNIT_ITEM_ID,
+			        :cpcPromotionId,
+			        :itemCode,
+			        :itemValue,
+			        SYSDATE
+			    )
+```
+
 
 暂停一键推广中的商品
 
@@ -588,6 +613,7 @@ t_cpc_promotion_hour_7day、_15day
     4.1分时
     4.2分日
 
+## <span id="promotionDetail">推广单元报表</span>
 
 
 | Name  | Desc    |
