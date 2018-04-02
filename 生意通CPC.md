@@ -58,7 +58,7 @@ grammar_cjkRuby: true
 ### 修改推广时段
 | Index  |  Desc    |
 | ---    | ---   |
-|   URL  |  aps-sale-web/aps/new/cpc/promotion/saveHours.htm?promotionId=16078106&throwHours=0+2+3| 
+|   URL  |  aps-sale-web/aps/new/cpc/promotion/saveHours.htm?promotionId=promotionId&throwHours=0+2+3| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
 |  TABLE | t_aps_promotion、T_APS_PROMOTION_ITEM(1001)  |
 |   CODE |   [修改推广时段](#promotionModifyHours) |
@@ -66,7 +66,7 @@ grammar_cjkRuby: true
 ### 设置投放平台
 | Index  |  Desc    |
 | ---    | ---   |
-|   URL  |aps/new/cpc_set_throwtime.htm </br>{</br>promotionId : 16078106,</br>throwDiscount :putDiscount,</br>positionType : app||hot</br>}| 
+|   URL  |aps/new/cpc_set_throwtime.htm </br>{</br>promotionId : promotionId,</br>throwDiscount :putDiscount,</br>positionType : app\|hot</br>}| 
 |  TABLE | t_aps_promotion、T_APS_PROMOTION_ITEM(1001)  |
 |   CODE |   [设置投放时间](#promotionSetThrowTime) |
 
