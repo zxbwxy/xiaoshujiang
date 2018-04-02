@@ -52,7 +52,7 @@ grammar_cjkRuby: true
 | ---    | ---   |
 |   URL  |  aps/new/cpc_modify_promotion_name.htm</br>{</br>promotionId : promotionId,</br>	name : name</br>	}| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
-|  TABLE | t_aps_promotion  |
+|  TABLE | t_aps_promotion、T_APS_PROMOTION_ITEM(1002)  |
 |   CODE |   [计划查询](#promotionModifyName) |
 
 ### 修改推广时段
@@ -60,7 +60,7 @@ grammar_cjkRuby: true
 | ---    | ---   |
 |   URL  |  aps-sale-web/aps/new/cpc/promotion/saveHours.htm?promotionId=16078106&throwHours=0+2+3| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
-|  TABLE | t_aps_promotion  |
+|  TABLE | t_aps_promotion、T_APS_PROMOTION_ITEM(1001)  |
 |   CODE |   [计划查询](#promotionModifyHours) |
 
 
@@ -70,7 +70,7 @@ grammar_cjkRuby: true
 |   URL  |  aps/new/cpc/promotion/saveArea.htm?promotionId=16078106&throwArea=10+20| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
 |  TABLE | t_aps_promotion  |
-|   CODE |   [计划查询](#promotionModifyArea) |
+|   CODE |   [修改定向地域](#promotionModifyArea) |
 
 
 
@@ -79,7 +79,7 @@ grammar_cjkRuby: true
 | ---    | ---   |
 |   URL  |  查询：aps/customBudget/cpc_daycost_init_data.htm?promotionId=promotionId</br></br>设置：aps-sale-web/aps/customBudget/cpc_set_daycost.htm?</br>{	promotionId : promotionId,</br>cpcDayAmount: {"defaultUserLimitAmount":1000,"customData":[]}| 
 |  TABLE | t_aps_promotion  |
-|   CODE |   [计划查询](#promotionModifyArea) |
+|   CODE |   [修改日限额](#promotionModifyArea) |
 
 ## 3.推广单元--新建
 
@@ -686,6 +686,12 @@ UPDATE
 
 ```
 
+
+查询：aps/customBudget/cpc_daycost_init_data.htm?promotionId=promotionId
+
+设置：aps-sale-web/aps/customBudget/cpc_set_daycost.htm?
+{	promotionId : promotionId,
+cpcDayAmount: {“defaultUserLimitAmount”:1000,“customData”:[]}
         
 ## <span id="promotionDetail">计划：暂停</span>
 aps/new/cpc_pause_promotion.htm?promotionId=16078106
