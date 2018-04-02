@@ -578,7 +578,16 @@ standardPromotionService.updateUnitStatus
                                     promotionId, productType);
                         }
 
-## <span id="promotionResume">计划：修改推广名称</span>
+## <span id="promotionModifyName">计划：修改推广名称</span>
+       paramMap.put("name", name);
+        paramMap.put("promotionId", promotionId);
+        paramMap.put("userId", userId);
+        String sqlId = "standardPromotion.selectPromotionNameCount";
+
+ paramMap.put("promotionId", promotionId);
+        paramMap.put("name", name);
+        paramMap.put("userId", userId);
+standardPromotion.renamePromotion
 ## <span id="promotionDetail">计划：暂停</span>
 aps/new/cpc_pause_promotion.htm?promotionId=16078106
 ## <span id="promotionDetail">关联推广单元</span>
