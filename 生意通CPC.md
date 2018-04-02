@@ -27,7 +27,7 @@ grammar_cjkRuby: true
 | ---    | ---  |
 |   URL  |  /aps/new/cpc_pause_promotion.htm <br>{promotionId }| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
-|   CODE |   [暂停推广计划](#pausePromotion)   |
+|   CODE |   [暂停推广计划](#promotion_pause)   |
 
 ## 3.推广单元--新建
 
@@ -66,7 +66,7 @@ grammar_cjkRuby: true
 | ---    | ---  |
 |   URL  |  aps/new/report_promotion_plan.htm| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
-|   CODE |   [暂停推广计划](#pausePromotion)   |
+|   CODE |   [推广计划_查询](#promotion_report)   |
 
 
 ----------
@@ -649,7 +649,7 @@ sqlId: standardPromotion.getPromotionUnitCount、standardPromotion.getPromotionU
 
 
 
-## <span id="productPromotion">商品推广&& 店铺推广列表</span>
+## <span id="promotion_report">商品推广&& 店铺推广列表</span>
 
 首页：
 推广基本信息+商品点击等数据(调接口)
