@@ -63,6 +63,15 @@ grammar_cjkRuby: true
 |  TABLE | t_aps_promotion  |
 |   CODE |   [计划查询](#promotionModifyHours) |
 
+
+### 修改推广时段
+| Index  |  Desc    |
+| ---    | ---   |
+|   URL  |  aps-sale-web/aps/new/cpc/promotion/saveHours.htm?promotionId=16078106&throwHours=0+2+3| 
+|   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
+|  TABLE | t_aps_promotion  |
+|   CODE |   [计划查询](#promotionModifyHours) |
+
 ## 3.推广单元--新建
 
 | 选择商品  |  Desc    |
@@ -632,7 +641,7 @@ UPDATE
 		
 		// 推广计划推广状态不为3直接返回
 		// 如果计划状态为0：余额不足直接返回
-		//
+		//正在推广的计划，修改了投放时段，需要冻结和投放。
 		int unitsNum = (Integer) promotion.get("UNITS_NUM");
         if (unitsNum > 0) {
             // 冻结与实时投放过程
