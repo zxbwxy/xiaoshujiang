@@ -678,12 +678,10 @@ UPDATE
         cpi.setItemValue(areaStr);
         cpcCommonService.updatePromotionItem(cpi);
         
-        apscommom_cpcBase.deletePromotionItemList
+        apscommom_cpcBase.deletePromotionItemList 、T_APS_PROMOTION_ITEM(1002) 
         apscommom_cpcBase.insertPromotionItemList
-
         // 发送消息到kafka
         sendPromotionData(promotionId, userId);
-
 ```
 
 
