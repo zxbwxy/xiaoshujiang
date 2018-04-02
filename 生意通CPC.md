@@ -682,7 +682,33 @@ UPDATE
             }
         }
 ## <span id="promotionSetThrowPlat">计划：设置投放平台</span>	
-	apscommom_cpcBase.deleteCpcPositionControlByRelId	
+1.更新计划表上存储的投放终端信息
+        Map<Long, String> appPositionIdMap = new HashMap();
+        appPositionIdMap.put(100000007L, "keyword");
+        appPositionIdMap.put(100000008L, "category");
+        appPositionIdMap.put(100000009L, "guess");
+        appPositionIdMap.put(100000016L, "guess");
+        appPositionIdMap.put(100000017L, "guess");
+        appPositionIdMap.put(100000018L, "guess");
+
+
+
+``` sql
+	<!-- 删除广告位控制数据 apscommom_cpcBase.deleteCpcPositionControlByRelId -->
+	<sql id="deleteCpcPositionControlByRelId">
+		<![CDATA[	
+			DELETE
+			FROM
+			    T_APS_CPC_POSITION_CONTROL pc
+			WHERE
+			    pc.REL_ID = :relId
+			AND pc.REL_TYPE = :relType
+			AND pc.POSITION_ID = :positionId
+		]]>
+	</sql>
+```
+
+	
 ## <span id="promotionSetThrowTime">计划：设置投放时间</span>	
 	1.更新推广计划属性	
 	2. 设置投放时间
