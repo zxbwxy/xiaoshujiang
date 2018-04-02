@@ -77,7 +77,7 @@ grammar_cjkRuby: true
 ### 修改日限额
 | Index  |  Desc    |
 | ---    | ---   |
-|   URL  |  aps-sale-web/aps/customBudget/cpc_set_daycost.htm?</br>{	promotionId : promotionId,</br>cpcDayAmount: {"defaultUserLimitAmount":1000,"customData":[]}| 
+|   URL  |  查询：aps/customBudget/cpc_daycost_init_data.htm?promotionId=promotionId</br></br>设置：aps-sale-web/aps/customBudget/cpc_set_daycost.htm?</br>{	promotionId : promotionId,</br>cpcDayAmount: {"defaultUserLimitAmount":1000,"customData":[]}| 
 |  TABLE | t_aps_promotion  |
 |   CODE |   [计划查询](#promotionModifyArea) |
 
