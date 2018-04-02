@@ -64,12 +64,11 @@ grammar_cjkRuby: true
 |   CODE |   [计划查询](#promotionModifyHours) |
 
 
-### 修改推广时段
+### 修改定向地域
 | Index  |  Desc    |
 | ---    | ---   |
 |   URL  |  aps/new/cpc/promotion/saveArea.htm?promotionId=16078106&throwArea=10+20| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
-|  TABLE | t_aps_promotion  |
 |   CODE |   [计划查询](#promotionModifyHours) |
 
 ## 3.推广单元--新建
