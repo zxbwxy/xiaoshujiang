@@ -61,7 +61,7 @@ grammar_cjkRuby: true
 |   URL  |  aps-sale-web/aps/new/cpc/promotion/saveHours.htm?promotionId=16078106&throwHours=0+2+3| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
 |  TABLE | t_aps_promotion  |
-|   CODE |   [计划查询](#promotionModifyName) |
+|   CODE |   [计划查询](#promotionModifyHours) |
 
 ## 3.推广单元--新建
 
@@ -614,7 +614,43 @@ UPDATE
 
 ## <span id="promotionModifyHours">计划：修改投放时段</span>
 
-
+	List<CpcPromotionItem> itemList = new ArrayList<CpcPromotionItem>();
+		CpcPromotionItem hourItem = new CpcPromotionItem();
+		hourItem.setItemCode(CpcPromotionItem.TIME_ITEM_CODE);
+		hourItem.setItemValue(hours);//0 3 4 5...
+		hourItem.setPromotionId(pId);
+		itemList.add(hourItem);
+		cpcCommonService.updatePromotionItemList(itemList);
+		
+            //this.dalClient.batchUpdate("apscommom_cpcBase.deletePromotionItemList", (Map[])mapList.toArray(new HashMap[0]));
+            //this.dalClient.batchUpdate("apscommom_cpcBase.insertPromotionItemList", (Map[])mapList.toArray(new HashMap[0]));
+		standPromotionService.sendPromotionData(pId, uId);
+		//获取推广计划信息
+		standardPromotion.getPromotionById
+		 // 更新推广计划变更时间
+		standardPromotion.updatePromotionStatusUpdateTime
+		
+		// 推广计划推广状态不为3直接返回
+		// 如果计划状态为0：余额不足直接返回
+		//
+		int unitsNum = (Integer) promotion.get("UNITS_NUM");
+        if (unitsNum > 0) {
+            // 冻结与实时投放过程
+            try {
+                cpcFreezeRealTimeKafkaService.freezeAndSendUpdatePromotion(promotionId, null);
+            } catch (BaseException ex) {
+                logger.error("cpc冻结与实时投放过程异常，异常原因：{}", ex);
+                if (CpcErrorCode.CPC_PROMOTION_FREEZE_INSUFFICIENT_FAIL_CODE.equals(ex.getCode())) {
+                    // 余额不足异常
+                    // 更新推广计划STATUS为 0暂停
+                    editPromotionStatus(Integer.parseInt(ApsConstants.STATUS_0), promotionId);
+                } else {
+                    // 未知异常继续向上层抛，用于业务回滚
+                    throw ex;
+                }
+            }
+        }
+		
 
 ## <span id="promotionDetail">计划：暂停</span>
 aps/new/cpc_pause_promotion.htm?promotionId=16078106
