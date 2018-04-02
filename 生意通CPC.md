@@ -72,6 +72,16 @@ grammar_cjkRuby: true
 |  TABLE | t_aps_promotion  |
 |   CODE |   [计划查询](#promotionModifyArea) |
 
+
+
+### 修改日限额
+| Index  |  Desc    |
+| ---    | ---   |
+|   URL  |  aps-sale-web/aps/customBudget/cpc_set_daycost.htm?</br>{	promotionId : promotionId,</br>cpcDayAmount: {"defaultUserLimitAmount":1000,"customData":[]}| 
+|   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
+|  TABLE | t_aps_promotion  |
+|   CODE |   [计划查询](#promotionModifyArea) |
+
 ## 3.推广单元--新建
 
 | 选择商品  |  Desc    |
