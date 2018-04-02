@@ -55,6 +55,14 @@ grammar_cjkRuby: true
 |  TABLE | t_aps_promotion  |
 |   CODE |   [计划查询](#promotionModifyName) |
 
+### 修改计划名称
+| Index  |  Desc    |
+| ---    | ---   |
+|   URL  |  aps-sale-web/aps/new/cpc/promotion/saveHours.htm?promotionId=16078106&throwHours=0+2+3| 
+|   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
+|  TABLE | t_aps_promotion  |
+|   CODE |   [计划查询](#promotionModifyName) |
+
 ## 3.推广单元--新建
 
 | 选择商品  |  Desc    |
@@ -604,7 +612,7 @@ UPDATE
     	    	USER_ID = :userId
 ```
 
-
+## <span id="promotionModifyHours">计划：修改投放时段</span>
 
 
 
