@@ -64,7 +64,7 @@ grammar_cjkRuby: true
 |   CODE |   [计划查询](#promotionModifyHours) |
 
 
-### 修改定向投放地域
+### 修改（定向）投放地域
 | Index  |  Desc    |
 | ---    | ---   |
 |   URL  | 列表页： aps/new/cpc/promotion/saveArea.htm?promotionId=16078106&throwArea=10+20</br></br>编辑页：aps/new/cpc_set_throwarea.htm?promotionId=16078106&areaStr=10 20 30| 
