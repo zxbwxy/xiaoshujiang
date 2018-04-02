@@ -582,11 +582,21 @@ standardPromotionService.updateUnitStatus
        paramMap.put("name", name);
         paramMap.put("promotionId", promotionId);
         paramMap.put("userId", userId);
-        String sqlId = "standardPromotion.selectPromotionNameCount";
+standardPromotion.selectPromotionNameCount
 
- paramMap.put("promotionId", promotionId);
-        paramMap.put("name", name);
-        paramMap.put("userId", userId);
+``` java
+SELECT COUNT(1) 
+    		FROM T_APS_PROMOTION 
+    		WHERE NAME = :name 
+    		AND USER_ID = :userId 
+    		AND PAY_TYPE = 2
+    		AND ISACTIVE=1
+    		<#if promotionId?? && promotionId != ''>
+    		AND PROMOTION_ID != :promotionId
+    		</#if>
+```
+
+
 standardPromotion.renamePromotion
 ## <span id="promotionDetail">计划：暂停</span>
 aps/new/cpc_pause_promotion.htm?promotionId=16078106
