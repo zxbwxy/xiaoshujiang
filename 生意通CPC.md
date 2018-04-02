@@ -68,7 +68,7 @@ grammar_cjkRuby: true
 | ---    | ---   |
 |   URL  |aps/save/updateCpcThrowControlByPromotion.htm </br>{</br>promotionId : promotionId,</br>throwDiscount :putDiscount,</br>positionType : app\|hot</br>}| 
 |  TABLE | t_aps_promotion、T_APS_PROMOTION_ITEM(1001)  |
-|   CODE |   [设置投放时间](#promotionSetThrowTime) |
+|   CODE |   [设置投放时间](#promotionSetThrowPlat) |
 
 ### 设置投放时间
 | Index  |  Desc    |
@@ -681,7 +681,8 @@ UPDATE
                 }
             }
         }
-		
+## <span id="promotionSetThrowPlat">计划：设置投放平台</span>	
+	apscommom_cpcBase.deleteCpcPositionControlByRelId	
 ## <span id="promotionSetThrowTime">计划：设置投放时间</span>	
 	1.更新推广计划属性	
 	2. 设置投放时间
