@@ -8,7 +8,8 @@ grammar_cjkRuby: true
 
 
 # 流程
-## 1.推广计划--新建
+## 推广计划
+### 1.新建
 | Index  |  Desc    |
 | ---    | ---   |
 |   URL  |  aps/new/cpc_new_promotion_by_name.htm <br>{	name，dept，startDate}| 
@@ -16,7 +17,7 @@ grammar_cjkRuby: true
 |  TABLE | t_aps_promotion  |
 |   CODE |   [计划新建](#promotionNew) |
 
-## 2.推广计划--查询
+### 2.查询
 | Index  |  Desc    |
 | ---    | ---   |
 |   URL  |  aps/new/cpc_standard_promotion_list.htm| 
@@ -24,14 +25,14 @@ grammar_cjkRuby: true
 |  TABLE | t_aps_promotion  |
 |   CODE |   [计划查询](#promotionList) |
 
-## 2.推广计划--编辑
+### 3.编辑
 | Index  |  Desc    |
 | ---    | ---   |
 |   URL  |  aps-sale-web/aps/new/cpc_promotion_detail.htm?</br>startDate=2018-03-23&endDate=2018-03-23&promotionId=16078106| 
 |   VIEW |  new/cpc/cpc_promotion_detail.ftl --productType=2(生意通)</br>new/cpc_shop/cpc_promotion_shop_detail.ftl--productType=4(CPC店铺推广)|
 |   CODE|   [计划下单元展示](#promotionDetail)   |
 
-## 4.推广计划--暂停
+### 4.暂停
 | Index  |  Desc    |
 | ---    | ---  |
 |   URL  |  /aps/new/cpc_pause_promotion.htm <br>{promotionId }| 
@@ -39,12 +40,20 @@ grammar_cjkRuby: true
 |   CODE |   [暂停推广计划](#promotionPause)   |
 
 
-## 4.推广计划--恢复
+### 恢复
 | Index  |  Desc    |
 | ---    | ---  |
 |   URL  |  aps/new/cpc_resume_promotion.htm?promotionId=<br>{promotionId }| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
 |   CODE |   [恢复推广计划](#promotionResume)   |
+
+### 修改计划名称
+| Index  |  Desc    |
+| ---    | ---   |
+|   URL  |  aps/new/cpc_modify_promotion_name.htm</br>{</br>promotionId : promotionId,</br>	name : name</br>	}| 
+|   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
+|  TABLE | t_aps_promotion  |
+|   CODE |   [计划查询](#promotionList) |
 
 ## 3.推广单元--新建
 
