@@ -675,6 +675,13 @@ UPDATE
             }
         }
 		
+## <span id="promotionSetThrowTime">计划：设置投放时间</span>	
+	1.更新推广计划属性	
+	2. 设置投放时间
+	 开始时间不能修改为小于今天
+     结束时间不能早于当前系统时间
+     晚上8点后再修改的推广计划，结束时间至少是第二天
+   3. 推广计划由等待推广改为正在推广	
 ## <span id="promotionModifyArea">计划：修改定向地域</span>
 
 ``` java
