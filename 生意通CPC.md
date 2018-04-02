@@ -683,22 +683,13 @@ UPDATE
      晚上8点后再修改的推广计划，结束时间至少是第二天
    3. 推广计划由等待推广改为正在推广	
 实时投放，判断是否需要冻结以及发送kafka消息
-   // 存在未删除且正常推广的推广单元
- 
-
-``` java
-   if (ApsConstants.PROMOTION_TYPE_CPC_CPM_3.equals(promotionStatus)) {
-                                // 原本计划就是正在推广状态，直接发送单纯的计划信息修改
-                                cpcFreezeRealTimeKafkaService.freezeAndSendUpdatePromotion(promotionId, null);
-                            } else {
-                                // 如果原计划为等待推广，由于改变开始时间，导致变更成了正在推广状态，发送计划下的全部单元数据的实时投放消息
-                                cpcFreezeRealTimeKafkaService.freezeAndSendUpdatePromotionWithAllUnit(promotionId,
-                                        null);
-                            }
-                            // 更新推广计划STATUS为 1正常
-                            editPromotionStatus(Integer.valueOf(ApsConstants.STATUS_1), promotionId);
-```
-
+存在未删除且正常推广的推广单元
+原本计划就是正在推广状态，直接发送单纯的计划信息修改
+cpcFreezeRealTimeKafkaService.freezeAndSendUpdatePromotion(promotionId, null);
+如果原计划为等待推广，由于改变开始时间，导致变更成了正在推广状态，发送计划下的全部单元数据的实时投放消息
+cpcFreezeRealTimeKafkaService.freezeAndSendUpdatePromotionWithAllUnit(promotionId, null);
+ 更新推广计划STATUS为 1正常
+editPromotionStatus(Integer.valueOf(ApsConstants.STATUS_1), promotionId);
 
 
 ## <span id="promotionModifyArea">计划：修改定向地域</span>
