@@ -8,21 +8,28 @@ grammar_cjkRuby: true
 
 
 # 流程
-## 1.新建推广计划
+## 1.推广计划--新建
 | Index  |  Desc    |
 | ---    | ---   |
 |   URL  |  aps/new/cpc_new_promotion_by_name.htm <br>{	name，dept，startDate}| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
 |  TABLE | t_aps_promotion  |
-|   CODE |   [新建计划](#newPromotion) |
-## 2.计划下的推广单元展示
+|   CODE |   [计划新建](#newPromotion) |
+## 2.推广单元--展示
 | Index  |  Desc    |
 | ---    | ---   |
 |   URL  |  aps-sale-web/aps/new/cpc_promotion_detail.htm?</br>startDate=2018-03-23&endDate=2018-03-23&promotionId=16078106| 
 |   VIEW |  new/cpc/cpc_promotion_detail.ftl --productType=2(生意通)</br>new/cpc_shop/cpc_promotion_shop_detail.ftl--productType=4(CPC店铺推广)|
 |   CODE |   [计划下单元展示](#promotionDetail)   |
 
-## 3.新建推广单元
+## 4.推广计划--暂停
+| Index  |  Desc    |
+| ---    | ---  |
+|   URL  |  /aps/new/cpc_pause_promotion.htm <br>{promotionId }| 
+|   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
+|   CODE |   [暂停推广计划](#pausePromotion)   |
+
+## 3.推广单元--新建
 
 | 选择商品  |  Desc    |
 | ---    | ---   |
@@ -41,7 +48,7 @@ grammar_cjkRuby: true
 |  TABLE | t_aps_promotion  |
 |   CODE |   [新建推广单元](#newPromotionUnit) |
 
-
+## 3.推广单元--删除
 | 删除推广单元  |  Desc    |
 | ---    | ---   |
 |   URL  |  /aps-sale-web/aps/new/cpc_delete_promotion_unit.htm</br>$.param({</br>	promotionId : '16078106',</br>	unitId : unitId</br>	}| 
@@ -50,13 +57,6 @@ grammar_cjkRuby: true
 
 
 
-
-## 4.暂停推广计划
-| Index  |  Desc    |
-| ---    | ---  |
-|   URL  |  /aps/new/cpc_pause_promotion.htm <br>{promotionId }| 
-|   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
-|   CODE |   [暂停推广计划](#pausePromotion)   |
 
 
 
