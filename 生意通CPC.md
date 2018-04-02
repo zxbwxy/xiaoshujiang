@@ -64,10 +64,10 @@ grammar_cjkRuby: true
 |   CODE |   [计划查询](#promotionModifyHours) |
 
 
-### 修改定向地域
+### 修改定向投放地域
 | Index  |  Desc    |
 | ---    | ---   |
-|   URL  |  aps/new/cpc/promotion/saveArea.htm?promotionId=16078106&throwArea=10+20| 
+|   URL  |  aps/new/cpc/promotion/saveArea.htm?promotionId=16078106&throwArea=10+20</br>aps/new/cpc_set_throwarea.htm?promotionId=16078106&areaStr=10 20 30| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
 |  TABLE | t_aps_promotion、T_APS_PROMOTION_ITEM(1002)   |
 |   CODE |   [修改定向地域](#promotionModifyArea) |
@@ -754,12 +754,45 @@ sqlId:cpcDayAmount.batchInsertDayAmout
  if (costOver > 0) {
     // 如果日预算耗尽，修改日预算则发送推广单元数据
     cpcFreezeRealTimeKafkaService.freezeAndSendUpdatePromotionWithAllUnit(promotionId, null);
+    apscommom_cpcBase.queryPromotionByPromotionId
+    apscommom_cpcDayAmount.getDefaultUserLimitAmount --默认日预算-T_APS_PROMOTION.USER_LIMIT_AMOUNT
+    apscommom_cpcKafka.getAllUnitIdInPromotion
 } else {
    // 如果日预算未耗尽，则只发送推广计划数据
    cpcFreezeRealTimeKafkaService.freezeAndSendUpdatePromotion(promotionId, null);
 }
 ```
 根据推广计划ID删除点爆表中的记录
+
+注：冻结流程??
+   日限额=个性化日限额？个性化日预算：默认日预算、
+   
+sqlId:apscommom_cpcFreeze.getPromotionUserAccount
+   	<!-- 查询广告主资金账户信息 -->
+	<sql id="getPromotionUserAccount">
+    	<![CDATA[
+    	    SELECT * FROM T_APS_ACCOUNT WHERE  USER_TYPE = '0' AND USER_ID = :userId
+    	]]>
+	</sql>
+     paramMap.put("promotionId", promotionId);
+     paramMap.put("accountId", account.getAccountId());
+     paramMap.put("freezeDay", freezeDay);
+sqlId: apscommom_cpcFreeze.getPromotionFreezeInfo
+   	<!-- 查询指定日期的推广计划冻结数据 -->
+	<sql id="getPromotionFreezeInfo">
+		<![CDATA[	
+			SELECT
+				fu.FREEZE_UNBIND_ID "freezeUnbindId",
+			    fu.LEFT_FE_AMOUNT "leftFeAmount"
+			FROM
+			    APSADMIN.T_APS_FREEZE_UNBIND fu
+			WHERE
+			    fu.TYPE = 3
+			AND fu.PROMOTION_DATE = :freezeDay
+			AND fu.ACCOUNT_ID = :accountId
+			AND fu.PROMOTION_ID = :promotionId
+		]]>
+	</sql>
 
         
 ## <span id="promotionDetail">计划：暂停</span>
