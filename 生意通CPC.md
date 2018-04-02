@@ -89,7 +89,7 @@ grammar_cjkRuby: true
 ----------
 
 # 备忘
-## <span id="newPromotion">新建推广计划</span>
+## <span id="promotionNew">新建推广计划</span>
 
 最低价：系统参数KEYWORD_DAY_LOWER_PRICE
 USER_TYPE==1 设置事业部编码 默认0
