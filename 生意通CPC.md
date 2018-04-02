@@ -759,14 +759,8 @@ sqlId:cpcDayAmount.batchInsertDayAmout
    cpcFreezeRealTimeKafkaService.freezeAndSendUpdatePromotion(promotionId, null);
 }
 ```
-
-
 根据推广计划ID删除点爆表中的记录
 
-
-设置：aps-sale-web/aps/customBudget/cpc_set_daycost.htm?
-{	promotionId : promotionId,
-cpcDayAmount: {“defaultUserLimitAmount”:1000,“customData”:[]}
         
 ## <span id="promotionDetail">计划：暂停</span>
 aps/new/cpc_pause_promotion.htm?promotionId=16078106
