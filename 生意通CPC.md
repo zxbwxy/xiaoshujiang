@@ -63,6 +63,13 @@ grammar_cjkRuby: true
 |  TABLE | t_aps_promotion、T_APS_PROMOTION_ITEM(1001)  |
 |   CODE |   [修改推广时段](#promotionModifyHours) |
 
+### 设置投放平台
+| Index  |  Desc    |
+| ---    | ---   |
+|   URL  |aps/new/cpc_set_throwtime.htm </br>{</br>promotionId : 16078106,</br>throwDiscount :putDiscount,</br>positionType : app||hot</br>}| 
+|  TABLE | t_aps_promotion、T_APS_PROMOTION_ITEM(1001)  |
+|   CODE |   [设置投放时间](#promotionSetThrowTime) |
+
 ### 设置投放时间
 | Index  |  Desc    |
 | ---    | ---   |
