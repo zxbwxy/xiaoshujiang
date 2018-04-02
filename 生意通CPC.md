@@ -79,7 +79,7 @@ grammar_cjkRuby: true
 | ---    | ---   |
 |   URL  |  查询：aps/customBudget/cpc_daycost_init_data.htm?promotionId=promotionId</br></br>设置：aps-sale-web/aps/customBudget/cpc_set_daycost.htm?</br>{	promotionId : promotionId,</br>cpcDayAmount: {"defaultUserLimitAmount":1000,"customData":[]}| 
 |  TABLE | t_aps_promotion  |
-|   CODE |   [修改日限额](#promotionModifyArea) |
+|   CODE |   [修改日限额](#promotionModifyDayCost) |
 
 ## 3.推广单元--新建
 
@@ -685,8 +685,8 @@ UPDATE
 ```
 
 
+## <span id="promotionModifyDayCost">计划：修改日限额</span>
 查询：aps/customBudget/cpc_daycost_init_data.htm?promotionId=promotionId
-
 设置：aps-sale-web/aps/customBudget/cpc_set_daycost.htm?
 {	promotionId : promotionId,
 cpcDayAmount: {“defaultUserLimitAmount”:1000,“customData”:[]}
