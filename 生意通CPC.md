@@ -23,12 +23,13 @@ grammar_cjkRuby: true
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
 |  TABLE | t_aps_promotion  |
 |   CODE |   [计划查询](#promotionList) |
+
 ## 2.推广计划--编辑
 | Index  |  Desc    |
 | ---    | ---   |
 |   URL  |  aps-sale-web/aps/new/cpc_promotion_detail.htm?</br>startDate=2018-03-23&endDate=2018-03-23&promotionId=16078106| 
 |   VIEW |  new/cpc/cpc_promotion_detail.ftl --productType=2(生意通)</br>new/cpc_shop/cpc_promotion_shop_detail.ftl--productType=4(CPC店铺推广)|
-|   CODE |   [计划下单元展示](#promotionDetail)   |
+|   CODE|   [计划下单元展示](#promotionDetail)   |
 
 ## 4.推广计划--暂停
 | Index  |  Desc    |
@@ -38,7 +39,7 @@ grammar_cjkRuby: true
 |   CODE |   [暂停推广计划](#promotionPause)   |
 
 
-## 4.推广计划--开始
+## 4.推广计划--恢复
 | Index  |  Desc    |
 | ---    | ---  |
 |   URL  |  aps/new/cpc_resume_promotion.htm?promotionId=<br>{promotionId }| 
@@ -51,25 +52,25 @@ grammar_cjkRuby: true
 | ---    | ---   |
 |   URL  |  aps-sale-web/new/unit/selectProduct.htm?promotionId=16078106| 
 |   VIEW |  /new/cpc/cpc_unit_select_product.ftl|
-|   CODE |   [新建推广单元](#newPromotionUnit) |
+|   CODE |   [新建推广单元](#unitNew) |
 |    *  |
 | **选择商品图片**    |  **Desc**    |
 |   URL  |  aps-sale-web/new/unit/selectProduct.htm?promotionId=16078106| 
 |   VIEW |  /new/cpc/cpc_unit_select_picture.ftl|
-|   CODE |   [新建推广单元](#newPromotionUnit) |
+|   CODE |   [新建推广单元](#unitNew) |
 |    *  |
 | **设置投放位置**    |  **Desc**    |
 |   URL  | aps-sale-web/new/unit/selectKeywordAndCatalog.htm?imgIndex=2&promotionId=16078106&productNum=000000011051101634&src=| 
 |   VIEW |  /new/cpc/cpc_unit_select_keyword.ftl|
 |  TABLE | t_aps_promotion  |
-|   CODE |   [新建推广单元](#newPromotionUnit) |
+|   CODE |   [新建推广单元](#unitNew) |
 
 ## 3.推广单元--删除
 | 删除推广单元  |  Desc    |
 | ---    | ---   |
 |   URL  |  /aps-sale-web/aps/new/cpc_delete_promotion_unit.htm</br>$.param({</br>	promotionId : '16078106',</br>	unitId : unitId</br>	}| 
 |   VIEW |  /new/cpc/cpc_unit_select_product.ftl|
-|   CODE |   [新建推广单元](#newPromotionUnit) |
+|   CODE |   [新建推广单元](#unitDel) |
 
 
 
@@ -113,7 +114,7 @@ sqlId: standardPromotion.createPromotion   **T_APS_PROMOTION**
 
 
 ---------
-## <span id="promotionNew">新建推广单元</span>
+## <span id="unitNew">新建推广单元</span>
 一.选择商品
 {promotionId=16078106,  userType=1, supplierType=C, shopId=0070057240, searchUrl=http://csearchpre.cnsuning.com/emall/cshop/queryByKeyword.do, 
 productPicUrl=http://uimgpre.cnsuning.com,
