@@ -579,11 +579,9 @@ standardPromotionService.updateUnitStatus
                         }
 
 ## <span id="promotionModifyName">计划：修改推广名称</span>
-       paramMap.put("name", name);
-        paramMap.put("promotionId", promotionId);
-        paramMap.put("userId", userId);
-standardPromotion.selectPromotionNameCount
-
+入参：{name=newPromotionName, userId=429004445, promotionId=16078106}
+sqlId：standardPromotion.selectPromotionNameCount
+sqlId：standardPromotion.renamePromotion
 ``` java
 SELECT COUNT(1) 
     		FROM T_APS_PROMOTION 
@@ -594,10 +592,22 @@ SELECT COUNT(1)
     		<#if promotionId?? && promotionId != ''>
     		AND PROMOTION_ID != :promotionId
     		</#if>
+    		
+UPDATE 
+    	    	T_APS_PROMOTION 
+    	    SET 
+    	    	name = :name, 
+    	    	UPDATE_DATE = CURRENT TIMESTAMP 
+    	    WHERE 
+    	    	PROMOTION_ID = :promotionId 
+    	    AND 
+    	    	USER_ID = :userId
 ```
 
 
-standardPromotion.renamePromotion
+
+
+
 ## <span id="promotionDetail">计划：暂停</span>
 aps/new/cpc_pause_promotion.htm?promotionId=16078106
 ## <span id="promotionDetail">关联推广单元</span>
