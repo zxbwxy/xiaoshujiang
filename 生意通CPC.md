@@ -52,7 +52,7 @@ grammar_cjkRuby: true
 | ---    | ---   |
 |   URL  |  aps/new/cpc_modify_promotion_name.htm</br>{</br>promotionId : promotionId,</br>	name : name</br>	}| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
-|  TABLE | t_aps_promotion、T_APS_PROMOTION_ITEM(1002)  |
+|  TABLE | t_aps_promotion |
 |   CODE |   [计划查询](#promotionModifyName) |
 
 ### 修改推广时段
@@ -69,7 +69,7 @@ grammar_cjkRuby: true
 | ---    | ---   |
 |   URL  |  aps/new/cpc/promotion/saveArea.htm?promotionId=16078106&throwArea=10+20| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
-|  TABLE | t_aps_promotion  |
+|  TABLE | t_aps_promotion、T_APS_PROMOTION_ITEM(1002)   |
 |   CODE |   [修改定向地域](#promotionModifyArea) |
 
 
