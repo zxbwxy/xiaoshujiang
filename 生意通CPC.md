@@ -390,7 +390,7 @@ proUnit.persistCpcDetailNew INSERT	INTO T_APS_PROMOTION_CPC_DETAIL
 			
 
 ---------
-## <span id="promotionDetail">开始推广</span>
+## <span id="promotionDetail">计划：开始推广</span>
 aps/new/cpc_resume_promotion.htm?promotionId=16078106
 standardPromotion.getPromotionListByIds
 
@@ -553,7 +553,7 @@ standardPromotionService.updateUnitStatus
                         }
 
 
-2.暂停推广
+## <span id="promotionDetail">计划：暂停</span>
 aps/new/cpc_pause_promotion.htm?promotionId=16078106
 ## <span id="promotionDetail">关联推广单元</span>
 1.获取推广计划信息
