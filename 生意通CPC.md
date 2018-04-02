@@ -744,8 +744,24 @@ cpcNowRealCost + maxDayCostIntervalPrice[CPC推广计划实时消耗金额上浮
 			WHERE PROMOTION_ID = :PROMOTION_ID
 ```
 更新每日日预算表
+sqlId:cpcDayAmount.delDayAmoutByPromotionIDs (PROMOTION_DATE >= CURRENT DATE)
+sqlId:cpcDayAmount.batchInsertDayAmout
+
+推广计划为正在推广，推广计划有正常推广的推广单元，并且不是余额不足状态，执行冻结操作
+推广计划是否点爆
+
+``` java
+ if (costOver > 0) {
+    // 如果日预算耗尽，修改日预算则发送推广单元数据
+    cpcFreezeRealTimeKafkaService.freezeAndSendUpdatePromotionWithAllUnit(promotionId, null);
+} else {
+   // 如果日预算未耗尽，则只发送推广计划数据
+   cpcFreezeRealTimeKafkaService.freezeAndSendUpdatePromotion(promotionId, null);
+}
+```
 
 
+根据推广计划ID删除点爆表中的记录
 
 
 设置：aps-sale-web/aps/customBudget/cpc_set_daycost.htm?
