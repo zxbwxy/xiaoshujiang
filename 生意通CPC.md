@@ -722,6 +722,29 @@ UPDATE
 			AND p.PROMOTION_DATE = :promotionDate
 ```
 cpcNowRealCost + maxDayCostIntervalPrice[CPC推广计划实时消耗金额上浮区间（单位分）]:系统配置 MAX_CPC_DAYCOST_INTERVAL_PRICE
+4.校验通过：
+更新推广计划日预算 -1：失败；0：成功
+
+``` sql
+			UPDATE T_APS_PROMOTION SET
+				NAME = :NAME, 
+				PAY_TYPE = :PAY_TYPE, 
+				PROMOTION_STATUS = :PROMOTION_STATUS, 
+				STATUS = :STATUS, 
+				TOTAL_DAYS = :TOTAL_DAYS, 
+				TOTAL_AMOUNT = :TOTAL_AMOUNT, 
+				DEPARTMENT_ID = :DEPARTMENT_ID, 
+				CREATE_DATE = :CREATE_DATE, 
+				UPDATE_DATE = CURRENT TIMESTAMP, 
+				STATUS_UPDATE_TIME = CURRENT TIMESTAMP, 
+				PRODUCT_TYPE = :PRODUCT_TYPE, 
+				USER_LIMIT_AMOUNT = <#if USER_LIMIT_AMOUNT??>:USER_LIMIT_AMOUNT<#else>NULL</#if>, 
+				START_DATE = <#if START_DATE?? && START_DATE != ''>:START_DATE<#else>NULL</#if>,
+				END_DATE = <#if END_DATE?? && END_DATE != ''>:END_DATE<#else>NULL</#if>
+			WHERE PROMOTION_ID = :PROMOTION_ID
+```
+更新每日日预算表
+
 
 
 
@@ -973,12 +996,12 @@ t_cpc_promotion_hour_7day、_15day
 ## <span id="promotionDetail">推广单元报表</span>
 
 
-| Name  | Desc    |
-| --- | --- |
-| T_APS_KEYWORD_PAGE_REL |     |
-|     |     |
-|     |     |
-|     |     |
+T_APS_PROMOTION_CUSTOM_BUDGET
+CPC个性化日预算表（指定计划某一天的日预算）
+
+T_APS_PROMOTION_ITEM
+推广计划属性表
+
 
 ![推广计划][2]
 
