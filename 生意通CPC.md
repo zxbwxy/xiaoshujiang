@@ -67,7 +67,7 @@ grammar_cjkRuby: true
 ### 修改定向投放地域
 | Index  |  Desc    |
 | ---    | ---   |
-|   URL  |  aps/new/cpc/promotion/saveArea.htm?promotionId=16078106&throwArea=10+20</br>aps/new/cpc_set_throwarea.htm?promotionId=16078106&areaStr=10 20 30| 
+|   URL  | 列表页： aps/new/cpc/promotion/saveArea.htm?promotionId=16078106&throwArea=10+20</br></br>编辑页：aps/new/cpc_set_throwarea.htm?promotionId=16078106&areaStr=10 20 30| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
 |  TABLE | t_aps_promotion、T_APS_PROMOTION_ITEM(1002)   |
 |   CODE |   [修改定向地域](#promotionModifyArea) |
