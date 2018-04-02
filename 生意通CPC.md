@@ -716,6 +716,37 @@ UPDATE
 	</sql>
 ```
 
+``` sql
+<!-- 新建广告位控制数据 apscommom_cpcBase.insertCpcPositionControl -->
+	<sql id="insertCpcPositionControl">
+		<![CDATA[	
+			INSERT
+			INTO
+			    T_APS_CPC_POSITION_CONTROL
+			    (
+			        ID,
+			        REL_ID,
+			        REL_TYPE,
+			        POSITION_ID,
+			        CONTROL_FLAG,
+			        DISCOUNT,
+			        CREATE_DT
+			    )
+			    VALUES
+			    (
+			        nextval FOR SEQ_T_APS_CPC_POSITION_CR,
+			        :relId,
+			        :relType,
+			        :positionId,
+			        :controlFlag,
+			        :discount,
+			        SYSDATE
+			    )
+		]]>
+	</sql>
+```
+
+
 	
 ## <span id="promotionSetThrowTime">计划：设置投放时间</span>	
 	1.更新推广计划属性	
