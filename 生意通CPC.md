@@ -15,7 +15,15 @@ grammar_cjkRuby: true
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
 |  TABLE | t_aps_promotion  |
 |   CODE |   [计划新建](#promotionNew) |
-## 2.推广单元--展示
+
+## 2.推广计划--查询
+| Index  |  Desc    |
+| ---    | ---   |
+|   URL  |  aps/new/cpc_standard_promotion_list.htm| 
+|   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
+|  TABLE | t_aps_promotion  |
+|   CODE |   [计划查询](#promotionList) |
+## 2.推广计划--编辑
 | Index  |  Desc    |
 | ---    | ---   |
 |   URL  |  aps-sale-web/aps/new/cpc_promotion_detail.htm?</br>startDate=2018-03-23&endDate=2018-03-23&promotionId=16078106| 
@@ -27,7 +35,7 @@ grammar_cjkRuby: true
 | ---    | ---  |
 |   URL  |  /aps/new/cpc_pause_promotion.htm <br>{promotionId }| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
-|   CODE |   [暂停推广计划](#promotion_pause)   |
+|   CODE |   [暂停推广计划](#promotionPause)   |
 
 ## 3.推广单元--新建
 
@@ -97,7 +105,7 @@ sqlId: standardPromotion.createPromotion   **T_APS_PROMOTION**
 
 
 ---------
-## <span id="newPromotionUnit">新建推广单元</span>
+## <span id="promotionNew">新建推广单元</span>
 一.选择商品
 {promotionId=16078106,  userType=1, supplierType=C, shopId=0070057240, searchUrl=http://csearchpre.cnsuning.com/emall/cshop/queryByKeyword.do, 
 productPicUrl=http://uimgpre.cnsuning.com,
@@ -649,7 +657,7 @@ sqlId: standardPromotion.getPromotionUnitCount、standardPromotion.getPromotionU
 
 
 
-## <span id="promotion_report">商品推广&& 店铺推广列表</span>
+## <span id="promotionList">商品推广&& 店铺推广列表</span>
 
 首页：
 推广基本信息+商品点击等数据(调接口)
