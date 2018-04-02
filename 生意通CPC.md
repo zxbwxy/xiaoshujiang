@@ -689,6 +689,7 @@ UPDATE
 查询：aps/customBudget/cpc_daycost_init_data.htm?promotionId=promotionId
 
 ``` sql
+--cpcDayAmount.getDayAmountByPromotionID
 		SELECT
 				SUBSTR(PROMOTION_DATE,1,10) AS date ,
 				USER_LIMIT_AMOUNT AS userLimitAmount
