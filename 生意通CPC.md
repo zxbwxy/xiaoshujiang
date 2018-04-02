@@ -66,7 +66,7 @@ grammar_cjkRuby: true
 ### 设置投放平台
 | Index  |  Desc    |
 | ---    | ---   |
-|   URL  |aps/new/cpc_set_throwtime.htm </br>{</br>promotionId : promotionId,</br>throwDiscount :putDiscount,</br>positionType : app\|hot</br>}| 
+|   URL  |aps/save/updateCpcThrowControlByPromotion.htm </br>{</br>promotionId : promotionId,</br>throwDiscount :putDiscount,</br>positionType : app\|hot</br>}| 
 |  TABLE | t_aps_promotion、T_APS_PROMOTION_ITEM(1001)  |
 |   CODE |   [设置投放时间](#promotionSetThrowTime) |
 
