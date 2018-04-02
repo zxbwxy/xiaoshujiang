@@ -78,7 +78,6 @@ grammar_cjkRuby: true
 | Index  |  Desc    |
 | ---    | ---   |
 |   URL  |  aps-sale-web/aps/customBudget/cpc_set_daycost.htm?</br>{	promotionId : promotionId,</br>cpcDayAmount: {"defaultUserLimitAmount":1000,"customData":[]}| 
-|   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
 |  TABLE | t_aps_promotion  |
 |   CODE |   [计划查询](#promotionModifyArea) |
 
