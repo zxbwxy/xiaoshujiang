@@ -14,7 +14,7 @@ grammar_cjkRuby: true
 |   URL  |  aps/new/cpc_new_promotion_by_name.htm <br>{	name，dept，startDate}| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
 |  TABLE | t_aps_promotion  |
-|   CODE |   [计划新建](#newPromotion) |
+|   CODE |   [计划新建](#promotionNew) |
 ## 2.推广单元--展示
 | Index  |  Desc    |
 | ---    | ---   |
