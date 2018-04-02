@@ -687,6 +687,28 @@ UPDATE
 
 ## <span id="promotionModifyDayCost">计划：修改日限额</span>
 查询：aps/customBudget/cpc_daycost_init_data.htm?promotionId=promotionId
+
+``` sql
+		SELECT
+				SUBSTR(PROMOTION_DATE,1,10) AS date ,
+				USER_LIMIT_AMOUNT AS userLimitAmount
+			FROM
+					APSADMIN.T_APS_PROMOTION_CUSTOM_BUDGET b--特殊日预算集合
+
+			WHERE
+				b.PROMOTION_ID=:promotionId
+-----------------------------------------------	
+--standardPromotion.queryPromotion
+	    	    SELECT
+			    USER_LIMIT_AMOUNT--默认日预算
+			FROM
+			    T_APS_PROMOTION
+			WHERE
+			    PROMOTION_ID = :PROMOTION_ID
+```
+
+
+
 设置：aps-sale-web/aps/customBudget/cpc_set_daycost.htm?
 {	promotionId : promotionId,
 cpcDayAmount: {“defaultUserLimitAmount”:1000,“customData”:[]}
