@@ -69,7 +69,8 @@ grammar_cjkRuby: true
 | ---    | ---   |
 |   URL  |  aps/new/cpc/promotion/saveArea.htm?promotionId=16078106&throwArea=10+20| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
-|   CODE |   [计划查询](#promotionModifyHours) |
+|  TABLE | t_aps_promotion  |
+|   CODE |   [计划查询](#promotionModifyArea) |
 
 ## 3.推广单元--新建
 
@@ -659,7 +660,24 @@ UPDATE
             }
         }
 		
+## <span id="promotionModifyArea">计划：修改定向地域</span>
 
+``` java
+        CpcPromotionItem cpi = new CpcPromotionItem();
+        cpi.setPromotionId(promotionId);
+        cpi.setItemCode(CpcPromotionItem.AREA_ITEM_CODE：1002);
+        cpi.setItemValue(areaStr);
+        cpcCommonService.updatePromotionItem(cpi);
+        
+        apscommom_cpcBase.deletePromotionItemList
+        apscommom_cpcBase.insertPromotionItemList
+
+        // 发送消息到kafka
+        sendPromotionData(promotionId, userId);
+
+```
+
+        
 ## <span id="promotionDetail">计划：暂停</span>
 aps/new/cpc_pause_promotion.htm?promotionId=16078106
 ## <span id="promotionDetail">关联推广单元</span>
