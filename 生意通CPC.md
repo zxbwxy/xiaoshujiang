@@ -66,7 +66,7 @@ grammar_cjkRuby: true
 ### 设置推广时间
 | Index  |  Desc    |
 | ---    | ---   |
-|   URL  |aps/new/cpc_set_throwtime.htm'| 
+|   URL  |aps/new/cpc_set_throwtime.htm </br>{</br>promotionId : 16078106,</br>startDate : 2018-03-24,</br>endDate : 2018-04-20,</br>slotArr :0 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23</br>}| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
 |  TABLE | t_aps_promotion、T_APS_PROMOTION_ITEM(1001)  |
 |   CODE |   [设置推广时间](#promotionSetThrowTime) |
