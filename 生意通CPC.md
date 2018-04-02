@@ -683,6 +683,8 @@ UPDATE
         }
 ## <span id="promotionSetThrowPlat">计划：设置投放平台</span>	
 1.更新计划表上存储的投放终端信息
+
+``` java
         Map<Long, String> appPositionIdMap = new HashMap();
         appPositionIdMap.put(100000007L, "keyword");
         appPositionIdMap.put(100000008L, "category");
@@ -690,6 +692,12 @@ UPDATE
         appPositionIdMap.put(100000016L, "guess");
         appPositionIdMap.put(100000017L, "guess");
         appPositionIdMap.put(100000018L, "guess");
+        Map<Long, String> hotPositionIdMap = new HashMap();
+        hotPositionIdMap.put(100000002L, "keyword");
+        hotPositionIdMap.put(100000003L, "category");
+```
+![enter description here](https://i.loli.net/2018/04/02/5ac219dcac823.jpg)
+
 
 
 
