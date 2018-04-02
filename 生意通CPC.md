@@ -37,6 +37,14 @@ grammar_cjkRuby: true
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
 |   CODE |   [暂停推广计划](#promotionPause)   |
 
+
+## 4.推广计划--开始
+| Index  |  Desc    |
+| ---    | ---  |
+|   URL  |  aps/new/cpc_resume_promotion.htm?promotionId=<br>{promotionId }| 
+|   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
+|   CODE |   [恢复推广计划](#promotionResume)   |
+
 ## 3.推广单元--新建
 
 | 选择商品  |  Desc    |
@@ -398,7 +406,7 @@ proUnit.persistCpcDetailNew INSERT	INTO T_APS_PROMOTION_CPC_DETAIL
 			
 
 ---------
-## <span id="promotionDetail">计划：开始推广</span>
+## <span id="promotionResume">计划：开始推广</span>
 aps/new/cpc_resume_promotion.htm?promotionId=16078106
 standardPromotion.getPromotionListByIds
 
