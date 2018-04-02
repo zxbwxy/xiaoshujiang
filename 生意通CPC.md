@@ -53,7 +53,7 @@ grammar_cjkRuby: true
 |   URL  |  aps/new/cpc_modify_promotion_name.htm</br>{</br>promotionId : promotionId,</br>	name : name</br>	}| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
 |  TABLE | t_aps_promotion  |
-|   CODE |   [计划查询](#promotionList) |
+|   CODE |   [计划查询](#promotionModifyName) |
 
 ## 3.推广单元--新建
 
@@ -578,7 +578,7 @@ standardPromotionService.updateUnitStatus
                                     promotionId, productType);
                         }
 
-
+## <span id="promotionResume">计划：修改推广名称</span>
 ## <span id="promotionDetail">计划：暂停</span>
 aps/new/cpc_pause_promotion.htm?promotionId=16078106
 ## <span id="promotionDetail">关联推广单元</span>
