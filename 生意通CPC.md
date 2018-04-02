@@ -67,7 +67,7 @@ grammar_cjkRuby: true
 ### 修改推广时段
 | Index  |  Desc    |
 | ---    | ---   |
-|   URL  |  aps-sale-web/aps/new/cpc/promotion/saveHours.htm?promotionId=16078106&throwHours=0+2+3| 
+|   URL  |  aps/new/cpc/promotion/saveArea.htm?promotionId=16078106&throwArea=10+20| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
 |  TABLE | t_aps_promotion  |
 |   CODE |   [计划查询](#promotionModifyHours) |
