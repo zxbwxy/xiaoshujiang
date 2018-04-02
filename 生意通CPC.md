@@ -69,7 +69,7 @@ grammar_cjkRuby: true
 |   URL  |aps/new/cpc_set_throwtime.htm'| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
 |  TABLE | t_aps_promotion、T_APS_PROMOTION_ITEM(1001)  |
-|   CODE |   [计划查询](#promotionSetThrowTime) |
+|   CODE |   [设置推广时间](#promotionSetThrowTime) |
 
 ### 修改（定向）投放地域
 | Index  |  Desc    |
