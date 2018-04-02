@@ -77,7 +77,7 @@ grammar_cjkRuby: true
 ### 修改日限额
 | Index  |  Desc    |
 | ---    | ---   |
-|   URL  |  查询：aps/customBudget/cpc_daycost_init_data.htm?promotionId=promotionId</br></br>设置：aps-sale-web/aps/customBudget/cpc_set_daycost.htm?</br>{	promotionId : promotionId,</br>cpcDayAmount: {"defaultUserLimitAmount":1000,"customData":[]}| 
+|   URL  |  查询：aps/customBudget/cpc_daycost_init_data.htm?promotionId=promotionId</br></br>设置：aps-sale-web/aps/customBudget/cpc_set_daycost.htm?</br>{	promotionId : promotionId,</br>cpcDayAmount: {"defaultUserLimitAmount":1000,"customData"::[{"date":"2018-04-02","userLimitAmount":1200},{"date":"2018-04-03","userLimitAmount":1300},{"date":"2018-04-04","userLimitAmount":1400}]}| 
 |  TABLE | t_aps_promotion  |
 |   CODE |   [修改日限额](#promotionModifyDayCost) |
 
@@ -1000,7 +1000,9 @@ T_APS_PROMOTION_CUSTOM_BUDGET
 CPC个性化日预算表（指定计划某一天的日预算）
 
 T_APS_PROMOTION_ITEM
-推广计划属性表
+推广计划属性表[投放时段（1001）、定向地域（1002）]
+
+
 
 
 ![推广计划][2]
