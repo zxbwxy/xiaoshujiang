@@ -133,7 +133,7 @@ grammar_cjkRuby: true
 | ---    | ---   |
 |   URL  |  /aps-sale-web/aps/new/cpc_delete_promotion_unit.htm</br>$.param({</br>	promotionId : '16078106',</br>	unitId : unitId</br>	}| 
 |   VIEW |  /new/cpc/cpc_unit_select_product.ftl|
-|   CODE |   [新建推广单元](#unitDel) |
+|   CODE |   [开始推广单元](#unitStart) |
 
 
 
