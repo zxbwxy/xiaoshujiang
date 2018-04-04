@@ -140,7 +140,6 @@ grammar_cjkRuby: true
 | 编辑推广单元  |  Desc    |
 | ---    | ---   |
 |   URL  |  aps/new/cpc_pause_promotion_unit.htm?promotionId=16078106&unitId=16105314| 
-|   VIEW |  /new/cpc/cpc_unit_select_product.ftl|
 |   CODE |   [开始推广单元](#unitStart) |
 
 
