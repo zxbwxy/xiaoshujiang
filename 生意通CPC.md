@@ -139,7 +139,7 @@ grammar_cjkRuby: true
 ### 开始
 | 编辑推广单元  |  Desc    |
 | ---    | ---   |
-|   URL  |  /aps-sale-web/aps/new/cpc_delete_promotion_unit.htm</br>$.param({</br>	promotionId : '16078106',</br>	unitId : unitId</br>	}| 
+|   URL  |  aps/new/cpc_pause_promotion_unit.htm?promotionId=16078106&unitId=16105314| 
 |   VIEW |  /new/cpc/cpc_unit_select_product.ftl|
 |   CODE |   [开始推广单元](#unitStart) |
 
