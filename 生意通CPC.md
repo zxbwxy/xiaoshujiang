@@ -1041,6 +1041,7 @@ sqlId: standardPromotion.getPromotionUnitCount、standardPromotion.getPromotionU
 
 4.暂停一键推广中的商品
 T_APS_PROMOTION_CPC.PRODUCT_TYPE=5
+T_APS_PROMOTION_CPC.GOODS_CODE
 
 5.记录用户操作日志
 
