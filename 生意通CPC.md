@@ -30,7 +30,7 @@ grammar_cjkRuby: true
 | ---    | ---   |
 |   URL  |  aps-sale-web/aps/new/cpc_promotion_detail.htm?</br>startDate=2018-03-23&endDate=2018-03-23&promotionId=16078106| 
 |   VIEW |  new/cpc/cpc_promotion_detail.ftl --productType=2(生意通)</br>new/cpc_shop/cpc_promotion_shop_detail.ftl--productType=4(CPC店铺推广)|
-|   CODE|   [计划下单元展示](#promotionDetail)   |
+|   CODE |   [计划下单元展示](#promotionDetail)   |
 
 ### 4.暂停
 | Index  |  Desc    |
@@ -124,7 +124,7 @@ grammar_cjkRuby: true
 ### 暂停
 | 暂停推广单元  |  Desc    |
 | ---    | ---   |
-|   URL  |  /aps-sale-web/aps/new/cpc_delete_promotion_unit.htm</br>$.param({</br>	promotionId : '16078106',</br>	unitId : unitId</br>	}| 
+|   URL  |aps/new/cpc_pause_promotion_unit.htm?promotionId=16078106&unitId=16105314| 
 |   VIEW |  /new/cpc/cpc_unit_select_product.ftl|
 |   CODE |   [暂停推广单元](#unitPause) |
 
@@ -139,7 +139,7 @@ grammar_cjkRuby: true
 ### 编辑
 | 编辑推广单元  |  Desc    |
 | ---    | ---   |
-|   URL  |  aps/new/cpc_pause_promotion_unit.htm?promotionId=16078106&unitId=16105314| 
+|   URL  |  | 
 |   CODE |   [编辑推广单元](#unitEdit) |
 
 
