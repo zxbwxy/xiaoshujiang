@@ -134,7 +134,6 @@ grammar_cjkRuby: true
 | 开始推广单元  |  Desc    |
 | ---    | ---   |
 |   URL  |  aps/new/cpc_resume_promotion_unit.htm?promotionId=16078106&unitId=16105314&productType=2| 
-|   VIEW |  /new/cpc/cpc_unit_select_product.ftl|
 |   CODE |   [开始推广单元](#unitStart) |
 
 
@@ -1028,7 +1027,19 @@ sqlId: standardPromotion.getPromotionUnitCount、standardPromotion.getPromotionU
 3.更新计划表变更时间
 	T_APS_PROMOTION.UPDATE_TIME,STATUS_UPDATE_TIME
 
+4.记录用户操作日志
 
+
+## <span id="unitStart">单元：开始</span>
+1.更新推广单元状态
+	T_APS_PROMOTION_CPC.STATUS --'0 是暂停，1 是正常
+
+2.仅推广计划状态为正在推广时，kafka发送单元下架信息
+
+3.更新计划表变更时间
+	T_APS_PROMOTION.UPDATE_TIME,STATUS_UPDATE_TIME
+
+4.记录用户操作日志
 
 ## <span id="promotionList">商品推广&& 店铺推广列表</span>
 
