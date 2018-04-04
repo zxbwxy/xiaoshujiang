@@ -94,8 +94,8 @@ grammar_cjkRuby: true
 |  TABLE | t_aps_promotion  |
 |   CODE |   [修改日限额](#promotionModifyDayCost) |
 
-## 3.推广单元--新建
-
+## 推广单元
+### 新建
 | 选择商品  |  Desc    |
 | ---    | ---   |
 |   URL  |  aps-sale-web/new/unit/selectProduct.htm?promotionId=16078106| 
@@ -113,13 +113,20 @@ grammar_cjkRuby: true
 |  TABLE | t_aps_promotion  |
 |   CODE |   [新建推广单元](#unitNew) |
 
-## 3.推广单元--删除
+### 删除
 | 删除推广单元  |  Desc    |
 | ---    | ---   |
 |   URL  |  /aps-sale-web/aps/new/cpc_delete_promotion_unit.htm</br>$.param({</br>	promotionId : '16078106',</br>	unitId : unitId</br>	}| 
 |   VIEW |  /new/cpc/cpc_unit_select_product.ftl|
 |   CODE |   [新建推广单元](#unitDel) |
 
+
+## 3.推广单元--删除
+| 删除推广单元  |  Desc    |
+| ---    | ---   |
+|   URL  |  /aps-sale-web/aps/new/cpc_delete_promotion_unit.htm</br>$.param({</br>	promotionId : '16078106',</br>	unitId : unitId</br>	}| 
+|   VIEW |  /new/cpc/cpc_unit_select_product.ftl|
+|   CODE |   [新建推广单元](#unitDel) |
 
 
 
@@ -698,9 +705,11 @@ UPDATE
 ```
 ![enter description here](https://i.loli.net/2018/04/04/5ac49f339cb5e.jpg)
 
+2.更新具体detail数据
+获取该推广计划的所有详情数据：standardPromotion.geiAllCpcPromotionDetailInAllPosition
 
-
-
+分组
+detailGroup // key:单元id-关键词（CPC_PROMOTION_ID-KEYWORD），value:list【detail数据】
 
 cpcPositionControlGroup
  this.groupMap.put(positionId, cpcPositionControlDto);
