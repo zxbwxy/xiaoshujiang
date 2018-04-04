@@ -121,14 +121,19 @@ grammar_cjkRuby: true
 |   CODE |   [新建推广单元](#unitDel) |
 
 
-## 3.推广单元--删除
-| 删除推广单元  |  Desc    |
+### 暂停
+| 暂停推广单元  |  Desc    |
+| ---    | ---   |
+|   URL  |  /aps-sale-web/aps/new/cpc_delete_promotion_unit.htm</br>$.param({</br>	promotionId : '16078106',</br>	unitId : unitId</br>	}| 
+|   VIEW |  /new/cpc/cpc_unit_select_product.ftl|
+|   CODE |   [暂停推广单元](#unitPause) |
+
+### 开始
+| 开始推广单元  |  Desc    |
 | ---    | ---   |
 |   URL  |  /aps-sale-web/aps/new/cpc_delete_promotion_unit.htm</br>$.param({</br>	promotionId : '16078106',</br>	unitId : unitId</br>	}| 
 |   VIEW |  /new/cpc/cpc_unit_select_product.ftl|
 |   CODE |   [新建推广单元](#unitDel) |
-
-
 
 
 
