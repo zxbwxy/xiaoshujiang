@@ -1039,7 +1039,10 @@ sqlId: standardPromotion.getPromotionUnitCount、standardPromotion.getPromotionU
 3.更新计划表变更时间
 	T_APS_PROMOTION.UPDATE_TIME,STATUS_UPDATE_TIME
 
-4.记录用户操作日志
+4.暂停一键推广中的商品
+T_APS_PROMOTION_CPC.PRODUCT_TYPE=5
+
+5.记录用户操作日志
 
 ## <span id="promotionList">商品推广&& 店铺推广列表</span>
 
