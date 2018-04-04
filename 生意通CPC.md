@@ -113,6 +113,8 @@ grammar_cjkRuby: true
 |  TABLE | t_aps_promotion  |
 |   CODE |   [新建推广单元](#unitNew) |
 
+
+
 ### 删除
 | 删除推广单元  |  Desc    |
 | ---    | ---   |
@@ -181,7 +183,7 @@ sqlId: standardPromotion.createPromotion   **T_APS_PROMOTION**
 
 
 ---------
-## <span id="unitNew">新建推广单元</span>
+## <span id="unitNew">推广单元--新建</span>
 一.选择商品
 {promotionId=16078106,  userType=1, supplierType=C, shopId=0070057240, searchUrl=http://csearchpre.cnsuning.com/emall/cshop/queryByKeyword.do, 
 productPicUrl=http://uimgpre.cnsuning.com,
@@ -1017,8 +1019,14 @@ sqlId: standardPromotion.getPromotionUnitCount、standardPromotion.getPromotionU
 
 
 
+## <span id="unitPause">单元：暂停</span>
+1.更新推广单元状态
+	T_APS_PROMOTION_CPC.STATUS --'0 是暂停，1 是正常
 
+2.仅推广计划状态为正在推广时，kafka发送单元下架信息
 
+3.更新计划表变更时间
+	T_APS_PROMOTION.UPDATE_TIME,STATUS_UPDATE_TIME
 
 ## <span id="promotionList">商品推广&& 店铺推广列表</span>
 
