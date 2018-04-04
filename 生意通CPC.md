@@ -696,7 +696,14 @@ UPDATE
         hotPositionIdMap.put(100000002L, "keyword");
         hotPositionIdMap.put(100000003L, "category");
 ```
-![enter description here](https://i.loli.net/2018/04/02/5ac219dcac823.jpg)
+![enter description here](https://i.loli.net/2018/04/04/5ac49f339cb5e.jpg)
+
+
+
+
+
+cpcPositionControlGroup
+ this.groupMap.put(positionId, cpcPositionControlDto);
 
 
 
@@ -745,9 +752,14 @@ UPDATE
 		]]>
 	</sql>
 ```
+ 2.更新具体detail数据
+将详情数据，依据单元id-关键词 分组
 
+standardPromotion.batchThrowAppDetail
 
-	
+  // 存在需要更新的出价数据，就需要发送整个单元的kafka消息
+            kafkaPromotionService.sendSaveThorwDetailKafka(userId, companyCode, userType, String.valueOf(promotionId));
+            
 ## <span id="promotionSetThrowTime">计划：设置投放时间</span>	
 	1.更新推广计划属性	
 	2. 设置投放时间
@@ -1153,6 +1165,7 @@ CPC广告位溢价表（广告位溢价与开关）
 
 ![新建推广单元--选择商品图片][5]
 
+![设置投放平台](https://i.loli.net/2018/04/04/5ac49f6baf3da.jpg)
 
   [1]: https://i.loli.net/2018/03/26/5ab85fb16c743.jpg
   [2]: https://i.loli.net/2018/03/23/5ab4bcdb77a48.jpg
