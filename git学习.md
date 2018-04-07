@@ -56,7 +56,7 @@ $ git clone gituser@git.server.com:project.git
 
 
 
-https://www.linuxidc.com/Linux/2016-10/136251.htm
+[Linux基础知识之用户和用户组以及 Linux 权限管理](https://www.linuxidc.com/Linux/2016-10/136251.htm)
 [在Windows上搭建Git Server](https://www.cnblogs.com/sumuncle/p/6362697.html)
 [GIT 远程仓库：添加远程库、从远程库克隆](https://www.cnblogs.com/wangmingshun/p/5424767.html)
 https://blog.csdn.net/txl199106/article/details/40266345
