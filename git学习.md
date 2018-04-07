@@ -45,6 +45,7 @@ Jerry在他的主目录中创建一个新目录并执行克隆操作。
 $ mkdir jerry_repo
 $ cd jerry_repo
 $ git clone gituser@git.server.com:project.git
+
 ## git-基本概念
 ## git-基本概念
 ## git-基本概念
@@ -56,7 +57,7 @@ $ git clone gituser@git.server.com:project.git
 
 
 
-https://www.cnblogs.com/sumuncle/p/6362697.html
+[在Windows上搭建Git Server](https://www.cnblogs.com/sumuncle/p/6362697.html)
 https://www.cnblogs.com/wangmingshun/p/5424767.html
 https://blog.csdn.net/txl199106/article/details/40266345
 
