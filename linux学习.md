@@ -235,7 +235,28 @@ type 命令是 shell 内部命令，它会显示命令的类别
 这个命令只对可执行程序有效，不包括内建命令和命令别名，别名是真正的可执行程序的替代物。 当我们试着使用 shell 内建命令时，例如，cd命令，我们或者得不到回应，或者是个错误信息。
 
 #### 得到命令文档
-help － 得到 shell 内建命令的帮助文档
+--help － 得到 shell 内建命令的帮助文档
+man － 显示程序手册页
+apropos － 显示适当的命令
+whatis － 显示非常简洁的命令说明
+info － 显示程序 Info 条目
+
+#### 用别名（alias）创建你自己的命令
+
+> [me@linuxbox ~]$ type foo 
+bash: type: foo: not found
+
+太棒了！”foo”还没被占用。创建命令别名：
+
+> [me@linuxbox ~]$ alias foo='cd /usr; ls; cd -'
+
+我们也可以使用 type 命令来查看我们的别名：
+
+> [me@linuxbox ~]$ type foo 
+foo is aliased to `cd /usr; ls ; cd -'
+
+删除别名，使用 unalias 命令
+
 
 
 
