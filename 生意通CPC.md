@@ -140,7 +140,7 @@ grammar_cjkRuby: true
 ### 编辑
 | 编辑推广单元  |  Desc    |
 | ---    | ---   |
-|   URL  |加载： new/unit/modifyUnit.htm?cpcPromotionId=16105318&promotionId=16078106 </br></br>提交：ajax/unit/savePromotionUnit.htm| 
+|   URL  |加载： new/unit/modifyUnit.htm?cpcPromotionId=16105318&promotionId=16078106 </br></br>提交：ajax/unit/updateUnit.htm| 
 |   VIEW |/new/cpc/cpc_unit_modify.ftl|
 |   CODE |   [编辑推广单元](#unitEdit) |
 
@@ -1047,7 +1047,7 @@ T_APS_PROMOTION_CPC.GOODS_CODE
 5.记录用户操作日志
 
 
-## <span id="unitStart">单元：编辑</span>
+## <span id="unitEdit">单元：编辑</span>
 加载页面数据：
 1.获取推广单元信息 ==proUnit.getPromotionInfoById==
 
