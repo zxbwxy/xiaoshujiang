@@ -1150,8 +1150,10 @@ mysql:keywordTool.queryRecommendKeyword {thirdCode=258004, score=100, rowNum=20}
 
 5.根据三级目录获取系统推荐类目
 *CATALOG_TOOLS_METHOD：类目分析工具查询方式(1.数据平台)*
-
+==mysql:pcKeyword.querySysCataAnalysis==
+==db2:proUnit.getParentCode
 ``` sql
+{thirdCode=258004, saleObj=1, status=1}
 	SELECT
 			page_list AS "LIST_SEQ"
 		    <#if thirdCode?exists && thirdCode != "">
@@ -1179,7 +1181,61 @@ mysql:keywordTool.queryRecommendKeyword {thirdCode=258004, score=100, rowNum=20}
 	             SCORE desc,
 	         </#if>
 	         search_num desc
+	         
+	         
+	         <sql id="getSysRecCatas">
+    	<![CDATA[  	
+    		SELECT A.LIST_SEQ,
+			        A.SCORE,
+			        A.LIST_SEQ as KEYWORD,
+			        A.NAME_SEQ,
+			        A.CODE_SEQ AS CODE,
+			        A.POSITION_ID,
+			        NVL(B.SEARCH_NUM,0) SEARCH_NUM,
+			        decimal(ROUND(NVL(B.CLICK_PERCENT*100.0,0.0),2),10,2) AS percent,
+			        decimal(round(NVL(B.AVG_PRICE,0)/100.0,2),10,2) AS avgPrice
+			FROM 
+			        (SELECT T1.LIST_SEQ,(CASE WHEN T1.CODE_SEQ=${thirdCode} THEN '100' ELSE '80' END ) SCORE,
+			        		T1.NAME_SEQ,T1.CODE_SEQ,T2.POSITION_ID 
+			         FROM T_APS_CPC_POSITION_REL T1,T_APS_ADS_POSITION T2 
+			         WHERE T1.LIST_SEQ LIKE ${secondCode} ESCAPE '!' AND T1.POSITION_ID=T2.POSITION_ID AND T1.STATUS = 1 
+			        AND T1.EFFECT_DATE <= current timestamp AND (T2.SALE_OBJ=2 OR T2.SALE_OBJ=:saleObj)) A 
+			LEFT JOIN
+			        (SELECT KEYWORD,SEARCH_NUM,CLICK_PERCENT,AVG_PRICE FROM T_APS_KEYWORD_TOOL_DATA_FRONT WHERE PROMOTION_TYPE=1) B
+			ON A.CODE_SEQ=B.KEYWORD
+			WITH UR
+		]]>
+	</sql>
 ```
+
+6.查询今日推荐信息
+IS_OPEN_FOR_ALL|| thirdCataId in THIRD_PAGE_CODE_FOR_TODAY
+7. 用户日预算\创建时间 unitInfo.get()
+8. 查询关键词和类目[详情数据]
+``` sql
+	    	SELECT
+	    		 A.CPC_PROMOTION_DETAIL_ID,
+	    		 A.KEYWORD,
+	    		 A.USER_PRICE,
+	    		 A.POSITION_ID,
+	    		 A.START_DATE,
+	    		 A.QUALITY,
+	    		 A.STANDARD_QUALITY,
+	    		 B.NAME_SEQ,
+	    		 A.TYPE,
+	    		 A.QUALITY*A.USER_PRICE AS TOTAL
+			FROM
+				T_APS_PROMOTION_CPC_DETAIL A LEFT JOIN T_APS_CPC_POSITION_REL B
+			ON A.KEYWORD = B.CODE_SEQ AND A.POSITION_ID=B.POSITION_ID AND B.STATUS = 1
+			WHERE
+				A.TYPE IN ('0','1') AND A.CPC_PROMOTION_ID=:cpcPromotionId WITH UR
+```
+9.查询系统限制的三级类目==THIRD_PAGE_LIMIT==,若该商品为限制类目下面的商品，则其投放的关键词不能夸三级类目，投放类目只能是该三级类目
+10.获取推广单元属性map(cpcPromotionId)==T_APS_PROMOTION_CPC_ITEM==
+11.  一键抢，预估排名
+@ApsScmConf("scm.cpc.isShowYJQ")
+@ApsScmConf("scm.cpc.isShowMorePositionRank")
+
 
 ## <span id="promotionList">商品推广&& 店铺推广列表</span>
 
