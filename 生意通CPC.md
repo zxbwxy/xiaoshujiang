@@ -350,7 +350,7 @@ WITH BASE (KEYWORD,SCORE,SEARCH_NUM,POSITION_ID,PERCENT,AVGPRICE) AS (
   
 "cpcPositionControlGroup",cpcCommonService.queryAllPositionControlInfoByRelId(Long.parseLong(promotionId),1)
 
-**提交**
+#### <p id='unitSubmit'>**提交**</p>
  selectWord.goSubmit('/ajax/unit/savePromotionUnit.htm');
 请求：
 {
@@ -1235,6 +1235,8 @@ IS_OPEN_FOR_ALL|| thirdCataId in THIRD_PAGE_CODE_FOR_TODAY
 11.  一键抢，预估排名
 @ApsScmConf("scm.cpc.isShowYJQ")
 @ApsScmConf("scm.cpc.isShowMorePositionRank")
+
+12.[修改并提交](#unitSubmit)
 
 
 ## <span id="promotionList">商品推广&& 店铺推广列表</span>
