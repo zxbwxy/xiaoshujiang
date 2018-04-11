@@ -140,7 +140,8 @@ grammar_cjkRuby: true
 ### 编辑
 | 编辑推广单元  |  Desc    |
 | ---    | ---   |
-|   URL  |  | 
+|   URL  | new/unit/modifyUnit.htm?cpcPromotionId=16105318&promotionId=16078106 | 
+|   VIEW |/new/cpc/cpc_unit_modify.ftl|
 |   CODE |   [编辑推广单元](#unitEdit) |
 
 
@@ -1044,6 +1045,141 @@ T_APS_PROMOTION_CPC.PRODUCT_TYPE=5
 T_APS_PROMOTION_CPC.GOODS_CODE
 
 5.记录用户操作日志
+
+
+## <span id="unitStart">单元：编辑</span>
+加载页面数据：
+1.获取推广单元信息 ==proUnit.getPromotionInfoById==
+
+设置广告主日限额
+:   特殊日预算  T_APS_PROMOTION_CUSTOM_BUDGET.USER_LIMIT_AMOUNT
+:   默认日预算  T_APS_PROMOTION_CPC.USER_LIMIT_AMOUNT
+
+2.获取商品图片
+查询CPC商品图片版本信息:GoodsPicUrlRsfQueryService.querySupplierCmmdtyMessage17
+
+> http://uimgpre.cnsuning.com/uimg/b2c/newcatentries/0070057240-000000000750049472_[1-4]_200x200.jpg
+
+3.获取商品编码对应的三级类目==proUnit.queryGoodRelByProductCode==
+
+``` sql
+	SELECT * FROM T_APS_GOODS_PAGE_REL WHERE GOODS_CODE=:productNum/000000000750049472  {T_APS_PROMOTION_CPC.GOODS_CODE}
+```
+|COLUMN|DATA
+|---|---
+|REL_ID|1432429	
+|GOODS_CODE|000000000750049472
+|FIRST_PAGE_CODE|157122
+|SECOND_PAGE_CODE|258003
+|THIRD_PAGE_CODE|258004
+|CREATE_DATE|	2017-03-30 16:16:41.304802
+|UPDATE_DATE|2018-04-08 11:57:56.975470
+|PARTNUMBER|000000000750049472|
+4.根据三级目录获取系统关键词 
+*KEYWORD_TOOLS_METHOD：关键词分析工具查询方式(1.数据平台)*
+==mysql:keywordTool.queryRecommendKeywords==
+==db2:proUnit.getSysRecWords==
+
+``` sql
+mysql:keywordTool.queryRecommendKeyword {thirdCode=258004, score=100, rowNum=20}
+
+	select 
+			distinct a.KEYWORD,
+            ${score} SCORE,
+             b.search_num as SEARCH_NUM,
+            '100000001' AS POSITION_ID,
+            ROUND(IFNULL(b.click_percent*100.0,0.0),2) AS PERCENT,
+            round(IFNULL(b.avg_price,0)/100.0,2) AS AVGPRICE,
+            round(IFNULL(b.shop_avg_price,0)/100.0,2) AS SHOP_AVG_PRICE,
+            IFNULL(b.compet_num,0) AS COMPET_NUM,
+            IFNULL(b.shop_compet_num,0) AS SHOP_COMPET_NUM
+			from  t_aps_keyword_page_rel a,t_aps_keyword_analysis  b where  
+			a.KEYWORD = b.keyword 
+			<#if thirdCode?exists && thirdCode != ''>
+				AND a.THIRD_PAGE_CODE = :thirdCode
+			</#if> 
+			<#if secondCode?exists && secondCode != ''>
+				AND a.SECOND_PAGE_CODE = :secondCode
+			</#if> 
+			<#if keywrods?exists && keywrods != ''>
+				AND a.KEYWORD NOT IN(:keywrods)
+			</#if> 
+			  ORDER BY b.search_num DESC 
+			limit :pageNumber,:pageSize
+------------------------------------------------
+	WITH BASE (KEYWORD,SCORE,SEARCH_NUM,POSITION_ID,PERCENT,AVGPRICE) AS (
+			        SELECT 
+			                DISTINCT A.KEYWORD,
+			                ${score} SCORE,
+			                C.SEARCH_NUM,
+			                '100000001' AS POSITION_ID,
+			                decimal(ROUND(NVL(C.CLICK_PERCENT*100.0,0.0),2),10,2) AS percent,
+			                decimal(round(NVL(C.AVG_PRICE,0)/100.0,2),10,2) AS avgPrice
+			        FROM T_APS_KEYWORD_PAGE_REL A,T_APS_KEYWORD_TOOL_DATA_FRONT C 
+			        WHERE A.KEYWORD=C.KEYWORD 
+			                AND A.STATUS=1
+			                <#if thirdCode?exists && thirdCode != ''>
+								AND A.THIRD_PAGE_CODE = :thirdCode
+							</#if> 
+							<#if secondCode?exists && secondCode != ''>
+								AND A.SECOND_PAGE_CODE = :secondCode
+							</#if> 
+							<#if keywrods?exists && keywrods != ''>
+								AND A.KEYWORD NOT IN(:keywrods)
+							</#if> 
+			                AND EXISTS(SELECT 'X' FROM T_APS_SEARCH_KEYWORD B WHERE B.KEYWORD_NAME=A.KEYWORD)
+			        ORDER BY C.SEARCH_NUM DESC
+			        FETCH FIRST ${rowNum} ROWS ONLY
+			)
+			
+			SELECT E.*,NVL(P.COMPET_NUM,0) AS COMPET_NUM
+			FROM BASE E LEFT JOIN
+			(SELECT 
+			        D.NAME,COUNT(1) COMPET_NUM 
+			        FROM T_APS_CPC_PROMOTION_DATA D
+			        WHERE D.PROMOTION_TYPE=0  
+			        AND D.PROMOTION_DATE= CURRENT DATE 
+			        GROUP BY D.NAME
+			) P
+			ON E.KEYWORD = P.NAME WITH UR
+
+
+```
+
+
+
+5.根据三级目录获取系统推荐类目
+*CATALOG_TOOLS_METHOD：类目分析工具查询方式(1.数据平台)*
+
+``` sql
+	SELECT
+			page_list AS "LIST_SEQ"
+		    <#if thirdCode?exists && thirdCode != "">
+			,(CASE WHEN page_code= :thirdCode THEN 100 ELSE 80 END ) AS "SCORE",
+			</#if>
+			page_list as  "KEYWORD",
+			page_name AS "NAME_SEQ",
+			page_code as "CODE",
+			position_id as "POSITION_ID",
+			ROUND(search_num <#if searchInc?exists>* :searchInc</#if>) AS "SEARCH_NUM",
+			compet_num AS "COMPET_NUM",
+			click_percent AS "PERCENT",
+			ROUND(avg_price <#if avgPriceInc?exists>* :avgPriceInc/100,2</#if>) AS "AVGPRICE"
+		FROM
+			t_aps_page_analysis
+	    WHERE 1=1
+	         <#if saleObj?exists && saleObj != "">
+	             and (SALE_OBJ=2 OR SALE_OBJ=:saleObj)
+	         </#if>   
+	         <#if pageCode?exists && pageCode != "">
+	             and page_list LIKE ${pageCode} ESCAPE '!' 
+	         </#if>
+	         order by 
+	         <#if thirdCode?exists && thirdCode != "">
+	             SCORE desc,
+	         </#if>
+	         search_num desc
+```
 
 ## <span id="promotionList">商品推广&& 店铺推广列表</span>
 
