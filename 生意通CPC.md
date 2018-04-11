@@ -1237,7 +1237,7 @@ IS_OPEN_FOR_ALL|| thirdCataId in THIRD_PAGE_CODE_FOR_TODAY
 @ApsScmConf("scm.cpc.isShowMorePositionRank")
 
 12.修改并提交
-
+'/ajax/unit/savePromotionUnit.htm
 
 ## <span id="promotionList">商品推广&& 店铺推广列表</span>
 
