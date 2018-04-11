@@ -140,7 +140,7 @@ grammar_cjkRuby: true
 ### 编辑
 | 编辑推广单元  |  Desc    |
 | ---    | ---   |
-|   URL  | new/unit/modifyUnit.htm?cpcPromotionId=16105318&promotionId=16078106 | 
+|   URL  |加载： new/unit/modifyUnit.htm?cpcPromotionId=16105318&promotionId=16078106 </br></br>提交：ajax/unit/savePromotionUnit.htm| 
 |   VIEW |/new/cpc/cpc_unit_modify.ftl|
 |   CODE |   [编辑推广单元](#unitEdit) |
 
