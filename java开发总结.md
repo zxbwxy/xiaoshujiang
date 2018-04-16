@@ -63,7 +63,7 @@ if ( foo instanceof byte[] )
 
 二、
 
-一般可能我们在使用java的RTTI技术时，都使用instanceof来判断一个对象是不是属于某个类，但是有时候这个类是继承于一个父类的，所以，不能严格判断出是不是自己的类，而不是自己的父类。这个时候就使用另一种思路也是不错的——getClass判断；当然肯定还有其他的方法来判断的，只是自己的总结。如果有好的其他方法请赐教。。
+一般可能我们在使用java的RTTI技术时，都使用instanceof来判断一个对象是不是属于某个类，但是有时候这个类是继承于一个父类的，所以，不能严格判断出是不是自己的类，而不是自己的父类。这个时候就使用另一种思路也是不错的——**getClass**判断；当然肯定还有其他的方法来判断的，只是自己的总结。如果有好的其他方法请赐教。。
 ``` java
 public class test {
     public static void main(String arg[]) {
@@ -115,3 +115,5 @@ Test.ClassA
 Test.ClassB
 Test.ClassC
 ```
+
+
