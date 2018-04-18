@@ -160,21 +160,22 @@ grammar_cjkRuby: true
 # 备忘
 ## <span id="promotionNew">新建推广计划</span>
 
-1.最低价：系统参数KEYWORD_DAY_LOWER_PRICE
+1.处理页面入参
+最低价：系统参数KEYWORD_DAY_LOWER_PRICE
 USER_TYPE==1 设置事业部编码 默认0
-2.校验 开始时间不能小于今天、该名称推广计划是否存在
+
+2.校验 开始时间不能小于今天、该名称推广计划是否存在(T_APS_PROMOTION.NAME)
 ``` sql
    SELECT COUNT(1) 
-    		FROM T_APS_PROMOTION 	WHERE NAME = :creatPromotionName AND USER_ID = :userId AND PAY_TYPE = 2 AND ISACTIVE=1 AND PROMOTION_ID != :promotionId
+    		FROM  	WHERE NAME = :creatPromotionName AND USER_ID = :userId AND PAY_TYPE = 2 AND ISACTIVE=1 AND PROMOTION_ID != :promotionId
 ```
 
 3.组装计划信息 入库
    根据开始时间判断推广计划的状态： ==\>today  1:等待推广    =today  3:正在推广==
-
-序列：SEQ_T_APS_PROMOTION
+   推广计划id：：==SEQ_T_APS_PROMOTION==
 sqlId: standardPromotion.createPromotion   **T_APS_PROMOTION**
 
-记录用户操作日志
+4.记录用户操作日志
 
 
 
