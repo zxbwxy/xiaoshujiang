@@ -30,7 +30,7 @@ grammar_cjkRuby: true
 | ---    | ---   |
 |   URL  |  aps-sale-web/aps/new/cpc_promotion_detail.htm?</br>startDate=2018-03-23&endDate=2018-03-23&promotionId=16078106| 
 |   VIEW |  new/cpc/cpc_promotion_detail.ftl --productType=2(生意通)</br>new/cpc_shop/cpc_promotion_shop_detail.ftl--productType=4(CPC店铺推广)|
-|   CODE |   [计划下单元展示](#promotionDetail)   |
+|   CODE |   [推广计划--编辑/详情](#promotionDetail)   |
 
 ### 4.暂停
 | Index  |  Desc    |
