@@ -25,12 +25,25 @@ Java提供了三种内建注解。
 
 2. @Target
 指明该类型的注解可以注解的程序元素的范围。该元注解的取值可以为TYPE,METHOD,CONSTRUCTOR,FIELD等。如果Target元注解没有出现，那么定义的注解可以应用于程序的任何元素。
+	
+	>  @Target(ElementType.TYPE)   //接口、类、枚举、注解
+	> @Target(ElementType.FIELD) //字段、枚举的常量
+	> @Target(ElementType.METHOD) //方法
+	> @Target(ElementType.PARAMETER) //方法参数
+	> @Target(ElementType.CONSTRUCTOR)  //构造函数
+	> @Target(ElementType.LOCAL_VARIABLE)//局部变量
+	> @Target(ElementType.ANNOTATION_TYPE)//定义元注解，只能用于注解类型元素上
+	> @Target(ElementType.PACKAGE) ///包
 
 3. @Inherited
 指明该注解类型被自动继承。如果用户在当前类中查询这个元注解类型并且当前类的声明中不包含这个元注解类型，那么也将自动查询当前类的父类是否存在Inherited元注解，这个动作将被重复执行知道这个标注类型被找到，或者是查询到顶层的父类。
 
 4. @Retention
-指明了该Annotation被保留的时间长短。RetentionPolicy取值为SOURCE,CLASS,RUNTIME。要想使用反射去读取注解，必须将Retention的值选为RUNTIME。
+指明了该Annotation被保留的时间长短。RetentionPolicy取值为SOURCE,CLASS,RUNTIME。
+
+	> @Retention(RetentionPolicy.SOURCE)   //注解仅存在于源码中，在class字节码文件中不包含
+	> @Retention(RetentionPolicy.CLASS)     //默认的保留策略，注解会在class字节码文件中存在，但运行时无法获得
+	> @Retention(RetentionPolicy.RUNTIME)  //注解会在class字节码文件中存在，在运行时可以通过反射获取到
 
 ## 示例
 创建自定义注解和创建一个接口相似，但是注解的interface关键字需要以@符号开头。我们可以为注解声明方法。下面是一个自定义注解的例子。
