@@ -769,6 +769,7 @@ aps/new/cpc_pause_promotion.htm?promotionId=16078106
   T_APS_PROMOTION 关联 T_APS_PROMOTION_CPC 查询计划基本信息+推广计划下正常推广单元个数
   
 2.满足 ==**推广状态：正在推广&& 推广计划状态:正常&& 计划下正常推广的单元数>0**== ；封装kafka消息并发送==单元==下线操作
+
 3.更新状态 ==standardPromotion.pausePromotionNew==
 
 ``` sql
@@ -798,11 +799,13 @@ standardPromotion.getPromotionListByIds
 ==standardPromotion.updatePromotionStatusNew==
 5.处理推广计划推广状态是暂停推广或余额不足暂停的计划数据
 推广计划下有正常推广的推广单元
-    今天在推广计划时间段内--冻结日预算
-    冻结成功，修改推广计划STATUS为正常
-    冻结失败,余额不足   // 当前计划的status状态翻成0
+  
+ - 今天在推广计划时间段内--冻结日预算
+       ==cpcFreezeRealTimeKafkaService.freezeAndSendUpdatePromotionWithAllUnit(promotionId,null);==
+ - 冻结成功，修改推广计划STATUS为正常
+ - 冻结失败,余额不足   // 当前计划的status状态翻成0
 
-开始推广成功后，判断计划中的商品是否存在一键优选中，如果存在，则暂停一键优选中的正在推广的商品(PRODUCT_TYPE==5)
+6.开始推广成功后，判断计划中的商品是否存在一键优选中，如果存在，则暂停一键优选中的正在推广的商品(PRODUCT_TYPE==5)
 //1 query onethrow promotion
 {promotionDate=2018-04-02, isActive=1, userId=429004445, productType=5}
 cpcOneThrow.queryPromotion
