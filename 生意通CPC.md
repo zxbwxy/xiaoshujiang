@@ -812,7 +812,7 @@ aps/new/cpc_resume_promotion.htm?promotionId=16078106
  - 6.3 根据一键优选计划的promotionId查询商品信息 ==cpcOneThrow.queryGoodsFromUnit==
 ``` sql
 			SELECT CPC_PROMOTION_ID, GOODS_NAME , GOODS_CODE  FROM T_APS_PROMOTION_CPC 
-			WHERE PROMOTION_ID=:promotionId AND ISACTIVE =:isActive AND STATUS=:status
+			WHERE PROMOTION_ID=:promotionId AND ISACTIVE =1 AND STATUS=1:正在推广
 ```
 
 //2 if promotion status is promoting, then query unit info(unit id, promotionid, goods_code)
