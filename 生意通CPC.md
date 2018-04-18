@@ -473,7 +473,7 @@ proUnit.persistCpcDetailNew INSERT	INTO T_APS_PROMOTION_CPC_DETAIL
 			
 
 ---------
-## <span id="promotionResume">计划：开始推广</span>
+## <span id="promotionResume">计划：恢复</span>
 aps/new/cpc_resume_promotion.htm?promotionId=16078106
 standardPromotion.getPromotionListByIds
 
