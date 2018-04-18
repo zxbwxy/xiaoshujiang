@@ -785,8 +785,8 @@ WHERE
   USER_ID = :USER_ID
 ```
 ## <span id="promotionResume">计划：恢复</span>
-aps/new/cpc_resume_promotion.htm?promotionId=16078106
-standardPromotion.getPromotionListByIds
+
+> aps/new/cpc_resume_promotion.htm?promotionId=16078106
 
 1.根据推广计划ID查询推广计划信息
   T_APS_PROMOTION 关联 T_APS_PROMOTION_CPC 查询计划基本信息+推广计划下正常推广单元个数
