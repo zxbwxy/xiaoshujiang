@@ -473,167 +473,6 @@ proUnit.persistCpcDetailNew INSERT	INTO T_APS_PROMOTION_CPC_DETAIL
 			
 
 ---------
-## <span id="promotionResume">计划：恢复</span>
-aps/new/cpc_resume_promotion.htm?promotionId=16078106
-standardPromotion.getPromotionListByIds
-
-<!-- 根据推广计划ID获取推广计划推广计划信息 -->
-	<sql id="getPromotionListByIds">
-		<![CDATA[
-			SELECT
-			D.*,NVL(C.UNITS_NUM,0) AS UNITS_NUM
-			FROM
-			(SELECT
-			P.PROMOTION_ID,
-			P.NAME,
-			P.USER_ID,
-			P.PAY_TYPE,
-			P.PROMOTION_STATUS,--'推广状态1：等待  2:暂停 3：正在 4：等待关联素材 8：完成 9：关闭     51：等待业务审核   52：等待设计创意审核 61：业务审核驳回62:设计创意审核驳回';
-			P.STATUS,--'推广计划状态：0：暂停 1：正常';
-			P.TOTAL_DAYS,
-			P.TOTAL_AMOUNT,
-			P.DEPARTMENT_ID,
-			P.CREATE_DATE,
-			P.UPDATE_DATE,
-			P.STATUS_UPDATE_TIME,
-			P.PRODUCT_TYPE,--PRODUCT_TYPE IS '产品线类型:1.聚客宝 2.生意通 3.大聚惠 5.一键抢';
-			P.USER_LIMIT_AMOUNT,
-			DATE(P.START_DATE) START_DATE,
-			DATE(P.END_DATE) END_DATE,
-			P.THROW_STAUS,
-			P.THROW_DISCOUNT
-			FROM
-			T_APS_PROMOTION P
-			WHERE
-			P.PROMOTION_ID IN (${promotionId})
-			AND P.ISACTIVE = 1
-			)D LEFT JOIN
-			(
-				SELECT
-				PROMOTION_ID,COUNT(1) AS UNITS_NUM
-				FROM
-				T_APS_PROMOTION_CPC
-				WHERE
-				PROMOTION_ID IN (${promotionId})
-				AND ISACTIVE = 1
-				AND STATUS = 1
-				GROUP BY PROMOTION_ID
-			)C
-			ON C.PROMOTION_ID = D.PROMOTION_ID
-		]]>
-	</sql>
-
-PROMOTION_STATUS==2||STATUS==0 执行开始推广操作
-
-
-
-翻转计划状态
-开始时间小于当前时间：等待推广1
-结束时间小于当前时间：完成推广8
-
-
-[{userId=429004445, promotionId=16078106, promotionStatus=3}]
-standardPromotion.updatePromotionStatusNew
-
-	UPDATE 
-    	    	T_APS_PROMOTION
-    	    SET 
-    	    	PROMOTION_STATUS = :promotionStatus, 
-    	    	UPDATE_DATE = CURRENT TIMESTAMP, 
-				STATUS_UPDATE_TIME = CURRENT TIMESTAMP
-    	    WHERE
-    	    	PROMOTION_ID = :promotionId
-    	    AND 
-    	    	USER_ID = :userId
-
-ApsConstants.PROMOTION_TYPE_CPC_CPM_2.equals(promotionStatus)
-                            || ApsConstants.STATUS_0.equals(status)
-推广计划下有正常推广的推广单元
-今天在推广计划时间段内--冻结日预算
-冻结成功，修改推广计划STATUS为正常
-冻结失败,余额不足   // 当前计划的status状态翻成0
-
-开始推广成功后，判断计划中的商品是否存在一键优选中，如果存在，则暂停一键优选中的正在推广的商品(PRODUCT_TYPE==5)
-//1 query onethrow promotion
-{promotionDate=2018-04-02, isActive=1, userId=429004445, productType=5}
-cpcOneThrow.queryPromotion
-			SELECT P.PROMOTION_ID, P.USER_ID, P.PROMOTION_STATUS, P.STATUS,P.USER_LIMIT_AMOUNT AS DAY_AMOUNT, P.NAME,
-			(
-			        SELECT
-			            COUNT(1)
-			        FROM
-			            T_APS_CPC_PROMOTION_COST_OVER c
-			        WHERE
-			            c.PROMOTION_ID = P.PROMOTION_ID
-			        AND c.PROMOTION_DATE = '2018-04-02') AS "COST_OVER",
-			        U.COMPANY_CODE, U.TYPE AS USER_TYPE
-			FROM T_APS_PROMOTION P INNER JOIN T_APS_USER U ON P.USER_ID=U.USER_ID
-			WHERE P.USER_ID=:userId AND P.PRODUCT_TYPE=:productType AND ISACTIVE=1
-
-//2 if promotion status is promoting, then query unit info(unit id, promotionid, goods_code)
-		//else return; do nothing
-cpcOneThrow.queryGoodsFromUnit
-<sql id="queryGoodsFromUnit">
-		<![CDATA[	
-			SELECT CPC_PROMOTION_ID, GOODS_NAME , 
-			GOODS_CODE
-			  FROM T_APS_PROMOTION_CPC 
-			WHERE PROMOTION_ID=:promotionId AND ISACTIVE =:isActive AND STATUS=:status
-		]]>
-	</sql>
-	
-//[3] query goodscode info by promotionIds
-        Map<String, Object> condition = new HashMap();
-        condition.put("productType", "2");
-        condition.put("isActive", "1");
-        condition.put("status", "1");
-        condition.put("userId", userId);
-        condition.put("promotionStatus", "1,2,3");
-        if (StringUtils.isNotBlank(promotionIds)) {
-            condition.put("promotionIds", promotionIds);
-        }
-apscommom_cpcBatch.queryPromotingGoods
-
-//compare 2 and 3, if goods both in 2 and3, then, pause unit in 2
-
-standardPromotionService.updateUnitStatus
-	standardPromotion.updateStatusUpdateTime
-
-	<sql id="updateStatusUpdateTime">
-		<![CDATA[
-			 UPDATE 
-    	    	T_APS_PROMOTION
-    	    SET 
-    	    	STATUS_UPDATE_TIME= CURRENT TIMESTAMP,
-    	    	UPDATE_DATE = CURRENT TIMESTAMP
-    	    WHERE
-    	    	PROMOTION_ID = :promotionId
-    	    AND 
-    	    	USER_ID = :userId
-    	]]>
-	</sql>
-	更新单元状态
-	standardPromotion.pauseUnit
-    UPDATE 
-    	    	T_APS_PROMOTION_CPC C
-    	    SET 
-    	    	STATUS = :status, UPDATE_TIME = CURRENT TIMESTAMP
-    	    WHERE
-    	    	STATUS <> :status
-    	    AND 
-    	    	CPC_PROMOTION_ID IN(${unitId})
-    	    AND
-    	    	PROMOTION_ID = :promotionId
-    	    AND (SELECT USER_ID FROM T_APS_PROMOTION P WHERE C.PROMOTION_ID = P.PROMOTION_ID) = :userId
-   	发送kafka
-                        // 如果当前为暂停操作
-                        if ("0".equals(status)) {
-                            kafkaPromotionService.sendPauseUnitKafka(userId, companyCode, userType, unitIdBak,
-                                    promotionId);
-                        } else { // 如果为开始操作
-                            kafkaPromotionService.sendResumeUnitKafka(userId, companyCode, userType, unitIdBak,
-                                    promotionId, productType);
-                        }
 
 ## <span id="promotionModifyName">计划：修改推广名称</span>
 入参：{name=newPromotionName, userId=429004445, promotionId=16078106}
@@ -928,6 +767,7 @@ aps/new/cpc_pause_promotion.htm?promotionId=16078106
 
 1.根据推广计划ID查询推广计划信息
   T_APS_PROMOTION 关联 T_APS_PROMOTION_CPC 查询计划基本信息+推广计划下正常推广单元个数
+  
 2.满足 ==**推广状态：正在推广&& 推广计划状态:正常&& 计划下正常推广的单元数>0**== ；封装kafka消息并发送==单元==下线操作
 3.更新状态 ==standardPromotion.pausePromotionNew==
 
@@ -935,7 +775,7 @@ aps/new/cpc_pause_promotion.htm?promotionId=16078106
 UPDATE
   T_APS_PROMOTION
 SET
-  PROMOTION_STATUS   = 2,--臧婷
+  PROMOTION_STATUS   = 2,--暂停
   UPDATE_DATE        = CURRENT TIMESTAMP,
   STATUS_UPDATE_TIME = CURRENT TIMESTAMP
 WHERE
@@ -943,6 +783,106 @@ WHERE
   AND
   USER_ID = :USER_ID
 ```
+## <span id="promotionResume">计划：恢复</span>
+aps/new/cpc_resume_promotion.htm?promotionId=16078106
+standardPromotion.getPromotionListByIds
+
+1.根据推广计划ID查询推广计划信息
+  T_APS_PROMOTION 关联 T_APS_PROMOTION_CPC 查询计划基本信息+推广计划下正常推广单元个数
+  
+2.满足暂停状态[==推广状态：2 暂停推广&& 推广计划状态：0余额不足暂停==]，可以执行恢复操作
+
+3.根据计划开始、结束时间 ，判断恢复后的计划状态 [==正在推广1、等待推广3、完成推广4==]
+
+4.批量更新计划状态
+==standardPromotion.updatePromotionStatusNew==
+5.处理推广计划推广状态是暂停推广或余额不足暂停的计划数据
+推广计划下有正常推广的推广单元
+    今天在推广计划时间段内--冻结日预算
+    冻结成功，修改推广计划STATUS为正常
+    冻结失败,余额不足   // 当前计划的status状态翻成0
+
+开始推广成功后，判断计划中的商品是否存在一键优选中，如果存在，则暂停一键优选中的正在推广的商品(PRODUCT_TYPE==5)
+//1 query onethrow promotion
+{promotionDate=2018-04-02, isActive=1, userId=429004445, productType=5}
+cpcOneThrow.queryPromotion
+			SELECT P.PROMOTION_ID, P.USER_ID, P.PROMOTION_STATUS, P.STATUS,P.USER_LIMIT_AMOUNT AS DAY_AMOUNT, P.NAME,
+			(
+			        SELECT
+			            COUNT(1)
+			        FROM
+			            T_APS_CPC_PROMOTION_COST_OVER c
+			        WHERE
+			            c.PROMOTION_ID = P.PROMOTION_ID
+			        AND c.PROMOTION_DATE = '2018-04-02') AS "COST_OVER",
+			        U.COMPANY_CODE, U.TYPE AS USER_TYPE
+			FROM T_APS_PROMOTION P INNER JOIN T_APS_USER U ON P.USER_ID=U.USER_ID
+			WHERE P.USER_ID=:userId AND P.PRODUCT_TYPE=:productType AND ISACTIVE=1
+
+//2 if promotion status is promoting, then query unit info(unit id, promotionid, goods_code)
+		//else return; do nothing
+cpcOneThrow.queryGoodsFromUnit
+<sql id="queryGoodsFromUnit">
+		<![CDATA[	
+			SELECT CPC_PROMOTION_ID, GOODS_NAME , 
+			GOODS_CODE
+			  FROM T_APS_PROMOTION_CPC 
+			WHERE PROMOTION_ID=:promotionId AND ISACTIVE =:isActive AND STATUS=:status
+		]]>
+	</sql>
+	
+//[3] query goodscode info by promotionIds
+        Map<String, Object> condition = new HashMap();
+        condition.put("productType", "2");
+        condition.put("isActive", "1");
+        condition.put("status", "1");
+        condition.put("userId", userId);
+        condition.put("promotionStatus", "1,2,3");
+        if (StringUtils.isNotBlank(promotionIds)) {
+            condition.put("promotionIds", promotionIds);
+        }
+apscommom_cpcBatch.queryPromotingGoods
+
+//compare 2 and 3, if goods both in 2 and3, then, pause unit in 2
+
+standardPromotionService.updateUnitStatus
+	standardPromotion.updateStatusUpdateTime
+
+	<sql id="updateStatusUpdateTime">
+		<![CDATA[
+			 UPDATE 
+    	    	T_APS_PROMOTION
+    	    SET 
+    	    	STATUS_UPDATE_TIME= CURRENT TIMESTAMP,
+    	    	UPDATE_DATE = CURRENT TIMESTAMP
+    	    WHERE
+    	    	PROMOTION_ID = :promotionId
+    	    AND 
+    	    	USER_ID = :userId
+    	]]>
+	</sql>
+	更新单元状态
+	standardPromotion.pauseUnit
+    UPDATE 
+    	    	T_APS_PROMOTION_CPC C
+    	    SET 
+    	    	STATUS = :status, UPDATE_TIME = CURRENT TIMESTAMP
+    	    WHERE
+    	    	STATUS <> :status
+    	    AND 
+    	    	CPC_PROMOTION_ID IN(${unitId})
+    	    AND
+    	    	PROMOTION_ID = :promotionId
+    	    AND (SELECT USER_ID FROM T_APS_PROMOTION P WHERE C.PROMOTION_ID = P.PROMOTION_ID) = :userId
+   	发送kafka
+                        // 如果当前为暂停操作
+                        if ("0".equals(status)) {
+                            kafkaPromotionService.sendPauseUnitKafka(userId, companyCode, userType, unitIdBak,
+                                    promotionId);
+                        } else { // 如果为开始操作
+                            kafkaPromotionService.sendResumeUnitKafka(userId, companyCode, userType, unitIdBak,
+                                    promotionId, productType);
+                        }
 
 ## <span id="promotionDetail">关联推广单元</span>
 1.获取推广计划信息
