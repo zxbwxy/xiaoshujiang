@@ -925,9 +925,24 @@ sqlId: apscommom_cpcFreeze.getPromotionFreezeInfo
         
 ## <span id="promotionPause">计划：暂停</span>
 aps/new/cpc_pause_promotion.htm?promotionId=16078106
+
 1.根据推广计划ID查询推广计划信息
   T_APS_PROMOTION 关联 T_APS_PROMOTION_CPC 查询计划基本信息+推广计划下正常推广单元个数
-2.mNZUne推广状态：正在推广&& 推广计划状态:正常 ；封装kafka消息并发送
+2.满足 ==**推广状态：正在推广&& 推广计划状态:正常&& 正常推广的单元>0**== ；封装kafka消息并发送==单元==下线操作
+3.更新状态 ==standardPromotion.pausePromotionNew==
+
+``` sql
+UPDATE
+  T_APS_PROMOTION
+SET
+  PROMOTION_STATUS   = 2,--臧婷
+  UPDATE_DATE        = CURRENT TIMESTAMP,
+  STATUS_UPDATE_TIME = CURRENT TIMESTAMP
+WHERE
+  PROMOTION_ID = :PROMOTION_ID
+  AND
+  USER_ID = :USER_ID
+```
 
 ## <span id="promotionDetail">关联推广单元</span>
 1.获取推广计划信息
