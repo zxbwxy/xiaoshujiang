@@ -806,23 +806,13 @@ aps/new/cpc_resume_promotion.htm?promotionId=16078106
  - 冻结失败,余额不足   // 当前计划的status状态翻成0
 
 6.开始推广成功后，判断计划中的商品是否存在一键优选中，如果存在，则暂停一键优选中的正在推广的商品(PRODUCT_TYPE==5)
-//1 query onethrow promotion
 
+ - 6.1查询该商户的一键优选计划 ==T_APS_PROMOTION.PRODUCT_TYPE=5==
+ - 6.2满足==推广状态：3正在推广&&推荐计划状态：1正常== 继续暂停操作
+ - 6.3 根据一键优选计划的promotionId查询商品信息 ==cpcOneThrow.queryGoodsFromUnit==
 ``` sql
---{promotionDate=2018-04-02, isActive=1, userId=429004445, productType=5} cpcOneThrow.queryPromotion
-			SELECT P.PROMOTION_ID, P.USER_ID, P.PROMOTION_STATUS, P.STATUS,P.USER_LIMIT_AMOUNT AS DAY_AMOUNT, P.NAME,
-			(
-			        SELECT
-			            COUNT(1)
-			        FROM
-			            T_APS_CPC_PROMOTION_COST_OVER c
-			        WHERE
-			            c.PROMOTION_ID = P.PROMOTION_ID
-			        AND c.PROMOTION_DATE = '2018-04-02') AS "COST_OVER",
-			        U.COMPANY_CODE, U.TYPE AS USER_TYPE
-			FROM T_APS_PROMOTION P INNER JOIN T_APS_USER U ON P.USER_ID=U.USER_ID
-			WHERE P.USER_ID=:userId AND P.PRODUCT_TYPE=5--一键抢
-			AND ISACTIVE=1
+			SELECT CPC_PROMOTION_ID, GOODS_NAME , GOODS_CODE  FROM T_APS_PROMOTION_CPC 
+			WHERE PROMOTION_ID=:promotionId AND ISACTIVE =:isActive AND STATUS=:status
 ```
 
 //2 if promotion status is promoting, then query unit info(unit id, promotionid, goods_code)
