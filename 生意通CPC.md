@@ -786,7 +786,7 @@ WHERE
 ```
 ## <span id="promotionResume">计划：恢复</span>
 
-> aps/new/cpc_resume_promotion.htm?promotionId=16078106
+aps/new/cpc_resume_promotion.htm?promotionId=16078106
 
 1.根据推广计划ID查询推广计划信息
   T_APS_PROMOTION 关联 T_APS_PROMOTION_CPC 查询计划基本信息+推广计划下正常推广单元个数
@@ -807,8 +807,9 @@ WHERE
 
 6.开始推广成功后，判断计划中的商品是否存在一键优选中，如果存在，则暂停一键优选中的正在推广的商品(PRODUCT_TYPE==5)
 //1 query onethrow promotion
-{promotionDate=2018-04-02, isActive=1, userId=429004445, productType=5}
-cpcOneThrow.queryPromotion
+
+``` sql
+--{promotionDate=2018-04-02, isActive=1, userId=429004445, productType=5} cpcOneThrow.queryPromotion
 			SELECT P.PROMOTION_ID, P.USER_ID, P.PROMOTION_STATUS, P.STATUS,P.USER_LIMIT_AMOUNT AS DAY_AMOUNT, P.NAME,
 			(
 			        SELECT
@@ -820,7 +821,9 @@ cpcOneThrow.queryPromotion
 			        AND c.PROMOTION_DATE = '2018-04-02') AS "COST_OVER",
 			        U.COMPANY_CODE, U.TYPE AS USER_TYPE
 			FROM T_APS_PROMOTION P INNER JOIN T_APS_USER U ON P.USER_ID=U.USER_ID
-			WHERE P.USER_ID=:userId AND P.PRODUCT_TYPE=:productType AND ISACTIVE=1
+			WHERE P.USER_ID=:userId AND P.PRODUCT_TYPE=5--一键抢
+			AND ISACTIVE=1
+```
 
 //2 if promotion status is promoting, then query unit info(unit id, promotionid, goods_code)
 		//else return; do nothing
