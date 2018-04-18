@@ -807,15 +807,14 @@ aps/new/cpc_resume_promotion.htm?promotionId=16078106
 
 6.开始推广成功后，判断计划中的商品是否存在一键优选中，如果存在，则暂停一键优选中的正在推广的商品(PRODUCT_TYPE==5)
 
- - 6.1查询该商户的一键优选计划 ==T_APS_PROMOTION.PRODUCT_TYPE=5==
- - 6.2满足==推广状态：3正在推广&&推荐计划状态：1正常== 继续暂停操作
+ - 6.1 查询该商户的一键优选计划 ==T_APS_PROMOTION.PRODUCT_TYPE=5==
+ - 6.2 满足==推广状态：3正在推广&&推荐计划状态：1正常== 继续暂停操作
  - 6.3 根据一键优选计划的promotionId查询商品信息 ==cpcOneThrow.queryGoodsFromUnit==
 ``` sql
 			SELECT CPC_PROMOTION_ID, GOODS_NAME , GOODS_CODE  FROM T_APS_PROMOTION_CPC 
 			WHERE PROMOTION_ID=:promotionId AND ISACTIVE =1 AND STATUS=1:正在推广
 ```
-- 6.4根据页面需要恢复的计划promotionIds 查询商品信息
-
+ - 6.4 根据页面需要恢复的计划promotionIds 查询商品信息
 ``` sql
 	SELECT C.GOODS_CODE
 		FROM T_APS_PROMOTION P INNER JOIN T_APS_PROMOTION_CPC C ON P.PROMOTION_ID=C.PROMOTION_ID
@@ -827,6 +826,29 @@ aps/new/cpc_resume_promotion.htm?promotionId=16078106
 		AND P.PROMOTION_ID IN(${promotionIds})
 		AND C.ISACTIVE=1 AND C.STATUS=1
 ```
+ - 6.5 对比 6.3、6.4查询结果得到unitIds（一键优选中使用到的商品的单元ID）,暂停、更新推广单元状态
+        - 更新一键优选计划的更新时间，状态变更时间 ==standardPromotion.updateStatusUpdateTime==
+        - 更新该计划下的推广单元状态[暂停] ==standardPromotion.pauseUnit== T_APS_PROMOTION_CPC.STATUS=0
+        - Kafka 发送单元下线消息
+``` sql
+<!-- 暂停/开始推广单元 -->
+	<sql id="pauseUnit">
+    	<![CDATA[
+    	    UPDATE 
+    	    	T_APS_PROMOTION_CPC C
+    	    SET 
+    	    	STATUS = :status, UPDATE_TIME = CURRENT TIMESTAMP
+    	    WHERE
+    	    	STATUS <> :status
+    	    AND 
+    	    	CPC_PROMOTION_ID IN(${unitId})
+    	    AND
+    	    	PROMOTION_ID = :promotionId
+    	    AND (SELECT USER_ID FROM T_APS_PROMOTION P WHERE C.PROMOTION_ID = P.PROMOTION_ID) = :userId
+    	]]>
+	</sql>
+```
+
 
 cpcOneThrow.queryGoodsFromUnit
 <sql id="queryGoodsFromUnit">
