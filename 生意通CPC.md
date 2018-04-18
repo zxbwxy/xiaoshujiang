@@ -15,7 +15,7 @@ grammar_cjkRuby: true
 |   URL  |  aps/new/cpc_new_promotion_by_name.htm <br>{	name，dept，startDate}| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
 |  TABLE | t_aps_promotion  |
-|   CODE |   [推广计划--新建](#promotionNew) |
+|   CODE |   [计划：新建](#promotionNew) |
 
 ### 2.查询
 | Index  |  Desc    |
@@ -23,31 +23,31 @@ grammar_cjkRuby: true
 |   URL  |  aps/new/cpc_standard_promotion_list.htm| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
 |  TABLE | t_aps_promotion  |
-|   CODE |   [计划查询](#promotionList) |
+|   CODE |   [计划：查询](#promotionList) |
 
 ### 3.编辑
 | Index  |  Desc    |
 | ---    | ---   |
 |   URL  |  aps-sale-web/aps/new/cpc_promotion_detail.htm?</br>startDate=2018-03-23&endDate=2018-03-23&promotionId=16078106| 
 |   VIEW |  new/cpc/cpc_promotion_detail.ftl --productType=2(生意通)</br>new/cpc_shop/cpc_promotion_shop_detail.ftl--productType=4(CPC店铺推广)|
-|   CODE |   [推广计划--编辑/详情](#promotionDetail)   |
+|   CODE |   [计划：编辑/详情](#promotionDetail)   |
 
 ### 4.暂停
 | Index  |  Desc    |
 | ---    | ---  |
 |   URL  |  /aps/new/cpc_pause_promotion.htm <br>{promotionId }| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
-|   CODE |   [暂停推广计划](#promotionPause)   |
+|   CODE |   [计划：暂停](#promotionPause)   |
 
 
-### 恢复
+### 5.恢复
 | Index  |  Desc    |
 | ---    | ---  |
 |   URL  |  aps/new/cpc_resume_promotion.htm?promotionId=<br>{promotionId }| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
-|   CODE |   [恢复推广计划](#promotionResume)   |
+|   CODE |   [计划：恢复](#promotionResume)   |
 
-### 修改计划名称
+### 6.修改计划名称
 | Index  |  Desc    |
 | ---    | ---   |
 |   URL  |  aps/new/cpc_modify_promotion_name.htm</br>{</br>promotionId : promotionId,</br>	name : name</br>	}| 
@@ -928,7 +928,7 @@ aps/new/cpc_pause_promotion.htm?promotionId=16078106
 
 1.根据推广计划ID查询推广计划信息
   T_APS_PROMOTION 关联 T_APS_PROMOTION_CPC 查询计划基本信息+推广计划下正常推广单元个数
-2.满足 ==**推广状态：正在推广&& 推广计划状态:正常&& 正常推广的单元>0**== ；封装kafka消息并发送==单元==下线操作
+2.满足 ==**推广状态：正在推广&& 推广计划状态:正常&& 计划下正常推广的单元数>0**== ；封装kafka消息并发送==单元==下线操作
 3.更新状态 ==standardPromotion.pausePromotionNew==
 
 ``` sql
