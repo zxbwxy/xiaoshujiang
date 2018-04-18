@@ -16,7 +16,7 @@ Java提供了三种内建注解。
 当我们希望编译器知道某一方法不建议使用时，我们应该使用这个注解。Java在javadoc 中推荐使用该注解，我们应该提供为什么该方法不推荐使用以及替代的方法。
 
 3. @SuppressWarnings
-这个仅仅是告诉编译器忽略特定的警告信息，例如在泛型中使用原生数据类型。它的保留策略是SOURCE（译者注：在源文件中有效）并且被编译器丢弃。
+这个仅仅是告诉编译器忽略特定的警告信息，例如在泛型中使用原生数据类型。它的保留策略是SOURCE（在源文件中有效）并且被编译器丢弃。
 
 ## 自定义注解
 要自定义一个注解，需要使用java提供的四个元注解，元注解的作用就是负责注解其他注解。Java5.0定义的四个元注解为：@Target、@Retention、@Documented、@Inherited这些类型和它们所支持的类在java.lang.annotation 包中可以找到。
@@ -43,7 +43,7 @@ Java提供了三种内建注解。
 
 	> @Retention(RetentionPolicy.SOURCE)   //注解仅存在于源码中，在class字节码文件中不包含。
 	> @Retention(RetentionPolicy.CLASS)     //默认的保留策略，注解会在class字节码文件中存在，但运行时无法获得，不能通过反射获取注解信息。
-	> @Retention(RetentionPolicy.RUNTIME)  //注解会在class字节码文件中存在，在运行时可以通过反射获取到注解信息。
+	> @Retention(RetentionPolicy.RUNTIME)  //编译器将把注解记录在类文件中，在运行时 VM 将保留注解，因此可以通过反射获取到注解信息。
 
 ## 示例
 创建自定义注解和创建一个接口相似，但是注解的interface关键字需要以@符号开头。我们可以为注解声明方法。下面是一个自定义注解的例子。
