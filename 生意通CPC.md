@@ -814,9 +814,20 @@ aps/new/cpc_resume_promotion.htm?promotionId=16078106
 			SELECT CPC_PROMOTION_ID, GOODS_NAME , GOODS_CODE  FROM T_APS_PROMOTION_CPC 
 			WHERE PROMOTION_ID=:promotionId AND ISACTIVE =1 AND STATUS=1:正在推广
 ```
+- 6.4根据页面需要恢复的计划promotionIds 查询商品信息
 
-//2 if promotion status is promoting, then query unit info(unit id, promotionid, goods_code)
-		//else return; do nothing
+``` sql
+	SELECT C.GOODS_CODE
+		FROM T_APS_PROMOTION P INNER JOIN T_APS_PROMOTION_CPC C ON P.PROMOTION_ID=C.PROMOTION_ID
+		WHERE P.USER_ID=:userId 
+		AND P.PRODUCT_TYPE=2--生意通
+		AND P.PROMOTION_STATUS in(1,2,3)
+		AND P.ISACTIVE=1
+		AND P.STATUS=1
+		AND P.PROMOTION_ID IN(${promotionIds})
+		AND C.ISACTIVE=1 AND C.STATUS=1
+```
+
 cpcOneThrow.queryGoodsFromUnit
 <sql id="queryGoodsFromUnit">
 		<![CDATA[	
