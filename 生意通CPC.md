@@ -923,7 +923,7 @@ sqlId: apscommom_cpcFreeze.getPromotionFreezeInfo
 	</sql>
 
         
-## <span id="promotionDetail">计划：暂停</span>
+## <span id="promotionPause">计划：暂停</span>
 aps/new/cpc_pause_promotion.htm?promotionId=16078106
 ## <span id="promotionDetail">关联推广单元</span>
 1.获取推广计划信息
