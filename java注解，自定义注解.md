@@ -40,7 +40,6 @@ Java提供了三种内建注解。
 
 4. @Retention
 指明了该Annotation被保留的时间长短。RetentionPolicy取值为SOURCE,CLASS,RUNTIME。
-
 	> @Retention(RetentionPolicy.SOURCE)   //注解仅存在于源码中，在class字节码文件中不包含。
 	> @Retention(RetentionPolicy.CLASS)     //默认的保留策略，注解会在class字节码文件中存在，但运行时无法获得，不能通过反射获取注解信息。
 	> @Retention(RetentionPolicy.RUNTIME)  //编译器将把注解记录在类文件中，在运行时 VM 将保留注解，因此可以通过反射获取到注解信息。
