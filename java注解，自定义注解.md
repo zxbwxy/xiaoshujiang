@@ -18,8 +18,8 @@ Java提供了三种内建注解。
 3. @SuppressWarnings
 这个仅仅是告诉编译器忽略特定的警告信息，例如在泛型中使用原生数据类型。它的保留策略是SOURCE（译者注：在源文件中有效）并且被编译器丢弃。
 
-## java自定义注解
-要自定义一个注解，需要使用java提供的四个原注解，元注解是指注解的注解。包括  @Retention @Target @Document @Inherited四种。
+## 自定义注解
+要自定义一个注解，需要使用java提供的四个元注解，元注解的作用就是负责注解其他注解。Java5.0定义的四个元注解为：@Target、@Retention、@Documented、@Inherited这些类型和它们所支持的类在java.lang.annotation 包中可以找到。
 1. @Documented 
 指明拥有这个注解的元素可以被javadoc此类的工具文档化。这种类型应该用于注解那些影响客户使用带注释的元素声明的类型。如果一种声明使用Documented进行注解，这种类型的注解被作为被标注的程序成员的公共API。
 
