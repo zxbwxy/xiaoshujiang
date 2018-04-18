@@ -829,7 +829,7 @@ aps/new/cpc_resume_promotion.htm?promotionId=16078106
  - 6.5 对比 6.3、6.4查询结果得到unitIds（一键优选中使用到的商品的单元CPC_PROMOTION_ID）,暂停、更新推广单元状态
         - 更新一键优选计划的更新时间，状态变更时间 ==standardPromotion.updateStatusUpdateTime==
         - 更新该计划下的推广单元状态[暂停] ==standardPromotion.pauseUnit== T_APS_PROMOTION_CPC.STATUS=0
-        - Kafka 发送单元下线消息
+        - Kafka 发送单元下线消息[只要一键优选计划不是余额不足暂停]
 ``` sql
 <!-- 暂停/开始推广单元 -->
 	<sql id="pauseUnit">
