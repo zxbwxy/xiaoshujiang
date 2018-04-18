@@ -158,7 +158,7 @@ grammar_cjkRuby: true
 ----------
 
 # 备忘
-## <span id="promotionNew">新建推广计划</span>
+## <span id="promotionNew">推广计划--新建</span>
 
 1.处理页面入参
 最低价：系统参数KEYWORD_DAY_LOWER_PRICE
