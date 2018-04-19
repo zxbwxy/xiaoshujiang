@@ -68,7 +68,7 @@ grammar_cjkRuby: true
 | ---    | ---   |
 |   URL  |aps/save/updateCpcThrowControlByPromotion.htm </br>{</br>promotionId : promotionId,</br>throwDiscount :putDiscount,</br>positionType : app\|hot</br>}| 
 |  TABLE | t_aps_promotion、t_aps_promotion_item(1001)[promotionId]  |
-|   CODE |   [设置投放时间](#promotionSetThrowPlat) |
+|   CODE |   [计划：设置投放平台](#promotionSetThrowPlat) |
 
 ### 设置投放时间
 | Index  |  Desc    |
@@ -477,7 +477,7 @@ proUnit.persistCpcDetailNew INSERT	INTO T_APS_PROMOTION_CPC_DETAIL
 ## <span id="promotionModifyName">计划：修改推广名称</span>
 更新推广计划表 计划名称和更新时间 ==T_APS_PROMOTION（NAME、UPDATE_DATE）==
 
-## <span id="promotionModifyHours">计划：修改投放时段</span>
+## <span id="promotionModifyHours">计划：修改时间定向</span>
 
  1. 修改计划时间属性 T_APS_PROMOTION_ITEM ( PROMOTION_ID,ITEM_CODE, ITEM_VALUE,CREATE_DT)
  2. 获取推广计划信息&&计划下正常推广单元数
