@@ -44,6 +44,7 @@ grammar_cjkRuby: true
 | Index  |  Desc    |
 | ---    | ---  |
 |   URL  |  aps/new/cpc_resume_promotion.htm?promotionId=<br>{promotionId }| 
+|   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
 |   CODE |   [计划：恢复](#promotionResume)   |
 
 ### 6.修改计划名称
@@ -52,28 +53,28 @@ grammar_cjkRuby: true
 |   URL  |  aps/new/cpc_modify_promotion_name.htm</br>{</br>promotionId : promotionId,</br>	name : name</br>	}| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
 |  TABLE | t_aps_promotion |
-|   CODE |   [计划查询](#promotionModifyName) |
+|   CODE |   [计划：修改名称](#promotionModifyName) |
 
 ### 7.修改推广时段
 | Index  |  Desc    |
 | ---    | ---   |
 |   URL  |  aps-sale-web/aps/new/cpc/promotion/saveHours.htm?promotionId=promotionId&throwHours=0+2+3| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
-|  TABLE | t_aps_promotion、T_APS_PROMOTION_ITEM(1001)  |
+|  TABLE | t_aps_promotion、t_aps_promotion_item(1001)  |
 |   CODE |   [修改推广时段](#promotionModifyHours) |
 
 ### 设置投放平台
 | Index  |  Desc    |
 | ---    | ---   |
 |   URL  |aps/save/updateCpcThrowControlByPromotion.htm </br>{</br>promotionId : promotionId,</br>throwDiscount :putDiscount,</br>positionType : app\|hot</br>}| 
-|  TABLE | t_aps_promotion、T_APS_PROMOTION_ITEM(1001)  |
+|  TABLE | t_aps_promotion、t_aps_promotion_item(1001)[promotionId]  |
 |   CODE |   [设置投放时间](#promotionSetThrowPlat) |
 
 ### 设置投放时间
 | Index  |  Desc    |
 | ---    | ---   |
 |   URL  |aps/new/cpc_set_throwtime.htm </br>{</br>promotionId : 16078106,</br>startDate : 2018-03-24,</br>endDate : 2018-04-20,</br>slotArr :0 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23</br>}| 
-|  TABLE | t_aps_promotion、T_APS_PROMOTION_ITEM(1001)  |
+|  TABLE | t_aps_promotion、t_aps_promotion_item(1001)  |
 |   CODE |   [设置投放时间](#promotionSetThrowTime) |
 
 ### 修改（定向）投放地域
@@ -81,7 +82,7 @@ grammar_cjkRuby: true
 | ---    | ---   |
 |   URL  | 列表页： aps/new/cpc/promotion/saveArea.htm?promotionId=16078106&throwArea=10+20</br></br>编辑页：aps/new/cpc_set_throwarea.htm?promotionId=16078106&areaStr=10 20 30| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
-|  TABLE | t_aps_promotion、T_APS_PROMOTION_ITEM(1002)   |
+|  TABLE | t_aps_promotion、t_aps_promotion_item(1002)   |
 |   CODE |   [修改定向地域](#promotionModifyArea) |
 
 
@@ -157,7 +158,7 @@ grammar_cjkRuby: true
 ----------
 
 # 备忘
-## <span id="promotionNew">推广计划--新建</span>
+## <span id="promotionNew">计划--新建</span>
 
 1.处理页面入参
 最低价：系统参数KEYWORD_DAY_LOWER_PRICE
@@ -179,7 +180,7 @@ sqlId: standardPromotion.createPromotion   **T_APS_PROMOTION**
 
 
 ---------
-## <span id="unitNew">推广单元--新建</span>
+## <span id="unitNew">单元--新建</span>
 一.选择商品
 {promotionId=16078106,  userType=1, supplierType=C, shopId=0070057240, searchUrl=http://csearchpre.cnsuning.com/emall/cshop/queryByKeyword.do, 
 productPicUrl=http://uimgpre.cnsuning.com,
@@ -644,7 +645,7 @@ editPromotionStatus(Integer.valueOf(ApsConstants.STATUS_1), promotionId);
         cpi.setItemValue(areaStr);
         cpcCommonService.updatePromotionItem(cpi);
         
-        apscommom_cpcBase.deletePromotionItemList 、T_APS_PROMOTION_ITEM(1002) 
+        apscommom_cpcBase.deletePromotionItemList 、t_aps_promotion_item(1002) 
         apscommom_cpcBase.insertPromotionItemList
         // 发送消息到kafka
         sendPromotionData(promotionId, userId);
@@ -1374,7 +1375,7 @@ t_cpc_promotion_hour_7day、_15day
 T_APS_PROMOTION_CUSTOM_BUDGET
 CPC个性化日预算表（指定计划某一天的日预算）
 
-T_APS_PROMOTION_ITEM
+t_aps_promotion_item
 推广计划属性表[投放时段（1001）、定向地域（1002）]
 
 T_APS_CPC_POSITION_CONTROL
