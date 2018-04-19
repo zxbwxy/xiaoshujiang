@@ -158,7 +158,7 @@ grammar_cjkRuby: true
 ----------
 
 # 备忘
-## <span id="promotionNew">计划--新建</span>
+## <span id="promotionNew">计划：新建</span>
 
 1.处理页面入参
 最低价：系统参数KEYWORD_DAY_LOWER_PRICE
@@ -180,7 +180,7 @@ sqlId: standardPromotion.createPromotion   **T_APS_PROMOTION**
 
 
 ---------
-## <span id="unitNew">单元--新建</span>
+## <span id="unitNew">单元：新建</span>
 一.选择商品
 {promotionId=16078106,  userType=1, supplierType=C, shopId=0070057240, searchUrl=http://csearchpre.cnsuning.com/emall/cshop/queryByKeyword.do, 
 productPicUrl=http://uimgpre.cnsuning.com,
@@ -475,20 +475,8 @@ proUnit.persistCpcDetailNew INSERT	INTO T_APS_PROMOTION_CPC_DETAIL
 ---------
 
 ## <span id="promotionModifyName">计划：修改推广名称</span>
-入参：{name=newPromotionName, userId=429004445, promotionId=16078106}
-sqlId：standardPromotion.selectPromotionNameCount
-sqlId：standardPromotion.renamePromotion
+更新T_APS_PROMOTION.NAME\UPDATE_DATE
 ``` java
-SELECT COUNT(1) 
-    		FROM T_APS_PROMOTION 
-    		WHERE NAME = :name 
-    		AND USER_ID = :userId 
-    		AND PAY_TYPE = 2
-    		AND ISACTIVE=1
-    		<#if promotionId?? && promotionId != ''>
-    		AND PROMOTION_ID != :promotionId
-    		</#if>
-    		
 UPDATE 
     	    	T_APS_PROMOTION 
     	    SET 
