@@ -55,7 +55,7 @@ grammar_cjkRuby: true
 |  TABLE | t_aps_promotion |
 |   CODE |   [计划：修改名称](#promotionModifyName) |
 
-### 7.修改计划时间定向
+### 7.修改时间定向
 | Index  |  Desc    |
 | ---    | ---   |
 |   URL  |  aps-sale-web/aps/new/cpc/promotion/saveHours.htm?promotionId=promotionId&throwHours=0+2+3| 
@@ -487,8 +487,12 @@ proUnit.persistCpcDetailNew INSERT	INTO T_APS_PROMOTION_CPC_DETAIL
     : 冻结成功，kafka 发送计划变更信息
     冻结失败，更新推广计划STATUS为 0余额不足暂停
 
-## <span id="promotionSetThrowPlat">计划：设置投放平台</span>	
-1.更新计划表上存储的投放终端信息
+## <span id="promotionSetThrowPlat">计划：设置投放平台</span>
+备注：投放时会将单元投放到不同的广告位，有标准广告位和溢价广告位
+设置投放平台和投放折扣后，更新常量配置中的positionId为溢价广告位的单元出价。
+1.更新广告位控制数据（修改溢价折扣）
+
+![enter description here](https://i.loli.net/2018/04/04/5ac49f339cb5e.jpg)
 
 ``` java
         Map<Long, String> appPositionIdMap = new HashMap();
@@ -502,65 +506,65 @@ proUnit.persistCpcDetailNew INSERT	INTO T_APS_PROMOTION_CPC_DETAIL
         hotPositionIdMap.put(100000002L, "keyword");
         hotPositionIdMap.put(100000003L, "category");
 ```
-![enter description here](https://i.loli.net/2018/04/04/5ac49f339cb5e.jpg)
+广告位控制Map
+**cpcPositionControlGroup**
+this.groupMap.put(positionId, cpcPositionControlDto);
 
 2.更新具体detail数据
 获取该推广计划的所有详情数据：standardPromotion.geiAllCpcPromotionDetailInAllPosition
 
+``` sql
+            SELECT
+                d.CPC_PROMOTION_DETAIL_ID,
+                d.CPC_PROMOTION_ID,
+                d.TYPE,
+                d.KEYWORD,
+                d.SORT,
+                d.START_DATE,
+                d.END_DATE,
+                d.USER_PRICE,
+                d.MIN_PRICE,
+                d.POSITION_ID,
+                d.PUSH_DATE,
+                d.QUALITY,
+                d.STANDARD_QUALITY,
+                d.KEYWORD_CATEGORY,
+                d.KEYWORD_BRAND
+            FROM
+                APSADMIN.T_APS_PROMOTION pro,
+                APSADMIN.T_APS_PROMOTION_CPC cpc,
+                APSADMIN.T_APS_PROMOTION_CPC_DETAIL d
+            WHERE
+                pro.PROMOTION_ID = cpc.PROMOTION_ID
+            AND cpc.CPC_PROMOTION_ID = d.CPC_PROMOTION_ID
+            AND cpc.ISACTIVE = 1
+            AND pro.PROMOTION_ID = :promotionid
+```
+
+
 分组
-detailGroup // key:单元id-关键词（CPC_PROMOTION_ID-KEYWORD），value:list【detail数据】
+detailGroup // key:单元id-关键词（CPC_PROMOTION_ID-KEYWORD），value:List<detail数据>
+--》
 
-cpcPositionControlGroup
- this.groupMap.put(positionId, cpcPositionControlDto);
-
-
-
-
-``` sql
-	<!-- 删除广告位控制数据 apscommom_cpcBase.deleteCpcPositionControlByRelId -->
-	<sql id="deleteCpcPositionControlByRelId">
-		<![CDATA[	
-			DELETE
-			FROM
-			    T_APS_CPC_POSITION_CONTROL pc
-			WHERE
-			    pc.REL_ID = :relId
-			AND pc.REL_TYPE = :relType
-			AND pc.POSITION_ID = :positionId
-		]]>
-	</sql>
-```
-
-``` sql
-<!-- 新建广告位控制数据 apscommom_cpcBase.insertCpcPositionControl -->
-	<sql id="insertCpcPositionControl">
-		<![CDATA[	
-			INSERT
-			INTO
-			    T_APS_CPC_POSITION_CONTROL
-			    (
-			        ID,
-			        REL_ID,
-			        REL_TYPE,
-			        POSITION_ID,
-			        CONTROL_FLAG,
-			        DISCOUNT,
-			        CREATE_DT
-			    )
-			    VALUES
-			    (
-			        nextval FOR SEQ_T_APS_CPC_POSITION_CR,
-			        :relId,
-			        :relType,
-			        :positionId,
-			        :controlFlag,
-			        :discount,
-			        SYSDATE
-			    )
-		]]>
-	</sql>
-```
  2.更新具体detail数据
+ 逐个单元下的每一个词，单独重新计算出价，如果出价有变化的，存入需要更新出价的清单中，用于之后批量更新
+
+``` javascript
+ detailGroup.each(
+ function(index,element){
+ 
+ typeMap.put(element.positionId,element)
+  Map<String, Object> keywordDetail=typeMap.get('100000001')//关键词基础数据
+  Map<String, Object> categoryDetail =typeMap.get('100001033')//类目基础数据
+  
+   只处理标记为keyword的投放控制广告位数据
+ typeMap.get("")
+ });
+```
+
+ 
+ 
+ 
 将详情数据，依据单元id-关键词 分组
 
 standardPromotion.batchThrowAppDetail
@@ -1329,6 +1333,16 @@ t_aps_promotion_item
 
 T_APS_CPC_POSITION_CONTROL
 CPC广告位溢价表（广告位溢价与开关）
+| COLUMN  |COMMENT|
+|---|---|
+|ID            |      主键
+|REL_ID        |      关联id（推广计划ID、推广单元ID、推广详情ID）
+|REL_TYPE      |      关联id类型（1.推广计划ID，2.推广单元ID，3.推广详情ID）
+|POSITION_ID   |      广告位id
+|CONTROL_FLAG  |      是否投放此广告位（0.关闭、1.开启）
+|DISCOUNT      |      该广告位折扣（百分数，例:90==90%）
+|CREATE_DT     |     创建时间
+[T_APS_CPC_POSITION_CONTROL-- cpc广告位控制表（广告位溢价与开关）]
 
 
 ![推广计划][2]
