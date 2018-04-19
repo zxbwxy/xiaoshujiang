@@ -475,14 +475,17 @@ proUnit.persistCpcDetailNew INSERT	INTO T_APS_PROMOTION_CPC_DETAIL
 ---------
 
 ## <span id="promotionModifyName">计划：修改推广名称</span>
-更新T_APS_PROMOTION.NAME 、T_APS_PROMOTION.PDATE_DATE
+更新推广计划表 计划名称和更新时间 ==T_APS_PROMOTION（NAME、UPDATE_DATE）==
 
 ## <span id="promotionModifyHours">计划：修改投放时段</span>
-1.修改计划时间属性
-T_APS_PROMOTION_ITEM ( PROMOTION_ID,ITEM_CODE, ITEM_VALUE,CREATE_DT)
-2.获取推广计划信息&&计划下正常推广单元数
-3.满足==推广状态：正在推广，推广计划状态：正常==的计划，修改了投放时段
-计划下有正常推广单元时，执行冻结操作，冻结成功kafka 发送计划变更信息。冻结失败，更新推广计划STATUS为 0余额不足暂停
+
+ 1. 修改计划时间属性 T_APS_PROMOTION_ITEM ( PROMOTION_ID,ITEM_CODE, ITEM_VALUE,CREATE_DT)
+ 2. 获取推广计划信息&&计划下正常推广单元数
+ 3. 满足==推广状态：正在推广，推广计划状态：正常==的计划，修改了投放时段后
+
+    执行冻结操作（计划下有正常推广单元）
+    : 冻结成功，kafka 发送计划变更信息
+    冻结失败，更新推广计划STATUS为 0余额不足暂停
 
 ## <span id="promotionSetThrowPlat">计划：设置投放平台</span>	
 1.更新计划表上存储的投放终端信息
