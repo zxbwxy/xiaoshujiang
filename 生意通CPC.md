@@ -475,57 +475,15 @@ proUnit.persistCpcDetailNew INSERT	INTO T_APS_PROMOTION_CPC_DETAIL
 ---------
 
 ## <span id="promotionModifyName">计划：修改推广名称</span>
-更新T_APS_PROMOTION.NAME\UPDATE_DATE
-``` java
-UPDATE 
-    	    	T_APS_PROMOTION 
-    	    SET 
-    	    	name = :name, 
-    	    	UPDATE_DATE = CURRENT TIMESTAMP 
-    	    WHERE 
-    	    	PROMOTION_ID = :promotionId 
-    	    AND 
-    	    	USER_ID = :userId
-```
+更新T_APS_PROMOTION.NAME 、T_APS_PROMOTION.PDATE_DATE
 
 ## <span id="promotionModifyHours">计划：修改投放时段</span>
+1.修改计划时间属性
+T_APS_PROMOTION_ITEM ( PROMOTION_ID,ITEM_CODE, ITEM_VALUE,CREATE_DT)
+2.获取推广计划信息&&计划下正常推广单元数
+3.满足==推广状态：正在推广，推广计划状态：正常==的计划，修改了投放时段
+计划下有正常推广单元时，执行冻结操作，冻结成功kafka 发送计划变更信息。冻结失败，更新推广计划STATUS为 0余额不足暂停
 
-	List<CpcPromotionItem> itemList = new ArrayList<CpcPromotionItem>();
-		CpcPromotionItem hourItem = new CpcPromotionItem();
-		hourItem.setItemCode(CpcPromotionItem.TIME_ITEM_CODE);
-		hourItem.setItemValue(hours);//0 3 4 5...
-		hourItem.setPromotionId(pId);
-		itemList.add(hourItem);
-		cpcCommonService.updatePromotionItemList(itemList);
-		
-            //this.dalClient.batchUpdate("apscommom_cpcBase.deletePromotionItemList", (Map[])mapList.toArray(new HashMap[0]));
-            //this.dalClient.batchUpdate("apscommom_cpcBase.insertPromotionItemList", (Map[])mapList.toArray(new HashMap[0]));
-		standPromotionService.sendPromotionData(pId, uId);
-		//获取推广计划信息
-		standardPromotion.getPromotionById
-		 // 更新推广计划变更时间
-		standardPromotion.updatePromotionStatusUpdateTime
-		
-		// 推广计划推广状态不为3直接返回
-		// 如果计划状态为0：余额不足直接返回
-		//正在推广的计划，修改了投放时段，需要冻结和投放。
-		int unitsNum = (Integer) promotion.get("UNITS_NUM");
-        if (unitsNum > 0) {
-            // 冻结与实时投放过程
-            try {
-                cpcFreezeRealTimeKafkaService.freezeAndSendUpdatePromotion(promotionId, null);
-            } catch (BaseException ex) {
-                logger.error("cpc冻结与实时投放过程异常，异常原因：{}", ex);
-                if (CpcErrorCode.CPC_PROMOTION_FREEZE_INSUFFICIENT_FAIL_CODE.equals(ex.getCode())) {
-                    // 余额不足异常
-                    // 更新推广计划STATUS为 0暂停
-                    editPromotionStatus(Integer.parseInt(ApsConstants.STATUS_0), promotionId);
-                } else {
-                    // 未知异常继续向上层抛，用于业务回滚
-                    throw ex;
-                }
-            }
-        }
 ## <span id="promotionSetThrowPlat">计划：设置投放平台</span>	
 1.更新计划表上存储的投放终端信息
 
