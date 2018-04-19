@@ -55,15 +55,15 @@ grammar_cjkRuby: true
 |  TABLE | t_aps_promotion |
 |   CODE |   [计划：修改名称](#promotionModifyName) |
 
-### 7.修改推广时段
+### 7.修改计划时间定向
 | Index  |  Desc    |
 | ---    | ---   |
 |   URL  |  aps-sale-web/aps/new/cpc/promotion/saveHours.htm?promotionId=promotionId&throwHours=0+2+3| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
 |  TABLE | t_aps_promotion、t_aps_promotion_item(1001)  |
-|   CODE |   [修改推广时段](#promotionModifyHours) |
+|   CODE |   [计划：修改时间定向](#promotionModifyHours) |
 
-### 设置投放平台
+### 8.设置投放平台
 | Index  |  Desc    |
 | ---    | ---   |
 |   URL  |aps/save/updateCpcThrowControlByPromotion.htm </br>{</br>promotionId : promotionId,</br>throwDiscount :putDiscount,</br>positionType : app\|hot</br>}| 
