@@ -70,12 +70,12 @@ grammar_cjkRuby: true
 |  TABLE | t_aps_promotion、t_aps_promotion_item(1001)[promotionId]  |
 |   CODE |   [计划：设置投放平台](#promotionSetThrowPlat) |
 
-### 设置投放时间
+### 9.设置投放时间
 | Index  |  Desc    |
 | ---    | ---   |
 |   URL  |aps/new/cpc_set_throwtime.htm </br>{</br>promotionId : 16078106,</br>startDate : 2018-03-24,</br>endDate : 2018-04-20,</br>slotArr :0 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23</br>}| 
 |  TABLE | t_aps_promotion、t_aps_promotion_item(1001)  |
-|   CODE |   [设置投放时间](#promotionSetThrowTime) |
+|   CODE |   [计划：设置投放时间](#promotionSetThrowTime) |
 
 ### 修改（定向）投放地域
 | Index  |  Desc    |
@@ -565,29 +565,35 @@ detailGroup // key:单元id-关键词（CPC_PROMOTION_ID-KEYWORD），value:List
 ==standardPromotion.batchThrowAppDetail T_APS_PROMOTION_CPC_DETAIL.USER_PRICE==
 4.更新推广计划 更新时间，状态变更时间
 5.存在需要更新的出价数据，就需要发送整个计划的kafka消息
-            kafkaPromotionService.sendSaveThorwDetailKafka(userId, companyCode, userType, String.valueOf(promotionId));
+            kafkaPromotionService.sendSaveThorwDetailKafka(userId, companyCode, userType, promotionId);
             
 ## <span id="promotionSetThrowTime">计划：设置投放时间</span>	
 1.更新推广计划属性	
-2. 设置投放时间
-
+2.校验投放时间
 >开始时间不能修改为小于今天
 >结束时间不能早于当前系统时间
 >晚上8点[全量任务]后再修改的推广计划，结束时间至少是第二天
 
-3. 推广计划由等待推广改为正在推广	
-实时投放，判断是否需要冻结以及发送kafka消息
+3.更新推广计划时间
+
+4.实时投放，判断是否需要冻结以及发送kafka消息
+
 存在未删除且正常推广的推广单元
-原本计划就是正在推广状态，直接发送单纯的计划信息修改
-cpcFreezeRealTimeKafkaService.freezeAndSendUpdatePromotion(promotionId, null);
-如果原计划为等待推广，由于改变开始时间，导致变更成了正在推广状态，发送计划下的全部单元数据的实时投放消息
-cpcFreezeRealTimeKafkaService.freezeAndSendUpdatePromotionWithAllUnit(promotionId, null);
+: 原本计划就是正在推广状态，直接发送单纯的计划信息修改
+   
+
+>  cpcFreezeRealTimeKafkaService.freezeAndSendUpdatePromotion(promotionId, null);
+
+如果原计划为等待推广，由于改变开始时间为当天，导致变更成了正在推广状态，发送计划下的全部单元数据的实时投放消息
+>cpcFreezeRealTimeKafkaService.freezeAndSendUpdatePromotionWithAllUnit(promotionId, null);
  更新推广计划STATUS为 1正常
 editPromotionStatus(Integer.valueOf(ApsConstants.STATUS_1), promotionId);
 
 
 ## <span id="promotionModifyArea">计划：修改定向地域</span>
-
+1.更新推广计划属性 1002
+2.更新推广计划变更时间
+3.满足==推广计划状态：正在推广==执行冻结与实时投放
 ``` java
         CpcPromotionItem cpi = new CpcPromotionItem();
         cpi.setPromotionId(promotionId);
@@ -597,8 +603,9 @@ editPromotionStatus(Integer.valueOf(ApsConstants.STATUS_1), promotionId);
         
         apscommom_cpcBase.deletePromotionItemList 、t_aps_promotion_item(1002) 
         apscommom_cpcBase.insertPromotionItemList
-        // 发送消息到kafka
-        sendPromotionData(promotionId, userId);
+        // 正在推广的计划，修改定向地域会执行冻结与实时投放过程
+ cpcFreezeRealTimeKafkaService.freezeAndSendUpdatePromotion(promotionId, null);
+            
 ```
 
 
