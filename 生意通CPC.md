@@ -55,7 +55,7 @@ grammar_cjkRuby: true
 |  TABLE | t_aps_promotion |
 |   CODE |   [计划查询](#promotionModifyName) |
 
-### 修改推广时段
+### 7.修改推广时段
 | Index  |  Desc    |
 | ---    | ---   |
 |   URL  |  aps-sale-web/aps/new/cpc/promotion/saveHours.htm?promotionId=promotionId&throwHours=0+2+3| 
