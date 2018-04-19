@@ -544,7 +544,6 @@ this.groupMap.put(positionId, cpcPositionControlDto);
 
 分组
 detailGroup // key:单元id-关键词（CPC_PROMOTION_ID-KEYWORD），value:List<detail数据>
---》
 
  2.更新具体detail数据
  逐个单元下的每一个词，单独重新计算出价，如果出价有变化的，存入需要更新出价的清单中，用于之后批量更新
@@ -556,9 +555,9 @@ detailGroup // key:单元id-关键词（CPC_PROMOTION_ID-KEYWORD），value:List
  typeMap.put(element.positionId,element)
   Map<String, Object> keywordDetail=typeMap.get('100000001')//关键词基础数据
   Map<String, Object> categoryDetail =typeMap.get('100001033')//类目基础数据
-  
-   只处理标记为keyword的投放控制广告位数据
- typeMap.get("")
+ 
+ 关键词出价和溢价后的关键词出价不相同，需要更新
+ 需要做溢价的广告位出价!=标准类目出价 x 该溢价广告位的折扣
  });
 ```
 
@@ -567,9 +566,8 @@ detailGroup // key:单元id-关键词（CPC_PROMOTION_ID-KEYWORD），value:List
  
 将详情数据，依据单元id-关键词 分组
 
-standardPromotion.batchThrowAppDetail
-
-  // 存在需要更新的出价数据，就需要发送整个单元的kafka消息
+==standardPromotion.batchThrowAppDetail T_APS_PROMOTION_CPC_DETAIL.USER_PRICE==
+ 4.存在需要更新的出价数据，就需要发送整个计划的kafka消息
             kafkaPromotionService.sendSaveThorwDetailKafka(userId, companyCode, userType, String.valueOf(promotionId));
             
 ## <span id="promotionSetThrowTime">计划：设置投放时间</span>	
