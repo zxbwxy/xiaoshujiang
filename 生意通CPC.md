@@ -490,7 +490,7 @@ proUnit.persistCpcDetailNew INSERT	INTO T_APS_PROMOTION_CPC_DETAIL
 ## <span id="promotionSetThrowPlat">计划：设置投放平台</span>
 备注：投放时会将单元投放到不同的广告位，有标准广告位和溢价广告位
 设置投放平台和投放折扣后，更新常量配置中的positionId为溢价广告位的单元出价。
-1.更新广告位控制数据（修改溢价折扣）
+1.更新溢价广告位控制数据（修改溢价折扣）
 
 ![enter description here](https://i.loli.net/2018/04/04/5ac49f339cb5e.jpg)
 
@@ -511,9 +511,10 @@ proUnit.persistCpcDetailNew INSERT	INTO T_APS_PROMOTION_CPC_DETAIL
 this.groupMap.put(positionId, cpcPositionControlDto);
 
 2.更新具体detail数据
-获取该推广计划的所有详情数据：standardPromotion.geiAllCpcPromotionDetailInAllPosition
+获取该推广计划的所有详情数据
 
 ``` sql
+-- standardPromotion.geiAllCpcPromotionDetailInAllPosition
             SELECT
                 d.CPC_PROMOTION_DETAIL_ID,
                 d.CPC_PROMOTION_ID,
@@ -546,7 +547,7 @@ this.groupMap.put(positionId, cpcPositionControlDto);
 detailGroup // key:单元id-关键词（CPC_PROMOTION_ID-KEYWORD），value:List<detail数据>
 
  2.更新具体detail数据
- 逐个单元下的每一个词，单独重新计算出价，如果出价有变化的，存入需要更新出价的清单中，用于之后批量更新
+ 逐个单元下的每一个词，单独重新计算出价，如果出价有变化[通过positioId区分出标准和溢价广告位，两者相比较]，存入需要更新出价的清单中，用于之后批量更新
 
 ``` javascript
  detailGroup.each(
@@ -560,13 +561,9 @@ detailGroup // key:单元id-关键词（CPC_PROMOTION_ID-KEYWORD），value:List
  需要做溢价的广告位出价!=标准类目出价 x 该溢价广告位的折扣
  });
 ```
-
- 
- 
- 
-将详情数据，依据单元id-关键词 分组
-
+3.更新需要变更出价的 溢价广告位数据
 ==standardPromotion.batchThrowAppDetail T_APS_PROMOTION_CPC_DETAIL.USER_PRICE==
+
  4.存在需要更新的出价数据，就需要发送整个计划的kafka消息
             kafkaPromotionService.sendSaveThorwDetailKafka(userId, companyCode, userType, String.valueOf(promotionId));
             
