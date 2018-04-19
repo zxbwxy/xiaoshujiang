@@ -563,17 +563,19 @@ detailGroup // key:单元id-关键词（CPC_PROMOTION_ID-KEYWORD），value:List
 ```
 3.更新需要变更出价的 溢价广告位数据
 ==standardPromotion.batchThrowAppDetail T_APS_PROMOTION_CPC_DETAIL.USER_PRICE==
-
- 4.存在需要更新的出价数据，就需要发送整个计划的kafka消息
+4.更新推广计划 更新时间，状态变更时间
+5.存在需要更新的出价数据，就需要发送整个计划的kafka消息
             kafkaPromotionService.sendSaveThorwDetailKafka(userId, companyCode, userType, String.valueOf(promotionId));
             
 ## <span id="promotionSetThrowTime">计划：设置投放时间</span>	
-	1.更新推广计划属性	
-	2. 设置投放时间
-	 开始时间不能修改为小于今天
-     结束时间不能早于当前系统时间
-     晚上8点后再修改的推广计划，结束时间至少是第二天
-   3. 推广计划由等待推广改为正在推广	
+1.更新推广计划属性	
+2. 设置投放时间
+
+>开始时间不能修改为小于今天
+>结束时间不能早于当前系统时间
+>晚上8点[全量任务]后再修改的推广计划，结束时间至少是第二天
+
+3. 推广计划由等待推广改为正在推广	
 实时投放，判断是否需要冻结以及发送kafka消息
 存在未删除且正常推广的推广单元
 原本计划就是正在推广状态，直接发送单纯的计划信息修改
