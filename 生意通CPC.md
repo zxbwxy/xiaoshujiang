@@ -44,7 +44,6 @@ grammar_cjkRuby: true
 | Index  |  Desc    |
 | ---    | ---  |
 |   URL  |  aps/new/cpc_resume_promotion.htm?promotionId=<br>{promotionId }| 
-|   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
 |   CODE |   [计划：恢复](#promotionResume)   |
 
 ### 6.修改计划名称
