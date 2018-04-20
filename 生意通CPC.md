@@ -664,17 +664,9 @@ cpcNowRealCost + maxDayCostIntervalPrice[CPC推广计划实时消耗金额上浮
   1.查询用户日限额==个性化日限额？个性化日预算：默认日预算==
    *T_APS_PROMOTION.USER_LIMIT_AMOUNT、T_APS_PROMOTION_CUSTOM_BUDGET.USER_LIMIT_AMOUNT*
   2.查询广告主资金账户信息[根据userId查T_APS_ACCOUNT]
-  
-sqlId:apscommom_cpcFreeze.getPromotionUserAccount
-   	<!-- 查询广告主资金账户信息 -->
-	<sql id="getPromotionUserAccount">
-    	<![CDATA[
-    	    SELECT * FROM T_APS_ACCOUNT WHERE  USER_TYPE = '0' AND USER_ID = :userId
-    	]]>
-	</sql>
-     paramMap.put("promotionId", promotionId);
-     paramMap.put("accountId", account.getAccountId());
-     paramMap.put("freezeDay", freezeDay);
+  3.查询指定日期的推广计划冻结数据
+
+``` sql
 sqlId: apscommom_cpcFreeze.getPromotionFreezeInfo
    	<!-- 查询指定日期的推广计划冻结数据 -->
 	<sql id="getPromotionFreezeInfo">
@@ -691,6 +683,8 @@ sqlId: apscommom_cpcFreeze.getPromotionFreezeInfo
 			AND fu.PROMOTION_ID = :promotionId
 		]]>
 	</sql>
+```
+T_APS_FREEZE_UNBIND中存在该计划信息：
 
         
 ## <span id="promotionPause">计划：暂停</span>
@@ -1247,6 +1241,21 @@ CPC广告位溢价表（广告位溢价与开关）
 |DISCOUNT      |      该广告位折扣（百分数，例:90==90%）
 |CREATE_DT     |     创建时间
 [T_APS_CPC_POSITION_CONTROL-- cpc广告位控制表（广告位溢价与开关）]
+
+|COLUNMN|COMMENT
+|---|---
+|FREEZE_UNBIND_ID |冻结明细ID
+|ACCOUNT_ID       |资金账户ID
+|SERIAL_NUM       |流水号
+|CUR_AMOUNT       |当前金额
+|FU_AMOUNT        |冻结金额
+|TYPE             |类型：3：冻结 4：解冻'
+|PROMOTION_ID     |推广计划ID
+|FREEZE_SERIAL_NUM|冻结流水编号
+|CREATE_DATE      |交易时间
+|PROMOTION_DATE   |投放时间<CPT为null>
+|LEFT_FE_AMOUNT   |剩余冻结金额
+[T_APS_FREEZE_UNBIND--冻结明细表]
 
 
 ![推广计划][2]
