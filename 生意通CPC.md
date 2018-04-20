@@ -100,18 +100,16 @@ grammar_cjkRuby: true
 | ---    | ---   |
 |   URL  |  aps-sale-web/new/unit/selectProduct.htm?promotionId=16078106| 
 |   VIEW |  /new/cpc/cpc_unit_select_product.ftl|
-|   CODE |   [新建推广单元](#unitNew) |
 |    *  |
 | **选择商品图片**    |  **Desc**    |
 |   URL  |  aps-sale-web/new/unit/selectProduct.htm?promotionId=16078106| 
 |   VIEW |  /new/cpc/cpc_unit_select_picture.ftl|
-|   CODE |   [新建推广单元](#unitNew) |
 |    *  |
 | **设置投放位置**    |  **Desc**    |
 |   URL  | aps-sale-web/new/unit/selectKeywordAndCatalog.htm?imgIndex=2&promotionId=16078106&productNum=000000011051101634&src=| 
 |   VIEW |  /new/cpc/cpc_unit_select_keyword.ftl|
 |  TABLE | t_aps_promotion  |
-|   CODE |   [新建推广单元](#unitNew) |
+|   CODE |   [单元：新建](#unitNew) |
 
 
 
@@ -1249,7 +1247,7 @@ CPC广告位溢价表（广告位溢价与开关）
 |SERIAL_NUM       |流水号
 |CUR_AMOUNT       |当前金额
 |FU_AMOUNT        |冻结金额
-|TYPE             |类型：3：冻结 4：解冻'
+|TYPE             |类型：3：冻结 4：解冻
 |PROMOTION_ID     |推广计划ID
 |FREEZE_SERIAL_NUM|冻结流水编号
 |CREATE_DATE      |交易时间
