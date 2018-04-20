@@ -767,7 +767,9 @@ SELECT T.DICT_CODE FROM T_APS_DICT_CODEMAP T WHERE T.CLASS_CODE='THIRD_PAGE_LIMI
    更新推广单元属性 T_APS_PROMOTION_CPC_ITEM
    保存推广单元详情数据
   调用kafka发送更新单元信息
+暂停一键推广中的商品
 
+？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？
 1.类目
 质量得分计算结果：
 {relateScore=10, qualityScore=10, detailList=[{score=10, qualityType=1, percent=1.0}], standardScore=1}
