@@ -102,7 +102,7 @@ grammar_cjkRuby: true
 |   VIEW |  /new/cpc/cpc_unit_select_product.ftl|
 |    *  |
 | **选择商品图片**    |  **Desc**    |
-|   URL  |  aps-sale-web/new/unit/selectProduct.htm?promotionId=16078106| 
+|   URL  |  aps-sale-web/new/unit/selectKeywordAndCatalog.htm?imgIndex=2&promotionId=16078106&productNum=000000011051101634| 
 |   VIEW |  /new/cpc/cpc_unit_select_picture.ftl|
 |    *  |
 | **设置投放位置**    |  **Desc**    |
@@ -573,51 +573,37 @@ productPicLinkUrl=http://productpre.cnsuning.com,
 
 > /ajax/unit/queryProduct.htm?date=1521804144793&productNum=000000011051101634&productType=2
 
-判断该商品是否已被计划下的单元占用 ==T_APS_PROMOTION_CPC.GOODS_CODE==
-``` sql
-	    	SELECT 
-	    		A.NAME
-	    	FROM 
-	    		T_APS_PROMOTION A,T_APS_PROMOTION_CPC B 
-			WHERE 
-				A.PROMOTION_ID=B.PROMOTION_ID 
-				AND A.USER_ID=:userId
-				<#if productType?exists>AND A.PRODUCT_TYPE = :productType</#if>
-				AND A.PROMOTION_STATUS !=8
-				AND B.GOODS_CODE=:productNum
-				AND A.ISACTIVE=1 
-				AND B.ISACTIVE=1
-```
-businessType: "priceText"
-dataExchangeInfo {
-  goodsCode: "000000011051101634"
-  cityCode: "025"
-  shopCode: "0070057240"
-  terminalType: "1"
-}
-http://admdspre.cnsuning.com/admdso/goods/textprice
-1.自营旗舰店账户：(USER_TYPE=4)&& 系统参数AD_QUERY_STATUS=1
+- 判断该商品是否已被计划下的单元占用 ==T_APS_PROMOTION_CPC.GOODS_CODE==
 
-2.sop外部商户需要查询商品状态信息：(USER_TYPE=2)&& 系统参数AD_QUERY_STATUS=1
-appliCode:供应商编码
-productQueryService.getProductStatus(GoodsCodeUtil.getValidGoodsCode(productNum),appliCode.substring(2))
- 需要查询商品状态信息 supplierType=C  [!=LT联营特卖商户]
-    {
-    type=00,   00：子码   01：通码 的商品编码不符合要求
-    status=Y 商品编码与商户匹配&&在售
-    }
-3.非自营旗舰店USER_TYPE!=4 
-调用rsf或esb接口查询商品相关信息
+- 查询商品信息
+    1.自营旗舰店账户：(USER_TYPE=4)&& 系统参数AD_QUERY_STATUS=1
+    
+    2.sop外部商户需要查询商品状态信息：(USER_TYPE=2)&& 系统参数AD_QUERY_STATUS=1
+    appliCode:供应商编码
+        productQueryService.getProductStatus(GoodsCodeUtil.getValidGoodsCode(productNum),appliCode.substring(2))
+         需要查询商品状态信息 supplierType=C  [!=LT联营特卖商户]
+            {
+            type=00,   00：子码   01：通码 的商品编码不符合要求
+            status=Y 商品编码与商户匹配&&在售
+            }
+    3.非自营旗舰店USER_TYPE!=4 
+    调用rsf或esb接口查询商品相关信息
+    
+    productQueryService.getProduct(productNum, appliCode)
+    scm上的scm.goodsinfo.intftype配置如果不存在或者配的是rsf，就使用商品中心的rsf接口查询商品信息
+    接口返回：
+    {returnCode=0, brandName=海尔(Haier), brandId=000070743, catentryId=null, partNumber=000000011051101634,     catentryName=11位商品编码测试003, categoryCode=R2403004, published=null, goodsName=11位商品编码测试003,     lastCatagoryId=258004, desc=3333333333333测试}
+   
+    将商品信息，存入session[USER.put("productInfo", prod)]
 
-productQueryService.getProduct(productNum, appliCode)
-scm上的scm.goodsinfo.intftype配置如果不存在或者配的是rsf，就使用商品中心的rsf接口查询商品信息
-接口返回：
-{returnCode=0, brandName=海尔(Haier), brandId=000070743, catentryId=null, partNumber=000000011051101634, catentryName=11位商品编码测试003, categoryCode=R2403004, published=null, goodsName=11位商品编码测试003, lastCatagoryId=258004, desc=3333333333333测试}
 
-result：
+跳转到 选择商品图片：
 {flag=true, datas={brandName=海尔(Haier), THIRD_PAGE_CODE=258004, catentryId=null, catentryName=11位商品编码测试003, categoryCode=R2403004, published=null, lastCatagoryId=258004, returnCode=0, FIRST_PAGE_CODE=157122, brandId=000070743, partNumber=000000011051101634, isInStock=false, goodsName=11位商品编码测试003, SECOND_PAGE_CODE=258003, desc=3333333333333测试, priceUrl=http://price1.suning.cn/webapp/wcs/stores/prdprice/11051101634_9173_0070057240_9-1.png}}
 
 二、选择商品图片
+
+>  aps-sale-web/new/unit/selectProduct.htm?promotionId=16078106
+
  cpcPromotionInfoProcessService.getProductPicUrl(productNum, user.get("shopId")))
  RSF查询商品图片版本信息，未查询到则按默认规则拼凑
  ![enter description here][1]
