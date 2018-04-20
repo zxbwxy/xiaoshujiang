@@ -632,10 +632,10 @@ editPromotionStatus(Integer.valueOf(ApsConstants.STATUS_1), promotionId);
 			WHERE
 			    PROMOTION_ID = :PROMOTION_ID
 ```
-1、校验是否大于系统默认最低日限额:KEYWORD_DAY_LOWER_PRICE
-2、校验每日预算表：批量验证每日日预算、并且在批量验证的时候， 获取今天的日预算
+1、校验 [用户设置的默认日限额]要大于系统默认最低日限额:KEYWORD_DAY_LOWER_PRICE
+2、校验每日预算表：批量验证每日日预算、并且在批量验证的时候， 获取今天[用户设置的默认日限额]
 3.如果推广计划在正常推广，则需要设置将今天的日预算与今日实时消耗金额做比较
- 非完成推广状态的推广计划的日预算不能调低至比当前实际消耗的金额还低
+  非完成推广状态!=4的推广计划，日预算不能调低至比当前实际消耗的金额还低
 ``` sql
 --sqlId:account.getNowCpcRealCostByPromotionId  |params:{promotionDate=2018-04-02, promotionId=16078106}
 	SELECT
