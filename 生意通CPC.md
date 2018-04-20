@@ -561,15 +561,19 @@ sqlId: standardPromotion.getPromotionUnitCount、standardPromotion.getPromotionU
 
 ## <span id="unitNew">单元：新建</span>
 一.选择商品
+1.查询推广计划信息，存入session[ user.put(Aps.PRO_INFO, proInfo);]（根据推广计划ID和productType:2生意通|4 店铺推广 获取推广计划）
+
+2.加载选择商品页面
 {promotionId=16078106,  userType=1, supplierType=C, shopId=0070057240, searchUrl=http://csearchpre.cnsuning.com/emall/cshop/queryByKeyword.do, 
 productPicUrl=http://uimgpre.cnsuning.com,
 productPicLinkUrl=http://productpre.cnsuning.com, 
-proInfo={PROMOTION_ID=16078106, NAME=zxbTest, START_DATE=2018-03-24 00:00:00.0, END_DATE=null, USER_LIMIT_AMOUNT=1000, CREATE_DATE=2018-03-23 16:11:05.741}}
-**商品查询**
-商户编码 18（左补0
-/ajax/unit/queryProduct.htm
-data : "date=1521804144793&productNum=000000011051101634&productType=2"
-该商品是否已被计划占用
+
+3.根据商品编码查询商品信息
+商户编码 18位（左补0）
+
+> /ajax/unit/queryProduct.htm?date=1521804144793&productNum=000000011051101634&productType=2
+
+判断该商品是否已被计划下的单元占用 ==T_APS_PROMOTION_CPC.GOODS_CODE==
 ``` sql
 	    	SELECT 
 	    		A.NAME
@@ -726,9 +730,10 @@ WITH BASE (KEYWORD,SCORE,SEARCH_NUM,POSITION_ID,PERCENT,AVGPRICE) AS (
   
 "cpcPositionControlGroup",cpcCommonService.queryAllPositionControlInfoByRelId(Long.parseLong(promotionId),1)
 
-**提交**
+**保存推广单元数据**
  selectWord.goSubmit('/ajax/unit/savePromotionUnit.htm');
 请求：
+``` json
 {
   "datas": "[{w:258004//类目,pId:100001033//广告位id,p:0.38//用户出价},{w:笔记本,p:0.10},{w:联想笔记本,p:0.10}]",
   "productNum": "000000011051101634",
@@ -757,6 +762,8 @@ WITH BASE (KEYWORD,SCORE,SEARCH_NUM,POSITION_ID,PERCENT,AVGPRICE) AS (
     }
   ]
 }
+```
+
 1.类目
 质量得分计算结果：
 {relateScore=10, qualityScore=10, detailList=[{score=10, qualityType=1, percent=1.0}], standardScore=1}
@@ -1227,8 +1234,33 @@ CPC个性化日预算表（指定计划某一天的日预算）
 t_aps_promotion_item
 推广计划属性表[投放时段（1001）、定向地域（1002）]
 
-T_APS_CPC_POSITION_CONTROL
-CPC广告位溢价表（广告位溢价与开关）
+|COLUNM|COMMENT
+|----|------
+|PROMOTION_ID      |推广计划ID
+|NAME              |推广计划名称
+|USER_ID           |广告主ID
+|PAY_TYPE          |广告计费模式：0：CPT； 1：CPM 2：CPC分类列表页 3: CPC搜索结果页'
+|PROMOTION_STATUS  |推广状态1：等待  2:暂停 3：正在 4：等待关联素材 8：完成 9：关闭     51：等待业务审核   52：等待设计创意审核 61：业务审核驳回62:设计创意审核驳回
+|STATUS            | 推广计划状态：0：暂停 1：正常
+|TOTAL_DAYS        |投放总天数
+|TOTAL_AMOUNT      |投放总金额
+|DEPARTMENT_ID     |推广计划所属事业部
+|CREATE_DATE       |操作日期
+|UPDATE_DATE       | 最后更新日期
+|STATUS_UPDATE_TIME| 状态变更时间
+|PRODUCT_TYPE      | 产品线类型:1.聚客宝 2.生意通 3.大聚惠 4.CPC店铺推广 5.一键优选
+|USER_LIMIT_AMOUNT | 推广计划日预算
+|START_DATE        |推广开始时间
+|END_DATE          | 推广结束时间,
+|ISACTIVE          | 推广计划是否删除 0 是，1 否
+|REGIST_ID         | 报名ID,
+|THROW_STAUS       | 
+|THROW_DISCOUNT    |
+|PROMOTION_MODE    | 推广方式，CPM广告位:0实时竞价 1 包段
+|POSITION          | 广告位对应的坑位,热搜词、默认词等管高位需要初始化坑位供投放使用
+[table T_APS_PROMOTION --推广计划表：记录推广计划信息']
+
+
 | COLUMN  |COMMENT|
 |---|---|
 |ID            |      主键
