@@ -77,22 +77,22 @@ grammar_cjkRuby: true
 |  TABLE | t_aps_promotion、t_aps_promotion_item(1001)  |
 |   CODE |   [计划：设置投放时间](#promotionSetThrowTime) |
 
-### 修改（定向）投放地域
+### 10.修改（定向）投放地域
 | Index  |  Desc    |
 | ---    | ---   |
 |   URL  | 列表页： aps/new/cpc/promotion/saveArea.htm?promotionId=16078106&throwArea=10+20</br></br>编辑页：aps/new/cpc_set_throwarea.htm?promotionId=16078106&areaStr=10 20 30| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
 |  TABLE | t_aps_promotion、t_aps_promotion_item(1002)   |
-|   CODE |   [修改定向地域](#promotionModifyArea) |
+|   CODE |   [计划：修改定向地域](#promotionModifyArea) |
 
 
 
-### 修改日限额
+### 11.修改日限额
 | Index  |  Desc    |
 | ---    | ---   |
 |   URL  |  查询：aps/customBudget/cpc_daycost_init_data.htm?promotionId=promotionId</br></br>设置：aps-sale-web/aps/customBudget/cpc_set_daycost.htm?</br>{	promotionId : promotionId,</br>cpcDayAmount: {"defaultUserLimitAmount":1000,"customData"::[{"date":"2018-04-02","userLimitAmount":1200},{"date":"2018-04-03","userLimitAmount":1300},{"date":"2018-04-04","userLimitAmount":1400}]}| 
 |  TABLE | t_aps_promotion  |
-|   CODE |   [修改日限额](#promotionModifyDayCost) |
+|   CODE |   [计划：修改日限额](#promotionModifyDayCost) |
 
 ## 推广单元
 ### 新建
@@ -611,6 +611,7 @@ editPromotionStatus(Integer.valueOf(ApsConstants.STATUS_1), promotionId);
 
 ## <span id="promotionModifyDayCost">计划：修改日限额</span>
 查询：aps/customBudget/cpc_daycost_init_data.htm?promotionId=promotionId
+设置：aps-sale-web/aps/customBudget/cpc_set_daycost.htm
 
 ``` sql
 --cpcDayAmount.getDayAmountByPromotionID
