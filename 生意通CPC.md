@@ -91,11 +91,11 @@ grammar_cjkRuby: true
 | Index  |  Desc    |
 | ---    | ---   |
 |   URL  |  查询：aps/customBudget/cpc_daycost_init_data.htm?promotionId=promotionId</br></br>设置：aps-sale-web/aps/customBudget/cpc_set_daycost.htm?</br>{	promotionId : promotionId,</br>cpcDayAmount: {"defaultUserLimitAmount":1000,"customData"::[{"date":"2018-04-02","userLimitAmount":1200},{"date":"2018-04-03","userLimitAmount":1300},{"date":"2018-04-04","userLimitAmount":1400}]}| 
-|  TABLE | t_aps_promotion  |
+|  TABLE | t_aps_promotion</br>  t_aps_promotion_custom_budget|
 |   CODE |   [计划：修改日限额](#promotionModifyDayCost) |
 
 ## 推广单元
-### 新建
+### 1.新建
 | 选择商品  |  Desc    |
 | ---    | ---   |
 |   URL  |  aps-sale-web/new/unit/selectProduct.htm?promotionId=16078106| 
@@ -113,7 +113,7 @@ grammar_cjkRuby: true
 
 
 
-### 删除
+### 2.删除
 | 删除推广单元  |  Desc    |
 | ---    | ---   |
 |   URL  |  /aps-sale-web/aps/new/cpc_delete_promotion_unit.htm</br>$.param({</br>	promotionId : '16078106',</br>	unitId : unitId</br>	}| 
@@ -121,14 +121,14 @@ grammar_cjkRuby: true
 |   CODE |   [新建推广单元](#unitDel) |
 
 
-### 暂停
+### 3.暂停
 | 暂停推广单元  |  Desc    |
 | ---    | ---   |
 |   URL  |aps/new/cpc_pause_promotion_unit.htm?promotionId=16078106&unitId=16105314| 
 |   VIEW |  /new/cpc/cpc_unit_select_product.ftl|
 |   CODE |   [暂停推广单元](#unitPause) |
 
-### 开始
+### 4.开始
 | 开始推广单元  |  Desc    |
 | ---    | ---   |
 |   URL  |  aps/new/cpc_resume_promotion_unit.htm?promotionId=16078106&unitId=16105314&productType=2| 
@@ -178,299 +178,7 @@ sqlId: standardPromotion.createPromotion   **T_APS_PROMOTION**
 
 
 ---------
-## <span id="unitNew">单元：新建</span>
-一.选择商品
-{promotionId=16078106,  userType=1, supplierType=C, shopId=0070057240, searchUrl=http://csearchpre.cnsuning.com/emall/cshop/queryByKeyword.do, 
-productPicUrl=http://uimgpre.cnsuning.com,
-productPicLinkUrl=http://productpre.cnsuning.com, 
-proInfo={PROMOTION_ID=16078106, NAME=zxbTest, START_DATE=2018-03-24 00:00:00.0, END_DATE=null, USER_LIMIT_AMOUNT=1000, CREATE_DATE=2018-03-23 16:11:05.741}}
-**商品查询**
-商户编码 18（左补0
-/ajax/unit/queryProduct.htm
-data : "date=1521804144793&productNum=000000011051101634&productType=2"
-该商品是否已被计划占用
-``` sql
-	    	SELECT 
-	    		A.NAME
-	    	FROM 
-	    		T_APS_PROMOTION A,T_APS_PROMOTION_CPC B 
-			WHERE 
-				A.PROMOTION_ID=B.PROMOTION_ID 
-				AND A.USER_ID=:userId
-				<#if productType?exists>AND A.PRODUCT_TYPE = :productType</#if>
-				AND A.PROMOTION_STATUS !=8
-				AND B.GOODS_CODE=:productNum
-				AND A.ISACTIVE=1 
-				AND B.ISACTIVE=1
-```
-businessType: "priceText"
-dataExchangeInfo {
-  goodsCode: "000000011051101634"
-  cityCode: "025"
-  shopCode: "0070057240"
-  terminalType: "1"
-}
-http://admdspre.cnsuning.com/admdso/goods/textprice
-1.自营旗舰店账户：(USER_TYPE=4)&& 系统参数AD_QUERY_STATUS=1
 
-2.sop外部商户需要查询商品状态信息：(USER_TYPE=2)&& 系统参数AD_QUERY_STATUS=1
-appliCode:供应商编码
-productQueryService.getProductStatus(GoodsCodeUtil.getValidGoodsCode(productNum),appliCode.substring(2))
- 需要查询商品状态信息 supplierType=C  [!=LT联营特卖商户]
-    {
-    type=00,   00：子码   01：通码 的商品编码不符合要求
-    status=Y 商品编码与商户匹配&&在售
-    }
-3.非自营旗舰店USER_TYPE!=4 
-调用rsf或esb接口查询商品相关信息
-
-productQueryService.getProduct(productNum, appliCode)
-scm上的scm.goodsinfo.intftype配置如果不存在或者配的是rsf，就使用商品中心的rsf接口查询商品信息
-接口返回：
-{returnCode=0, brandName=海尔(Haier), brandId=000070743, catentryId=null, partNumber=000000011051101634, catentryName=11位商品编码测试003, categoryCode=R2403004, published=null, goodsName=11位商品编码测试003, lastCatagoryId=258004, desc=3333333333333测试}
-
-result：
-{flag=true, datas={brandName=海尔(Haier), THIRD_PAGE_CODE=258004, catentryId=null, catentryName=11位商品编码测试003, categoryCode=R2403004, published=null, lastCatagoryId=258004, returnCode=0, FIRST_PAGE_CODE=157122, brandId=000070743, partNumber=000000011051101634, isInStock=false, goodsName=11位商品编码测试003, SECOND_PAGE_CODE=258003, desc=3333333333333测试, priceUrl=http://price1.suning.cn/webapp/wcs/stores/prdprice/11051101634_9173_0070057240_9-1.png}}
-
-二、选择商品图片
- cpcPromotionInfoProcessService.getProductPicUrl(productNum, user.get("shopId")))
- RSF查询商品图片版本信息，未查询到则按默认规则拼凑
- ![enter description here][1]
- 
- 三、设置投放位置
- aps-sale-web/new/unit/selectKeywordAndCatalog.htm?imgIndex=2&promotionId=16078106&productNum=000000011051101634&src=
-1.获取session中保存的商品信息
-```java
-   Map<String, Object> proInfo = (Map<String, Object>) user.get(Aps.PRO_INFO);
-        if (null == proInfo || proInfo.isEmpty()) {
-            proInfo = unitService.queryPromotionInfoById(promotionId);
-        }
-```
-```sql
- SELECT A.PROMOTION_ID,A.NAME,A.CREATE_DATE,B.START_DATE,B.END_DATE,B.USER_LIMIT_AMOUNT 
- FROM T_APS_PROMOTION A,T_APS_PROMOTION_CPC B 
- WHERE A.PROMOTION_ID = :promotionId AND A.PROMOTION_ID= B.PROMOTION_ID
-```
-2.查询系统推荐词：系统参数 KEYWORD_TOOLS_METHOD--1：数据平台
-三级目录关键词不够+二级目录关键词
-``` java
-     if ("1".equals(isNew)) {
-                //按照类目相关度、search_num降序排列(取20条)
-                recWordList = unitService.querySysRecWordsFromDataPlat(thirdCataId);
-            } else {
-                recWordList = unitService.querySysRecWords(thirdCataId);
-            }
-```
-``` sql
-WITH BASE (KEYWORD,SCORE,SEARCH_NUM,POSITION_ID,PERCENT,AVGPRICE) AS (
-			        SELECT 
-			                DISTINCT A.KEYWORD,
-			                ${score} SCORE,
-			                C.SEARCH_NUM,
-			                '100000001' AS POSITION_ID,
-			                decimal(ROUND(NVL(C.CLICK_PERCENT*100.0,0.0),2),10,2) AS percent,
-			                decimal(round(NVL(C.AVG_PRICE,0)/100.0,2),10,2) AS avgPrice
-			        FROM T_APS_KEYWORD_PAGE_REL A,T_APS_KEYWORD_TOOL_DATA_FRONT C 
-			        WHERE A.KEYWORD=C.KEYWORD 
-			                AND A.STATUS=1
-			                <#if thirdCode?exists && thirdCode != ''>
-								AND A.THIRD_PAGE_CODE = :thirdCode
-							</#if> 
-							<#if secondCode?exists && secondCode != ''>
-								AND A.SECOND_PAGE_CODE = :secondCode
-							</#if> 
-							<#if keywrods?exists && keywrods != ''>
-								AND A.KEYWORD NOT IN(:keywrods)
-							</#if> 
-			                AND EXISTS(SELECT 'X' FROM T_APS_SEARCH_KEYWORD B WHERE B.KEYWORD_NAME=A.KEYWORD)
-			        ORDER BY C.SEARCH_NUM DESC
-			        FETCH FIRST ${rowNum} ROWS ONLY
-			)
-			
-			SELECT E.*,NVL(P.COMPET_NUM,0) AS COMPET_NUM
-			FROM BASE E LEFT JOIN
-			(SELECT 
-			        D.NAME,COUNT(1) COMPET_NUM 
-			        FROM T_APS_CPC_PROMOTION_DATA D
-			        WHERE D.PROMOTION_TYPE=0  
-			        AND D.PROMOTION_DATE= CURRENT DATE 
-			        GROUP BY D.NAME
-			) P
-			ON E.KEYWORD = P.NAME WITH UR
-```
-
-3.查询系统推荐类目：系统参数  CATALOG_TOOLS_METHOD
- 
-
-``` sql
-     --	{thirdCode=258004, saleObj=1, secondCode='%!_258003!_%', status=1}
-     		SELECT A.LIST_SEQ,
-			        A.SCORE,
-			        A.LIST_SEQ as KEYWORD,
-			        A.NAME_SEQ,
-			        A.CODE_SEQ AS CODE,
-			        A.POSITION_ID,
-			        NVL(B.SEARCH_NUM,0) SEARCH_NUM,
-			        decimal(ROUND(NVL(B.CLICK_PERCENT*100.0,0.0),2),10,2) AS percent,
-			        decimal(round(NVL(B.AVG_PRICE,0)/100.0,2),10,2) AS avgPrice
-			FROM 
-			        (SELECT T1.LIST_SEQ,(CASE WHEN T1.CODE_SEQ=${thirdCode} THEN '100' ELSE '80' END ) SCORE,
-			        		T1.NAME_SEQ,T1.CODE_SEQ,T2.POSITION_ID 
-			         FROM T_APS_CPC_POSITION_REL T1,T_APS_ADS_POSITION T2 
-			         WHERE T1.LIST_SEQ LIKE ${secondCode} ESCAPE '!' AND T1.POSITION_ID=T2.POSITION_ID AND T1.STATUS = 1 
-			        AND T1.EFFECT_DATE <= current timestamp AND (T2.SALE_OBJ=2 OR T2.SALE_OBJ=:saleObj)) A 
-			LEFT JOIN
-			        (SELECT KEYWORD,SEARCH_NUM,CLICK_PERCENT,AVG_PRICE FROM T_APS_KEYWORD_TOOL_DATA_FRONT WHERE PROMOTION_TYPE=1) B
-			ON A.CODE_SEQ=B.KEYWORD
-			WITH UR
-```
-
-
-4.查询系统限制的三级类目,若该商品为限制类目下面的商品，
-则其投放的关键词不能夸三级类目，投放类目只能是该三级类目
-数据字典配置：THIRD_PAGE_LIMIT
-
-关键词系统最低出价KEYWORD_LOWER_PRICE
-类目系统最低出价LOCATION_LOWER_PRICE
- 
-     @ApsScmConf("scm.cpc.isShowYJQ")
-    private String isShowYJQ;
-
-    @ApsScmConf("scm.cpc.isShowYJQ")
-    private String isShowYJQ;
-  一键抢排名功能展示开关SCM配置
-    @ApsScmConf("scm.cpc.isShowMorePositionRank")
-    private String isShowMorePostionRank;
-  是否开启多广告位的预估排名
-  
-"cpcPositionControlGroup",cpcCommonService.queryAllPositionControlInfoByRelId(Long.parseLong(promotionId),1)
-
-**提交**
- selectWord.goSubmit('/ajax/unit/savePromotionUnit.htm');
-请求：
-{
-  "datas": "[{w:258004//类目,pId:100001033//广告位id,p:0.38//用户出价},{w:笔记本,p:0.10},{w:联想笔记本,p:0.10}]",
-  "productNum": "000000011051101634",
-  "promotionId": "16078106",
-  "needTodayRec": true,
-  "cpcUnitItemListJson": [
-    {
-      "itemCode": "1002",
-      "itemValue": "top3"
-      //前三名
-    },
-    {
-      "itemCode": "1003",
-      "itemValue": "10"
-      //溢价系数
-    },
-    {
-      "itemCode": "1004",
-      "itemValue": "1"
-      //一键抢 1：checked
-    },
-    {
-      "itemCode": "1001",
-      "itemValue": "2"
-      // 1：精准匹配 2：广泛匹配
-    }
-  ]
-}
-1.类目
-质量得分计算结果：
-{relateScore=10, qualityScore=10, detailList=[{score=10, qualityType=1, percent=1.0}], standardScore=1}
-
-
-
-分类编码层级
-
-``` sql
- 	SELECT LIST_SEQ  FROM T_APS_CPC_POSITION_REL WHERE STATUS=1 
-                                                     AND CODE_SEQ=258004 AND POSITION_ID = 100001033
-01_157122_258003_258004
-```
-
-
-根节点_一级目录_二级目录_三级目录
-**cataMap:**{FIRST_PAGE_CODE=157122, THIRD_PAGE_CODE=258004, SECOND_PAGE_CODE=258003}
-
-字典表AD_QUALITY_MATCH_SCORE 配置 质量得分分段及分数
-**scoreMap:**{1=10, 2=8, 3=4, 4=1}
-**goodsMap:**{brandName=海尔(Haier), THIRD_PAGE_CODE=258004, catentryId=null, catentryName=11位商品编码测试003, categoryCode=R2403004, published=null, lastCatagoryId=258004, returnCode=0, FIRST_PAGE_CODE=157122, brandId=000070743, partNumber=000000011051101634, isInStock=false, goodsName=11位商品编码测试003, SECOND_PAGE_CODE=258003, desc=3333333333333测试, priceUrl=http://price1.suning.cn/webapp/wcs/stores/prdprice/11051101634_9173_0070057240_9-1.png}
-
-> 得分 三级目录》二级目录》一级目录
-
-**weight：** 字典表 AD_QUALITY_PERCENT 配置权重 key==1对应的value/100
-
-
-相关度得分
-质量得分==cataMap跟goodsMap中目录匹配后(关联scoreMap)得分*权重
-
-
-
-2.关键词
-
-
-temp:{258004={positionId=100001033, price=38, relateScore=10, qualityScore=10, detailList=[{score=10, qualityType=1, percent=1.0}], standardScore=1}, 
-笔记本={positionId=100000001, price=10, relateScore=10, qualityScore=10, detailList=[{score=10, qualityType=1, percent=1.0}], standardScore=1, keyword=笔记本}}
-
-调用评价系统接口
-
-                maxSize = this.getReviewSizeConfig("MAX_CMMDTY_REVIEW_SIZE", 22);
-                minSize = this.getReviewSizeConfig("MIN_CMMDTY_REVIEW_SIZE", 8);
-                // 通过调用评价系统接口，推广商品的评价标签拼接信息，保存至pInfo中，准备下一步入库到推广单元表中 end
-                pInfo.put("jsonArr", jsonArr);
-                // 调用搜索商品中心ESB接口，查询子码对应的通码数据 start
-                String generalCmmdtyCode = generalCmmdtyCodeQueryService.getGeneralCmmdtyCodeByGoodsCode(productNum);
-
-保存推广单元数据
-seqId:SEQ_T_APS_PROMOTION_CPC
-sqlId:proUnit.persistCpcPromotion   INSERT INTO T_APS_PROMOTION_CPC
-	UPDATE T_APS_PROMOTION SET UPDATE_DATE = CURRENT TIMESTAMP,STATUS_UPDATE_TIME = CURRENT TIMESTAMP WHERE PROMOTION_ID = :promotionId
- 更新推广单元属性 proUnit.insertUnitItemList
-
-
-``` sql
-			INSERT
-			INTO
-			    T_APS_PROMOTION_CPC_ITEM
-			    (
-			        ID,
-			        CPC_PROMOTION_ID,
-			        ITEM_CODE,
-			        ITEM_VALUE,
-			        CREATE_DT
-			    )
-			    VALUES
-			    (
-			        nextval FOR SEQ_T_APS_CPC_UNIT_ITEM_ID,
-			        :cpcPromotionId,
-			        :itemCode,
-			        :itemValue,
-			        SYSDATE
-			    )
-```
-存储所有关键词/类目的信息，用于后续生成所有detail
-proUnit.persistCpcDetailNew INSERT	INTO T_APS_PROMOTION_CPC_DETAIL
-调用kafka发送逻辑
-
-暂停一键推广中的商品
- cpcOneThrow.queryPromotion
- 			SELECT P.PROMOTION_ID, P.USER_ID, P.PROMOTION_STATUS, P.STATUS,P.USER_LIMIT_AMOUNT AS DAY_AMOUNT, P.NAME,
-			(
-			        SELECT
-			            COUNT(1)
-			        FROM
-			            T_APS_CPC_PROMOTION_COST_OVER c
-			        WHERE
-			            c.PROMOTION_ID = P.PROMOTION_ID
-			        AND c.PROMOTION_DATE = :promotionDate) AS "COST_OVER",
-			        U.COMPANY_CODE, U.TYPE AS USER_TYPE
-			FROM T_APS_PROMOTION P INNER JOIN T_APS_USER U ON P.USER_ID=U.USER_ID
-			WHERE P.USER_ID=:userId AND P.PRODUCT_TYPE=:productType AND ISACTIVE=:isActive
-			
-
----------
 
 ## <span id="promotionModifyName">计划：修改推广名称</span>
 更新推广计划表 计划名称和更新时间 ==T_APS_PROMOTION（NAME、UPDATE_DATE）==
@@ -851,7 +559,299 @@ sqlId: standardPromotion.getPromotionUnitCount、standardPromotion.getPromotionU
 
 
 
+## <span id="unitNew">单元：新建</span>
+一.选择商品
+{promotionId=16078106,  userType=1, supplierType=C, shopId=0070057240, searchUrl=http://csearchpre.cnsuning.com/emall/cshop/queryByKeyword.do, 
+productPicUrl=http://uimgpre.cnsuning.com,
+productPicLinkUrl=http://productpre.cnsuning.com, 
+proInfo={PROMOTION_ID=16078106, NAME=zxbTest, START_DATE=2018-03-24 00:00:00.0, END_DATE=null, USER_LIMIT_AMOUNT=1000, CREATE_DATE=2018-03-23 16:11:05.741}}
+**商品查询**
+商户编码 18（左补0
+/ajax/unit/queryProduct.htm
+data : "date=1521804144793&productNum=000000011051101634&productType=2"
+该商品是否已被计划占用
+``` sql
+	    	SELECT 
+	    		A.NAME
+	    	FROM 
+	    		T_APS_PROMOTION A,T_APS_PROMOTION_CPC B 
+			WHERE 
+				A.PROMOTION_ID=B.PROMOTION_ID 
+				AND A.USER_ID=:userId
+				<#if productType?exists>AND A.PRODUCT_TYPE = :productType</#if>
+				AND A.PROMOTION_STATUS !=8
+				AND B.GOODS_CODE=:productNum
+				AND A.ISACTIVE=1 
+				AND B.ISACTIVE=1
+```
+businessType: "priceText"
+dataExchangeInfo {
+  goodsCode: "000000011051101634"
+  cityCode: "025"
+  shopCode: "0070057240"
+  terminalType: "1"
+}
+http://admdspre.cnsuning.com/admdso/goods/textprice
+1.自营旗舰店账户：(USER_TYPE=4)&& 系统参数AD_QUERY_STATUS=1
 
+2.sop外部商户需要查询商品状态信息：(USER_TYPE=2)&& 系统参数AD_QUERY_STATUS=1
+appliCode:供应商编码
+productQueryService.getProductStatus(GoodsCodeUtil.getValidGoodsCode(productNum),appliCode.substring(2))
+ 需要查询商品状态信息 supplierType=C  [!=LT联营特卖商户]
+    {
+    type=00,   00：子码   01：通码 的商品编码不符合要求
+    status=Y 商品编码与商户匹配&&在售
+    }
+3.非自营旗舰店USER_TYPE!=4 
+调用rsf或esb接口查询商品相关信息
+
+productQueryService.getProduct(productNum, appliCode)
+scm上的scm.goodsinfo.intftype配置如果不存在或者配的是rsf，就使用商品中心的rsf接口查询商品信息
+接口返回：
+{returnCode=0, brandName=海尔(Haier), brandId=000070743, catentryId=null, partNumber=000000011051101634, catentryName=11位商品编码测试003, categoryCode=R2403004, published=null, goodsName=11位商品编码测试003, lastCatagoryId=258004, desc=3333333333333测试}
+
+result：
+{flag=true, datas={brandName=海尔(Haier), THIRD_PAGE_CODE=258004, catentryId=null, catentryName=11位商品编码测试003, categoryCode=R2403004, published=null, lastCatagoryId=258004, returnCode=0, FIRST_PAGE_CODE=157122, brandId=000070743, partNumber=000000011051101634, isInStock=false, goodsName=11位商品编码测试003, SECOND_PAGE_CODE=258003, desc=3333333333333测试, priceUrl=http://price1.suning.cn/webapp/wcs/stores/prdprice/11051101634_9173_0070057240_9-1.png}}
+
+二、选择商品图片
+ cpcPromotionInfoProcessService.getProductPicUrl(productNum, user.get("shopId")))
+ RSF查询商品图片版本信息，未查询到则按默认规则拼凑
+ ![enter description here][1]
+ 
+ 三、设置投放位置
+ aps-sale-web/new/unit/selectKeywordAndCatalog.htm?imgIndex=2&promotionId=16078106&productNum=000000011051101634&src=
+1.获取session中保存的商品信息
+```java
+   Map<String, Object> proInfo = (Map<String, Object>) user.get(Aps.PRO_INFO);
+        if (null == proInfo || proInfo.isEmpty()) {
+            proInfo = unitService.queryPromotionInfoById(promotionId);
+        }
+```
+```sql
+ SELECT A.PROMOTION_ID,A.NAME,A.CREATE_DATE,B.START_DATE,B.END_DATE,B.USER_LIMIT_AMOUNT 
+ FROM T_APS_PROMOTION A,T_APS_PROMOTION_CPC B 
+ WHERE A.PROMOTION_ID = :promotionId AND A.PROMOTION_ID= B.PROMOTION_ID
+```
+2.查询系统推荐词：系统参数 KEYWORD_TOOLS_METHOD--1：数据平台
+三级目录关键词不够+二级目录关键词
+``` java
+     if ("1".equals(isNew)) {
+                //按照类目相关度、search_num降序排列(取20条)
+                recWordList = unitService.querySysRecWordsFromDataPlat(thirdCataId);
+            } else {
+                recWordList = unitService.querySysRecWords(thirdCataId);
+            }
+```
+``` sql
+WITH BASE (KEYWORD,SCORE,SEARCH_NUM,POSITION_ID,PERCENT,AVGPRICE) AS (
+			        SELECT 
+			                DISTINCT A.KEYWORD,
+			                ${score} SCORE,
+			                C.SEARCH_NUM,
+			                '100000001' AS POSITION_ID,
+			                decimal(ROUND(NVL(C.CLICK_PERCENT*100.0,0.0),2),10,2) AS percent,
+			                decimal(round(NVL(C.AVG_PRICE,0)/100.0,2),10,2) AS avgPrice
+			        FROM T_APS_KEYWORD_PAGE_REL A,T_APS_KEYWORD_TOOL_DATA_FRONT C 
+			        WHERE A.KEYWORD=C.KEYWORD 
+			                AND A.STATUS=1
+			                <#if thirdCode?exists && thirdCode != ''>
+								AND A.THIRD_PAGE_CODE = :thirdCode
+							</#if> 
+							<#if secondCode?exists && secondCode != ''>
+								AND A.SECOND_PAGE_CODE = :secondCode
+							</#if> 
+							<#if keywrods?exists && keywrods != ''>
+								AND A.KEYWORD NOT IN(:keywrods)
+							</#if> 
+			                AND EXISTS(SELECT 'X' FROM T_APS_SEARCH_KEYWORD B WHERE B.KEYWORD_NAME=A.KEYWORD)
+			        ORDER BY C.SEARCH_NUM DESC
+			        FETCH FIRST ${rowNum} ROWS ONLY
+			)
+			
+			SELECT E.*,NVL(P.COMPET_NUM,0) AS COMPET_NUM
+			FROM BASE E LEFT JOIN
+			(SELECT 
+			        D.NAME,COUNT(1) COMPET_NUM 
+			        FROM T_APS_CPC_PROMOTION_DATA D
+			        WHERE D.PROMOTION_TYPE=0  
+			        AND D.PROMOTION_DATE= CURRENT DATE 
+			        GROUP BY D.NAME
+			) P
+			ON E.KEYWORD = P.NAME WITH UR
+```
+
+3.查询系统推荐类目：系统参数  CATALOG_TOOLS_METHOD
+ 
+
+``` sql
+     --	{thirdCode=258004, saleObj=1, secondCode='%!_258003!_%', status=1}
+     		SELECT A.LIST_SEQ,
+			        A.SCORE,
+			        A.LIST_SEQ as KEYWORD,
+			        A.NAME_SEQ,
+			        A.CODE_SEQ AS CODE,
+			        A.POSITION_ID,
+			        NVL(B.SEARCH_NUM,0) SEARCH_NUM,
+			        decimal(ROUND(NVL(B.CLICK_PERCENT*100.0,0.0),2),10,2) AS percent,
+			        decimal(round(NVL(B.AVG_PRICE,0)/100.0,2),10,2) AS avgPrice
+			FROM 
+			        (SELECT T1.LIST_SEQ,(CASE WHEN T1.CODE_SEQ=${thirdCode} THEN '100' ELSE '80' END ) SCORE,
+			        		T1.NAME_SEQ,T1.CODE_SEQ,T2.POSITION_ID 
+			         FROM T_APS_CPC_POSITION_REL T1,T_APS_ADS_POSITION T2 
+			         WHERE T1.LIST_SEQ LIKE ${secondCode} ESCAPE '!' AND T1.POSITION_ID=T2.POSITION_ID AND T1.STATUS = 1 
+			        AND T1.EFFECT_DATE <= current timestamp AND (T2.SALE_OBJ=2 OR T2.SALE_OBJ=:saleObj)) A 
+			LEFT JOIN
+			        (SELECT KEYWORD,SEARCH_NUM,CLICK_PERCENT,AVG_PRICE FROM T_APS_KEYWORD_TOOL_DATA_FRONT WHERE PROMOTION_TYPE=1) B
+			ON A.CODE_SEQ=B.KEYWORD
+			WITH UR
+```
+
+
+4.查询系统限制的三级类目,若该商品为限制类目下面的商品，
+则其投放的关键词不能夸三级类目，投放类目只能是该三级类目
+数据字典配置：THIRD_PAGE_LIMIT
+
+关键词系统最低出价KEYWORD_LOWER_PRICE
+类目系统最低出价LOCATION_LOWER_PRICE
+ 
+     @ApsScmConf("scm.cpc.isShowYJQ")
+    private String isShowYJQ;
+
+    @ApsScmConf("scm.cpc.isShowYJQ")
+    private String isShowYJQ;
+  一键抢排名功能展示开关SCM配置
+    @ApsScmConf("scm.cpc.isShowMorePositionRank")
+    private String isShowMorePostionRank;
+  是否开启多广告位的预估排名
+  
+"cpcPositionControlGroup",cpcCommonService.queryAllPositionControlInfoByRelId(Long.parseLong(promotionId),1)
+
+**提交**
+ selectWord.goSubmit('/ajax/unit/savePromotionUnit.htm');
+请求：
+{
+  "datas": "[{w:258004//类目,pId:100001033//广告位id,p:0.38//用户出价},{w:笔记本,p:0.10},{w:联想笔记本,p:0.10}]",
+  "productNum": "000000011051101634",
+  "promotionId": "16078106",
+  "needTodayRec": true,
+  "cpcUnitItemListJson": [
+    {
+      "itemCode": "1002",
+      "itemValue": "top3"
+      //前三名
+    },
+    {
+      "itemCode": "1003",
+      "itemValue": "10"
+      //溢价系数
+    },
+    {
+      "itemCode": "1004",
+      "itemValue": "1"
+      //一键抢 1：checked
+    },
+    {
+      "itemCode": "1001",
+      "itemValue": "2"
+      // 1：精准匹配 2：广泛匹配
+    }
+  ]
+}
+1.类目
+质量得分计算结果：
+{relateScore=10, qualityScore=10, detailList=[{score=10, qualityType=1, percent=1.0}], standardScore=1}
+
+
+
+分类编码层级
+
+``` sql
+ 	SELECT LIST_SEQ  FROM T_APS_CPC_POSITION_REL WHERE STATUS=1 
+                                                     AND CODE_SEQ=258004 AND POSITION_ID = 100001033
+01_157122_258003_258004
+```
+
+
+根节点_一级目录_二级目录_三级目录
+**cataMap:**{FIRST_PAGE_CODE=157122, THIRD_PAGE_CODE=258004, SECOND_PAGE_CODE=258003}
+
+字典表AD_QUALITY_MATCH_SCORE 配置 质量得分分段及分数
+**scoreMap:**{1=10, 2=8, 3=4, 4=1}
+**goodsMap:**{brandName=海尔(Haier), THIRD_PAGE_CODE=258004, catentryId=null, catentryName=11位商品编码测试003, categoryCode=R2403004, published=null, lastCatagoryId=258004, returnCode=0, FIRST_PAGE_CODE=157122, brandId=000070743, partNumber=000000011051101634, isInStock=false, goodsName=11位商品编码测试003, SECOND_PAGE_CODE=258003, desc=3333333333333测试, priceUrl=http://price1.suning.cn/webapp/wcs/stores/prdprice/11051101634_9173_0070057240_9-1.png}
+
+> 得分 三级目录》二级目录》一级目录
+
+**weight：** 字典表 AD_QUALITY_PERCENT 配置权重 key==1对应的value/100
+
+
+相关度得分
+质量得分==cataMap跟goodsMap中目录匹配后(关联scoreMap)得分*权重
+
+
+
+2.关键词
+
+
+temp:{258004={positionId=100001033, price=38, relateScore=10, qualityScore=10, detailList=[{score=10, qualityType=1, percent=1.0}], standardScore=1}, 
+笔记本={positionId=100000001, price=10, relateScore=10, qualityScore=10, detailList=[{score=10, qualityType=1, percent=1.0}], standardScore=1, keyword=笔记本}}
+
+调用评价系统接口
+
+                maxSize = this.getReviewSizeConfig("MAX_CMMDTY_REVIEW_SIZE", 22);
+                minSize = this.getReviewSizeConfig("MIN_CMMDTY_REVIEW_SIZE", 8);
+                // 通过调用评价系统接口，推广商品的评价标签拼接信息，保存至pInfo中，准备下一步入库到推广单元表中 end
+                pInfo.put("jsonArr", jsonArr);
+                // 调用搜索商品中心ESB接口，查询子码对应的通码数据 start
+                String generalCmmdtyCode = generalCmmdtyCodeQueryService.getGeneralCmmdtyCodeByGoodsCode(productNum);
+
+保存推广单元数据
+seqId:SEQ_T_APS_PROMOTION_CPC
+sqlId:proUnit.persistCpcPromotion   INSERT INTO T_APS_PROMOTION_CPC
+	UPDATE T_APS_PROMOTION SET UPDATE_DATE = CURRENT TIMESTAMP,STATUS_UPDATE_TIME = CURRENT TIMESTAMP WHERE PROMOTION_ID = :promotionId
+ 更新推广单元属性 proUnit.insertUnitItemList
+
+
+``` sql
+			INSERT
+			INTO
+			    T_APS_PROMOTION_CPC_ITEM
+			    (
+			        ID,
+			        CPC_PROMOTION_ID,
+			        ITEM_CODE,
+			        ITEM_VALUE,
+			        CREATE_DT
+			    )
+			    VALUES
+			    (
+			        nextval FOR SEQ_T_APS_CPC_UNIT_ITEM_ID,
+			        :cpcPromotionId,
+			        :itemCode,
+			        :itemValue,
+			        SYSDATE
+			    )
+```
+存储所有关键词/类目的信息，用于后续生成所有detail
+proUnit.persistCpcDetailNew INSERT	INTO T_APS_PROMOTION_CPC_DETAIL
+调用kafka发送逻辑
+
+暂停一键推广中的商品
+ cpcOneThrow.queryPromotion
+ 			SELECT P.PROMOTION_ID, P.USER_ID, P.PROMOTION_STATUS, P.STATUS,P.USER_LIMIT_AMOUNT AS DAY_AMOUNT, P.NAME,
+			(
+			        SELECT
+			            COUNT(1)
+			        FROM
+			            T_APS_CPC_PROMOTION_COST_OVER c
+			        WHERE
+			            c.PROMOTION_ID = P.PROMOTION_ID
+			        AND c.PROMOTION_DATE = :promotionDate) AS "COST_OVER",
+			        U.COMPANY_CODE, U.TYPE AS USER_TYPE
+			FROM T_APS_PROMOTION P INNER JOIN T_APS_USER U ON P.USER_ID=U.USER_ID
+			WHERE P.USER_ID=:userId AND P.PRODUCT_TYPE=:productType AND ISACTIVE=:isActive
+			
+
+---------
 
 ## <span id="unitPause">单元：暂停</span>
 1.更新推广单元状态
