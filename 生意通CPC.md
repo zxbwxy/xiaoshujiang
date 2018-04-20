@@ -102,7 +102,7 @@ grammar_cjkRuby: true
 |   VIEW |  /new/cpc/cpc_unit_select_product.ftl|
 |    *  |
 | **选择商品图片**    |  **Desc**    |
-|   URL  |  aps-sale-web/new/unit/selectKeywordAndCatalog.htm?imgIndex=2&promotionId=16078106&productNum=000000011051101634| 
+|   URL  | aps-sale-web/new/unit/selectPicture.htm?productNum=000000000150016402&promotionId=16078241| 
 |   VIEW |  /new/cpc/cpc_unit_select_picture.ftl|
 |    *  |
 | **设置投放位置**    |  **Desc**    |
@@ -602,14 +602,17 @@ productPicLinkUrl=http://productpre.cnsuning.com,
 
 二、选择商品图片
 
->  aps-sale-web/new/unit/selectProduct.htm?promotionId=16078106
+> aps-sale-web/new/unit/selectPicture.htm?productNum=000000000150016402&promotionId=16078241
 
  cpcPromotionInfoProcessService.getProductPicUrl(productNum, user.get("shopId")))
  RSF查询商品图片版本信息，未查询到则按默认规则拼凑
  ![enter description here][1]
+ 获取图片索引imgIndex
  
  三、设置投放位置
- aps-sale-web/new/unit/selectKeywordAndCatalog.htm?imgIndex=2&promotionId=16078106&productNum=000000011051101634&src=
+
+>  aps-sale-web/new/unit/selectKeywordAndCatalog.htm?imgIndex=2&promotionId=16078106&productNum=000000011051101634&src=
+
 1.获取session中保存的商品信息
 ```java
    Map<String, Object> proInfo = (Map<String, Object>) user.get(Aps.PRO_INFO);
@@ -716,7 +719,7 @@ WITH BASE (KEYWORD,SCORE,SEARCH_NUM,POSITION_ID,PERCENT,AVGPRICE) AS (
   
 "cpcPositionControlGroup",cpcCommonService.queryAllPositionControlInfoByRelId(Long.parseLong(promotionId),1)
 
-**保存推广单元数据**
+**5.保存推广单元数据**
  selectWord.goSubmit('/ajax/unit/savePromotionUnit.htm');
 请求：
 ``` json
@@ -749,11 +752,25 @@ WITH BASE (KEYWORD,SCORE,SEARCH_NUM,POSITION_ID,PERCENT,AVGPRICE) AS (
   ]
 }
 ```
+**处理数据**
+5.1 取session中的商品信息，推广计划信息
+5.2 是否展示今日推荐
+5.3 判断是否重复推广
+5.4 查询系统限制的三级类目,若该商品为限制类目下面的商品，则其投放的关键词不能夸三级类目，投放类目只能是该三级类目
+``` sql
+SELECT T.DICT_CODE FROM T_APS_DICT_CODEMAP T WHERE T.CLASS_CODE='THIRD_PAGE_LIMIT'
+```
+**保存数据**
+   保存单元基本信息 T_APS_PROMOTION_CPC
+   保存或更新商品的价格数据 T_APS_GOODS_PRICE
+   更新推广计划信息，T_APS_PROMOTION.status_update_time,update_time
+   更新推广单元属性 T_APS_PROMOTION_CPC_ITEM
+   保存推广单元详情数据
+  调用kafka发送更新单元信息
 
 1.类目
 质量得分计算结果：
 {relateScore=10, qualityScore=10, detailList=[{score=10, qualityType=1, percent=1.0}], standardScore=1}
-
 
 
 分类编码层级
@@ -1219,6 +1236,8 @@ CPC个性化日预算表（指定计划某一天的日预算）
 
 t_aps_promotion_item
 推广计划属性表[投放时段（1001）、定向地域（1002）]
+t_aps_promotion_cpc_item
+推广单元属性表
 
 |COLUNM|COMMENT
 |----|------
