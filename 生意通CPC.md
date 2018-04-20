@@ -638,60 +638,33 @@ editPromotionStatus(Integer.valueOf(ApsConstants.STATUS_1), promotionId);
   非完成推广状态!=4的推广计划，日预算不能调低至比当前实际消耗的金额还低
 ``` sql
 --sqlId:account.getNowCpcRealCostByPromotionId  |params:{promotionDate=2018-04-02, promotionId=16078106}
+--查询推广计划指定日期实时消费金额
 	SELECT
 			    p.DAY_COST
 			FROM
-			    T_APS_RELEASE_CPC_PROMOTION p
+			    T_APS_RELEASE_CPC_PROMOT**IO*N p
 			WHERE
 			    p.PROMOTION_ID = :promotionId
-			AND p.PROMOTION_DATE = :promotionDate
+			AND p.PROMOTION_DATE =** :pro*motionDate
 ```
-cpcNowRealCost + maxDayCostIntervalPrice[CPC推广计划实时消耗金额上浮区间（单位分）]:系统配置 MAX_CPC_DAYCOST_INTERVAL_PRICE
+cpcNowRealCost + maxDayCostIntervalPrice[CPC推广计划实时消耗金额上浮区间（单位分）： MAX_CPC_DAYCOST_INTERVAL_PRICE]
 4.校验通过：
-更新推广计划日预算 -1：失败；0：成功
+  4.1 更新推广计划日预算:T_APS_PROMOTION.USER_LIMIT_AMOUNT
+  4.2 更新每日日预算表
+      ==cpcDayAmount.delDayAmoutByPromotionIDs (PROMOTION_DATE >= CURRENT DATE)、cpcDayAmount.batchInsertDayAmout |T_APS_PROMOTION_CUSTOM_BUDGET.USER_LIMIT_AMOUNT==
 
-``` sql
-			UPDATE T_APS_PROMOTION SET
-				NAME = :NAME, 
-				PAY_TYPE = :PAY_TYPE, 
-				PROMOTION_STATUS = :PROMOTION_STATUS, 
-				STATUS = :STATUS, 
-				TOTAL_DAYS = :TOTAL_DAYS, 
-				TOTAL_AMOUNT = :TOTAL_AMOUNT, 
-				DEPARTMENT_ID = :DEPARTMENT_ID, 
-				CREATE_DATE = :CREATE_DATE, 
-				UPDATE_DATE = CURRENT TIMESTAMP, 
-				STATUS_UPDATE_TIME = CURRENT TIMESTAMP, 
-				PRODUCT_TYPE = :PRODUCT_TYPE, 
-				USER_LIMIT_AMOUNT = <#if USER_LIMIT_AMOUNT??>:USER_LIMIT_AMOUNT<#else>NULL</#if>, 
-				START_DATE = <#if START_DATE?? && START_DATE != ''>:START_DATE<#else>NULL</#if>,
-				END_DATE = <#if END_DATE?? && END_DATE != ''>:END_DATE<#else>NULL</#if>
-			WHERE PROMOTION_ID = :PROMOTION_ID
-```
-更新每日日预算表
-sqlId:cpcDayAmount.delDayAmoutByPromotionIDs (PROMOTION_DATE >= CURRENT DATE)
-sqlId:cpcDayAmount.batchInsertDayAmout
-
-推广计划为正在推广，推广计划有正常推广的推广单元，并且不是余额不足状态，执行冻结操作
+5.推广计划为正在推广，推广计划有正常推广的推广单元，并且不是余额不足状态，执行冻结操作
 推广计划是否点爆
-
-``` java
- if (costOver > 0) {
-    // 如果日预算耗尽，修改日预算则发送推广单元数据
-    cpcFreezeRealTimeKafkaService.freezeAndSendUpdatePromotionWithAllUnit(promotionId, null);
-    apscommom_cpcBase.queryPromotionByPromotionId
-    apscommom_cpcDayAmount.getDefaultUserLimitAmount --默认日预算-T_APS_PROMOTION.USER_LIMIT_AMOUNT
-    apscommom_cpcKafka.getAllUnitIdInPromotion
-} else {
-   // 如果日预算未耗尽，则只发送推广计划数据
-   cpcFreezeRealTimeKafkaService.freezeAndSendUpdatePromotion(promotionId, null);
-}
-```
+如果日预算尽耗==costOver>0==，修改日预算则执行冻结，kafka发送更新所有推广单元信息
+如果日预算未耗尽，则执行冻结，，kafka只发送更新所有推广计划元信息
 根据推广计划ID删除点爆表中的记录
 
-注：冻结流程??
-   日限额=个性化日限额？个性化日预算：默认日预算、
-   
+**注：冻结流程//TODO**
+开始进行推广计划冻结过程
+  1.查询用户日限额==个性化日限额？个性化日预算：默认日预算==
+   *T_APS_PROMOTION.USER_LIMIT_AMOUNT、T_APS_PROMOTION_CUSTOM_BUDGET.USER_LIMIT_AMOUNT*
+  2.查询广告主资金账户信息[根据userId查T_APS_ACCOUNT]
+  
 sqlId:apscommom_cpcFreeze.getPromotionUserAccount
    	<!-- 查询广告主资金账户信息 -->
 	<sql id="getPromotionUserAccount">
