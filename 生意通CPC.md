@@ -1130,14 +1130,6 @@ http://admdspre.cnsuning.com/admdso/general-intf?key=h_saleCpcRT_plan_20180322_1
 SELECT SHOP_START_COUNT FROM T_APS_SHOP_SCORE WHERE  SHOP_ID = :companyCode
 
 
-
-    
-
-
-
- 
-
-
 ----------
 
 
