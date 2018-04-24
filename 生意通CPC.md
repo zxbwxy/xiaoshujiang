@@ -1087,24 +1087,29 @@ IS_OPEN_FOR_ALL|| thirdCataId in THIRD_PAGE_CODE_FOR_TODAY
 
 ## <span id="promotionList">计划：查询</span>
 
-首页：
-推广基本信息+商品点击等数据(调接口)
-aps-sale-web/aps/new/cpc_standard_promotion_list.htm
-？productType=2 商品推广  
-？productType=4 店铺推广
 
-view：
-new/cpc/cpc_standard_promotion_list.ftl
-加载页面
+
+> aps-sale-web/aps/new/cpc_standard_promotion_list.htm 
+> productType=2 商品推广 || productType=4 店铺推广
+
+**加载页面**
 1.默认查询时间、内部事业部账号需加载事业部下拉框[AD_PROMOTION_BUY_DEPARTMENT]
-2.控制是否开放店铺推广
+2.推广基本信息+商品点击等数据(调接口)
+3.控制是否开放店铺推广
 AD_CPC_SHOP_SWITCH(0不显示 1显示) && SOP合作商家主账号、SCS账号(userType in 2、3)
-3.productType=2 商品推广页面 new/cpc/cpc_standard_promotion_list.ftl
-4.productType=4  店铺推广页面
+4.productType=2 商品推广页面 new/cpc/cpc_standard_promotion_list.ftl
+5.productType=4 店铺推广页面
 判断用户店铺准入标准:
-4.1是否在黑名单字典中：AD_SHOP_ACCESS_BLACKLIST
-4.2店铺准入分数[>AD_SHOP_ACCESS_SCORE]
-4.3
+ > 是否在黑名单字典中：AD_SHOP_ACCESS_BLACKLIST
+> 店铺准入分数[>AD_SHOP_ACCESS_SCORE]
+SELECT SHOP_START_COUNT FROM T_APS_SHOP_SCORE WHERE  SHOP_ID = :companyCode
+
+
+2.1获取满足条件的计划
+2.2根据计划ID查询报表历史数据
+2.3
+
+
 code:
 ``` sql
 SELECT
@@ -1161,60 +1166,7 @@ public static final String  KEY_ALL_ORDER_AMOUNT="all_order_amount";//总订单�
 ```
 
 
-```sql
-SELECT
-  T.*,
-  (
-    SELECT COUNT(1)
-    FROM
-      T_APS_PROMOTION_CPC
-    WHERE
-      PROMOTION_ID = T.PROMOTION_ID
-      AND ISACTIVE = 1
-  )  AS CPCAMOUNT,
 
-  (
-    SELECT COUNT(1)
-    FROM
-      T_APS_PROMOTION_CPC
-    WHERE
-      PROMOTION_ID = T.PROMOTION_ID
-      AND ISACTIVE = 1 AND STATUS = 1--'0 是暂停，1 是正常';
-  ) AS CPC_PROMOTION_AMOUNT
-FROM
-  (
-    SELECT
-      ROW_NUMBER()
-      OVER (
-        ORDER BY P.UPDATE_DATE DESC ) AS ROW_NUM,
-      P.PROMOTION_ID,
-      P.PROMOTION_STATUS,
-      P.USER_LIMIT_AMOUNT,
-      P.UPDATE_DATE,
-      P.STATUS,
-      P.PAY_TYPE,
-      P.NAME,
-      O.ID                            AS "dayCost_over",
-      0                               AS SHOW_NUM,
-      0                               AS CLICK_NUM,
-      0                               AS CLICK_PERCENT,
-      0                               AS TODAY_COST,
-      0                               AS DAY_COST
-    FROM
-      T_APS_PROMOTION P
-      LEFT JOIN
-      T_APS_CPC_PROMOTION_COST_OVER O
-        ON P.PROMOTION_ID = O.PROMOTION_ID
-           AND O.PROMOTION_DATE = CHAR(CURRENT_DATE)
-    WHERE
-      P.PAY_TYPE = 2  --'广告计费模式：0：CPT；1：CPM 2：CPC分类列表页 3: CPC搜索结果页';
-      AND P.ISACTIVE = 1
-      AND P.USER_ID = 429004445
-      AND p.PRODUCT_TYPE = 2   --'产品线类型:1.聚客宝 2.生意通 3.大聚惠';
-      --AND P.PROMOTION_STATUS ？
-  ) T
-
-```
 
 
 ----------
