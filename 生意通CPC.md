@@ -1094,79 +1094,48 @@ IS_OPEN_FOR_ALL|| thirdCataId in THIRD_PAGE_CODE_FOR_TODAY
 
 **加载页面**
 1.默认查询时间、内部事业部账号需加载事业部下拉框[AD_PROMOTION_BUY_DEPARTMENT]
-2.推广基本信息+商品点击等数据(调接口)
+2.推广基本计划数据+商品点击等数据(调接口)
+>    2.1 获取满足条件的计划
+>    2.2 根据计划ID查询查询计划 当日数据+历史数据,进行合并
+
+>*当日数据 [提交订单不包括 成交订单 ]*
+总订单=直接提交订单+间接提交订单+直接成交订单+间接成交订单
+http://admdspre.cnsuning.com/admdso/general-intf?key=h_saleCpcRT_plan_20180322_16075927,h_saleCpcRT_plan_20180322_promotionId
+
+>*历史数据(startDate>CurrentDate) [提交订单 包括 成交订单]*   
+: 所以 ：总订单=直接提交订单+间接提交订单
+报表平台 
+==cpcRealtimeReport.queryRealtimePromotionPlanData  |t_cpc_promotion==
+==cpcRealtimeReport.queryRealtimePromotionUnitData  |t_cpc_promotion_unit==
+
+>2.3 添加可删除标识 ==完成推广||计划下无推广单元==
+
+>2.4 商品推广则添加地域和时段
+    T_APS_PROMOTION_ITEM
+    throwHours:T_APS_PROMOTION_ITEM.ITEM_CODE=1001 投放时段内|24h全天
+    throwArea:T_APS_PROMOTION_ITEM.ITEM_CODE=1002 定向区域|86全国
+
+
+
+
 3.控制是否开放店铺推广
-AD_CPC_SHOP_SWITCH(0不显示 1显示) && SOP合作商家主账号、SCS账号(userType in 2、3)
+>AD_CPC_SHOP_SWITCH(0不显示 1显示) && SOP合作商家主账号、SCS账号(userType in 2、3)
+
 4.productType=2 商品推广页面 new/cpc/cpc_standard_promotion_list.ftl
-5.productType=4 店铺推广页面
+
+5.productType=4 店铺推广页面 new/cpc_shop/cpc_promotion_shop_list.ftl
 判断用户店铺准入标准:
  > 是否在黑名单字典中：AD_SHOP_ACCESS_BLACKLIST
 > 店铺准入分数[>AD_SHOP_ACCESS_SCORE]
 SELECT SHOP_START_COUNT FROM T_APS_SHOP_SCORE WHERE  SHOP_ID = :companyCode
 
 
-2.1获取满足条件的计划
-2.2根据计划ID查询报表历史数据
-2.3
 
-
-code:
-``` sql
-SELECT
-  USER_ID,
-  COMPANY_CODE,
-  TYPE --'0：系统管理员 1：内部事业部账号 2：SOP合作商家主账号 3:SCS供应商账号,4:自营旗舰店账号,5虚拟币账户';
-FROM T_APS_USER
-WHERE USER_NAME = 'soppre0803@126.com'
-```
-
-
-{endDate=2018-03-22, userId=429004445, startDate=2018-03-22, productType=2, statusCode=-2}
-
- // 根据计划ID查询报表历史数据
-当日数据 
-    提交订单不包括 成交订单    所以 ： 总订单=直接提交订单+间接提交订单+直接成交订单+间接成交订单
-http://admdspre.cnsuning.com/admdso/general-intf?key=h_saleCpcRT_plan_20180322_16075927,h_saleCpcRT_plan_20180322_16078059
-历史数据(startDate>CurrentDate)    
-   提交订单 包括 成交订单  所以 ：总订单=直接提交订单+间接提交订单
-报表平台 apsReportService    
-QUERY_REALTIME_PROMOTION("cpcRealtimeReport.queryRealtimePromotionPlanData"),
-QUERY_REALTIME_PROMOTION_UNIT("cpcRealtimeReport.queryRealtimePromotionUnitData");
     
-public static final String  KEY_ALL_ORDER_NUM="all_order_num";//总订单数
-public static final String  KEY_ALL_ORDER_AMOUNT="all_order_amount";//总订单金额
 
-合并项： KEY_ALL_ORDER_AMOUNT,KEY_ALL_ORDER_NUM,KEY_CLICK,KEY_COST,KEY_PV
 
-//可删除标识
- PROMOTION_STATUS==8|| CPCAMOUNT==0
- // 如果是商品推广则添加地域和时段的
- apscommom_cpcBase.queryAllPromotionItemByPromotionId
+
  
-
-
-```sql
---'推广状态1：等待  2:暂停 3：正在 4：等待关联素材 8：完成 9：关闭     51：等待业务审核   52：等待设计创意审核 61：业务审核驳回62:设计创意审核驳回';
-    select count(promotion_id) 
-    	    	from t_aps_promotion p 
-    	    	where pay_type = 2 
-    	    	and p.isactive=1 and user_id = :userId
-    	    	and p.PRODUCT_TYPE = :productType
-    	    	<#if statusCode?? && statusCode != -1>
-					<#if statusCode == -2>
-						and p.PROMOTION_STATUS != 8
-					<#elseif statusCode==1||statusCode==3 >
-	                 AND p.PROMOTION_STATUS =:statusCode AND p.STATUS = 1
-	                <#elseif statusCode==2> 
-	                 AND (p.PROMOTION_STATUS =:statusCode OR p.STATUS = 0)
-					<#else>
-						and p.PROMOTION_STATUS = :statusCode
-					</#if>
-				</#if>
-```
-
-
-
 
 
 ----------
