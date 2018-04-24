@@ -1085,7 +1085,7 @@ IS_OPEN_FOR_ALL|| thirdCataId in THIRD_PAGE_CODE_FOR_TODAY
 12.修改并提交
 '/ajax/unit/savePromotionUnit.htm
 
-## <span id="promotionList">商品推广&& 店铺推广列表</span>
+## <span id="promotionList">计划：查询</span>
 
 首页：
 推广基本信息+商品点击等数据(调接口)
@@ -1093,10 +1093,18 @@ aps-sale-web/aps/new/cpc_standard_promotion_list.htm
 ？productType=2 商品推广  
 ？productType=4 店铺推广
 
-
 view：
 new/cpc/cpc_standard_promotion_list.ftl
-
+加载页面
+1.默认查询时间、内部事业部账号需加载事业部下拉框[AD_PROMOTION_BUY_DEPARTMENT]
+2.控制是否开放店铺推广
+AD_CPC_SHOP_SWITCH(0不显示 1显示) && SOP合作商家主账号、SCS账号(userType in 2、3)
+3.productType=2 商品推广页面 new/cpc/cpc_standard_promotion_list.ftl
+4.productType=4  店铺推广页面
+判断用户店铺准入标准:
+4.1是否在黑名单字典中：AD_SHOP_ACCESS_BLACKLIST
+4.2店铺准入分数[>AD_SHOP_ACCESS_SCORE]
+4.3
 code:
 ``` sql
 SELECT
@@ -1106,8 +1114,7 @@ SELECT
 FROM T_APS_USER
 WHERE USER_NAME = 'soppre0803@126.com'
 ```
-控制是否开放店铺推广
-系统参数AD_CPC_SHOP_SWITCH==1 && (TYPE==2||TYPE==23)
+
 
 {endDate=2018-03-22, userId=429004445, startDate=2018-03-22, productType=2, statusCode=-2}
 
