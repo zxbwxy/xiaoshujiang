@@ -1131,7 +1131,59 @@ SELECT SHOP_START_COUNT FROM T_APS_SHOP_SCORE WHERE  SHOP_ID = :companyCode
 
 
 ----------
+## <span id="onthrow">一键优选</span>
 
+> new/cpc/promotion/onethrow.htm
+	new/cpc/cpc_unit_onethrow.ftl
+	
+**加载页面**
+
+1.查询广告主的一键优选计划 （T_APS_PROMOTION,userId, productType=5）
+
+2.查询是否有正在进行的一键优选任务（userId,TASK_STATUS IN(W,D),TASK_TYPE:'1' UPDATE）
+>如果是开始投放(TASK_TYPE:'1')任务，则读取任务中的数据（日限额dayAmount，溢价系数pricePercent）
+
+3.如果没有一键优选任务，存在一键优选计划
+>日限额 ==T_APS_PROMOTION.USER_LIMIT_AMMOUNT==，溢价系数 ==T_APS_CPC_POSITION_CONTROL.DISCOUNT==
+
+4.有正在进行中的计划任务(TASK_STATUS W,D)或计划(PROMOTION_STATUS:3,STATUS=1)，则设置页面不可编辑
+
+5.获取商品信息 
+- 存在一键优选计划,商品取推广单元中的商品信息（编码和名称）
+> SELECT CPC_PROMOTION_ID, GOODS_NAME , GOODS_CODE  FROM T_APS_PROMOTION_CPC
+
+- 不存在优选计划，从数据平台获取数据、过滤出返回数据中的 在推商品编码 ==T_APS_PROMOTION_CPC.GOODS_CODE==
+
+
+**开始、暂停推广** 
+> aps/new/cpc/promotion/onethrow/sendTask.htm
+{"taskType": 1：开始 2：暂停, "dayAmount" : dayAmount, "pricePercent": pricePercent},
+
+1.校验参数
+日限额最低为50、出价范围错误，0%<出价调整范围<=300%
+
+2.是否展示一键优选 
+ 非sop，不展示一键投放
+ 系统配置，CPC_ONETHROW_SWITCH：总开关[ALL,CLOSE,LIST<CPC_ONETHROW_WHITE_LIST字典>]
+ >无展示权限，提示 "no_right" : "此功能暂不开放"
+ 
+3.查询广告主一键优选计划 （userId, productType=5）
+
+4.查询是否有正在进行的一键优选任务（userId,TASK_STATUS IN(W,D),TASK_TYPE:'1' UPDATE）
+>如果有，提示"hasdoing" : "任务进行中，请稍后再试"
+
+5.如果没有一键优选任务，则构建新任务
+5.1 如果是==开始推广==，比较页面输入日预算是否低于日消耗         
+　　当日实时消耗:T_APS_RELEASE_CPC_PROMOTION.DAY_COST+MAX_CPC_DAYCOST_INTERVAL_PRICE（浮动区间）
+ >低于，提示"low_amount" : "日限额低于已消耗金额，请调整"
+ >不低于，设置新任务的日预算、溢价系数
+ 
+5.2 创建新任务 [T_APS_CPC_ONETHROW_TASK]
+5.3 kafka发送任务
+5.4 删除预算耗完记录 [T_APS_CPC_PROMOTION_COST_OVER]
+
+**表格数据**
+根据计划ID查询查询计划 当日数据+历史数据,进行合并，同 **计划：查询**
 
 ## <span id="promotionDetail">推广计划报表</span>
 Table:
