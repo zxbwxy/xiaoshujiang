@@ -1140,7 +1140,7 @@ IS_OPEN_FOR_ALL|| thirdCataId in THIRD_PAGE_CODE_FOR_TODAY
 
 
 ----------
-## <span id="onthrow">一键优选</span>
+## <span id="onethrow">一键优选</span>
 
 > new/cpc/promotion/onethrow.htm
 	new/cpc/cpc_unit_onethrow.ftl
@@ -1195,20 +1195,15 @@ IS_OPEN_FOR_ALL|| thirdCataId in THIRD_PAGE_CODE_FOR_TODAY
 
 ## <span id="promotionDetail">推广计划报表</span>
 Table:
-t_cpc_yxb_promotion_7day、_15day
-t_cpc_promotion_hour_7day、_15day
+t_cpc_yxb_promotion、t_cpc_yxb_promotion_7day、_15day
+t_cpc_yxb_promotion_hour、t_cpc_promotion_hour_7day、_15day
  
-1.	数据总览
-    点击量 CLICK_NUM
-    点击率 CLICK_NUM/SHOW_NUM
-    花费 COST
-    平均点击花费 COST/CLICK_NUM
-    投入产出比 TOTAL_SUBMIT_AMOUNT/COST --总提交金额（单位：分）/花费
-2.	时间趋势图
-3.	表格:各计划数据概览+下载（底部添加合计行）
+1.	数据总览[用户维度]
+2.	时间趋势图[时间维度]
+3.	表格:各计划数据展示+下载（??底部添加合计行）【计划维度】
 4.	详情[promotionId]
-    4.1分时
-    4.2分日
+    4.1分时 t_cpc_yxb_promotion
+    4.2分日 t_cpc_yxb_promotion_hour
 
 ## <span id="promotionDetail">推广单元报表</span>
 
