@@ -1201,7 +1201,7 @@ t_cpc_yxb_promotion_hour、t_cpc_promotion_hour_7day、t_cpc_yxb_promotion_15day
  
 1.	数据总览[用户维度]
 2.	时间趋势图[时间维度]
-3.	表格:各计划数据展示+下载（??底部添加合计行）[计划维度]
+3.	表格:各计划数据展示+下载（底部添加合计行）[计划维度]
 4.	详情[by promotionId]
     4.1分时 t_cpc_yxb_promotion
     4.2分日 t_cpc_yxb_promotion_hour
@@ -1214,7 +1214,7 @@ t_cpc_yxb_promotion_unit_hour、t_cpc_promotion_unit_hour_7day、t_cpc_yxb_promo
  
 1.	数据总览[用户维度]
 2.	时间趋势图[时间维度]
-3.	表格:各单元数据展示+下载（??底部添加合计行）[计划维度]
+3.	表格:各单元数据展示+下载（底部添加合计行）[计划维度]
 4.	详情[by cpcPromotionId]
     4.1分时 t_cpc_yxb_promotion_unit
     4.2分日 t_cpc_yxb_promotion_unit_hour
