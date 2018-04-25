@@ -153,9 +153,12 @@ grammar_cjkRuby: true
 
 # 投放报表
 ## 4.
-|   推广计划报表  | [推广计划报表](#report-promotion)| 
-|   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
-|   CODE |   [推广计划_查询](#promotion_report)   |
+|   推广计划报表  | [推广计划报表](#promotion-report)| 
+|   推广单元报表 |   [推广单元报表](#unit-report)  |
+|   类目推广报表 |   [类目推广报表](#catalog_report)   |
+|   搜索推广报表 |   [搜索推广报表](#search_report)   |
+|   关键词报表 |   [关键词报表](#keyword_report)   |
+|   一键优选 |   [一键优选](#onethorw_report)   |
 
 
 ----------
