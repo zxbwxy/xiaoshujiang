@@ -183,6 +183,52 @@ sqlId: standardPromotion.createPromotion   **T_APS_PROMOTION**
 4.记录用户操作日志
 
 
+----------
+## <span id="promotionList">计划：查询</span>
+
+
+
+> aps-sale-web/aps/new/cpc_standard_promotion_list.htm 
+> productType=2 商品推广 || productType=4 店铺推广
+
+**加载页面**
+1.默认查询时间、内部事业部账号需加载事业部下拉框[AD_PROMOTION_BUY_DEPARTMENT]
+2.推广基本计划数据+商品点击等数据(调接口)
+>    2.1 获取满足条件的计划
+>    2.2 根据计划ID查询查询计划 当日数据+历史数据,进行合并
+
+>*当日数据 [提交订单不包括 成交订单 ]*
+总订单=直接提交订单+间接提交订单+直接成交订单+间接成交订单
+http://admdspre.cnsuning.com/admdso/general-intf?key=h_saleCpcRT_plan_20180322_16075927,h_saleCpcRT_plan_20180322_promotionId
+
+>*历史数据(startDate>CurrentDate) [提交订单 包括 成交订单]*   
+: 所以 ：总订单=直接提交订单+间接提交订单
+报表平台 
+==cpcRealtimeReport.queryRealtimePromotionPlanData  |t_cpc_promotion==
+==cpcRealtimeReport.queryRealtimePromotionUnitData  |t_cpc_promotion_unit==
+
+>2.3 添加可删除标识 ==完成推广||计划下无推广单元==
+
+>2.4 商品推广则添加地域和时段
+    T_APS_PROMOTION_ITEM
+    throwHours:T_APS_PROMOTION_ITEM.ITEM_CODE=1001 投放时段内|24h全天
+    throwArea:T_APS_PROMOTION_ITEM.ITEM_CODE=1002 定向区域|86全国
+
+
+
+
+3.控制是否开放店铺推广
+>AD_CPC_SHOP_SWITCH(0不显示 1显示) && SOP合作商家主账号、SCS账号(userType in 2、3)
+
+4.productType=2 商品推广页面 new/cpc/cpc_standard_promotion_list.ftl
+
+5.productType=4 店铺推广页面 new/cpc_shop/cpc_promotion_shop_list.ftl
+判断用户店铺准入标准:
+ > 是否在黑名单字典中：AD_SHOP_ACCESS_BLACKLIST
+> 店铺准入分数[>AD_SHOP_ACCESS_SCORE]
+SELECT SHOP_START_COUNT FROM T_APS_SHOP_SCORE WHERE  SHOP_ID = :companyCode
+
+
 
 ---------
 
@@ -1091,50 +1137,6 @@ IS_OPEN_FOR_ALL|| thirdCataId in THIRD_PAGE_CODE_FOR_TODAY
 
 12.修改并提交
 '/ajax/unit/savePromotionUnit.htm
-
-## <span id="promotionList">计划：查询</span>
-
-
-
-> aps-sale-web/aps/new/cpc_standard_promotion_list.htm 
-> productType=2 商品推广 || productType=4 店铺推广
-
-**加载页面**
-1.默认查询时间、内部事业部账号需加载事业部下拉框[AD_PROMOTION_BUY_DEPARTMENT]
-2.推广基本计划数据+商品点击等数据(调接口)
->    2.1 获取满足条件的计划
->    2.2 根据计划ID查询查询计划 当日数据+历史数据,进行合并
-
->*当日数据 [提交订单不包括 成交订单 ]*
-总订单=直接提交订单+间接提交订单+直接成交订单+间接成交订单
-http://admdspre.cnsuning.com/admdso/general-intf?key=h_saleCpcRT_plan_20180322_16075927,h_saleCpcRT_plan_20180322_promotionId
-
->*历史数据(startDate>CurrentDate) [提交订单 包括 成交订单]*   
-: 所以 ：总订单=直接提交订单+间接提交订单
-报表平台 
-==cpcRealtimeReport.queryRealtimePromotionPlanData  |t_cpc_promotion==
-==cpcRealtimeReport.queryRealtimePromotionUnitData  |t_cpc_promotion_unit==
-
->2.3 添加可删除标识 ==完成推广||计划下无推广单元==
-
->2.4 商品推广则添加地域和时段
-    T_APS_PROMOTION_ITEM
-    throwHours:T_APS_PROMOTION_ITEM.ITEM_CODE=1001 投放时段内|24h全天
-    throwArea:T_APS_PROMOTION_ITEM.ITEM_CODE=1002 定向区域|86全国
-
-
-
-
-3.控制是否开放店铺推广
->AD_CPC_SHOP_SWITCH(0不显示 1显示) && SOP合作商家主账号、SCS账号(userType in 2、3)
-
-4.productType=2 商品推广页面 new/cpc/cpc_standard_promotion_list.ftl
-
-5.productType=4 店铺推广页面 new/cpc_shop/cpc_promotion_shop_list.ftl
-判断用户店铺准入标准:
- > 是否在黑名单字典中：AD_SHOP_ACCESS_BLACKLIST
-> 店铺准入分数[>AD_SHOP_ACCESS_SCORE]
-SELECT SHOP_START_COUNT FROM T_APS_SHOP_SCORE WHERE  SHOP_ID = :companyCode
 
 
 ----------
