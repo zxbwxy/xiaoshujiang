@@ -1194,18 +1194,30 @@ IS_OPEN_FOR_ALL|| thirdCataId in THIRD_PAGE_CODE_FOR_TODAY
 根据计划ID查询查询计划 当日数据+历史数据,进行合并，同 **计划：查询**
 
 ## <span id="promotionDetail">推广计划报表</span>
+从报表平台获取计划数据
 Table:
-t_cpc_yxb_promotion、t_cpc_yxb_promotion_7day、_15day
-t_cpc_yxb_promotion_hour、t_cpc_promotion_hour_7day、_15day
+t_cpc_yxb_promotion、t_cpc_yxb_promotion_7day、t_cpc_yxb_promotion_15day
+t_cpc_yxb_promotion_hour、t_cpc_promotion_hour_7day、t_cpc_yxb_promotion_15day
  
 1.	数据总览[用户维度]
 2.	时间趋势图[时间维度]
-3.	表格:各计划数据展示+下载（??底部添加合计行）【计划维度】
-4.	详情[promotionId]
+3.	表格:各计划数据展示+下载（??底部添加合计行）[计划维度]
+4.	详情[by promotionId]
     4.1分时 t_cpc_yxb_promotion
     4.2分日 t_cpc_yxb_promotion_hour
 
 ## <span id="promotionDetail">推广单元报表</span>
+从报表平台获取数据
+Table:
+t_cpc_yxb_promotion_unit、t_cpc_yxb_promotion_unit_7day、t_cpc_yxb_promotion_unit_15day
+t_cpc_yxb_promotion_unit_hour、t_cpc_promotion_unit_hour_7day、t_cpc_yxb_promotion_unit_15day
+ 
+1.	数据总览[用户维度]
+2.	时间趋势图[时间维度]
+3.	表格:各单元数据展示+下载（??底部添加合计行）[计划维度]
+4.	详情[by cpcPromotionId]
+    4.1分时 t_cpc_yxb_promotion_unit
+    4.2分日 t_cpc_yxb_promotion_unit_hour
 
 
 T_APS_PROMOTION_CUSTOM_BUDGET
