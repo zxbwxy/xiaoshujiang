@@ -1195,7 +1195,11 @@ IS_OPEN_FOR_ALL|| thirdCataId in THIRD_PAGE_CODE_FOR_TODAY
 **表格数据**
 根据计划ID查询查询计划 当日数据+历史数据,进行合并，同 **计划：查询**
 
-## <span id="promotionDetail">推广计划报表</span>
+</br>
+----------
+
+
+## <span id="promotion-report">推广计划报表</span>
 从报表平台获取计划数据
 Table:
 t_cpc_yxb_promotion、t_cpc_yxb_promotion_7day、t_cpc_yxb_promotion_15day
@@ -1209,7 +1213,7 @@ t_cpc_yxb_promotion_hour、t_cpc_promotion_hour_7day、t_cpc_yxb_promotion_15day
     4.2分日 t_cpc_yxb_promotion_hour
 
 ## <span id="promotionDetail">推广单元报表</span>
-从报表平台获取数据
+从报表平台获取单元数据
 Table:
 t_cpc_yxb_promotion_unit、t_cpc_yxb_promotion_unit_7day、t_cpc_yxb_promotion_unit_15day
 t_cpc_yxb_promotion_unit_hour、t_cpc_promotion_unit_hour_7day、t_cpc_yxb_promotion_unit_15day
