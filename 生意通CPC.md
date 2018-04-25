@@ -1343,15 +1343,15 @@ new/report/promotion_unit_rep_type_detail.ftl
   竞争度:t_aps_promotion_cpc_detail count(keyword) <promotionCount
   关键词:t_aps_search_keyword.keyword_name 
   搜索次数:t_aps_keyword_tool_data_front.search_num
-  点击率 :t_aps_keyword_tool_data_front.click_percent
+  点击率:t_aps_keyword_tool_data_front.click_percent
   平均出价(元):t_aps_keyword_tool_data_front.avg_price
 
 
-2.获取已有关键词模板
-    select template_id as templateId, template_name as templateName
-            from T_APS_TEMPLATE
-            where user_id=:userID
-            order by create_time asc
+2.获取已有关键词模板 **T_APS_TEMPLATE**.TEMPLATE_ID
+3.更新关键词模板 **T_APS_TEMPLATE_DETAIL**
+　执行添加到模板 aps/new/toolsAddToTemplate.htm { keywords : keywordsList,templateId : templateId }
+
+
 
 
 
