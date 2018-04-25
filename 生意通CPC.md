@@ -95,7 +95,7 @@ grammar_cjkRuby: true
 |   CODE |   [计划：修改日限额](#promotionModifyDayCost) |
 
 ### 12.一键优选计划
-| 删除推广单元  |  Desc    |
+| 一键优选计划  |  Desc    |
 | ---    | ---   |
 |   URL  |  加载：new/cpc/promotion/onethrow.htm</br>开始、暂停推广： aps/new/cpc/promotion/onethrow/sendTask.htm</br>表格：aps/new/cpc/onethrow/promotionInfo.htm	</br>| 
 |   VIEW | new/cpc/cpc_unit_onethrow.ftl|
