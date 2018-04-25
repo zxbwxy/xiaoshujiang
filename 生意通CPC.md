@@ -152,7 +152,8 @@ grammar_cjkRuby: true
 
 
 # 投放报表
-## 4.
+| 报表  |  herf    |
+| ---    | ---   |
 |   推广计划报表  | [推广计划报表](#promotion-report)| 
 |   推广单元报表 |   [推广单元报表](#unit-report)  |
 |   类目推广报表 |   [类目推广报表](#catalog_report)   |
