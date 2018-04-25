@@ -1335,7 +1335,7 @@ t_aps_promotion_cpc_item
 |USER_ID           |广告主ID
 |PAY_TYPE          |广告计费模式：0：CPT； 1：CPM 2：CPC分类列表页 3: CPC搜索结果页'
 |PROMOTION_STATUS  |推广状态1：等待  2:暂停 3：正在 
-|STATUS            | 推广计划状态：0：暂停 1：正常
+|STATUS            | 推广计划状态：0：暂停(余额不足) 1：正常
 |TOTAL_DAYS        |投放总天数
 |TOTAL_AMOUNT      |投放总金额
 |DEPARTMENT_ID     |推广计划所属事业部
