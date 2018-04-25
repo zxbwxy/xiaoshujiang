@@ -1238,18 +1238,26 @@ t_cpc_promotion_type、t_cpc_promotion_type_7days、t_cpc_promotion_type_15days
 
  按投放终端区分推广计划类型productType 移动端：2,5
  
-## <span id="keyword-report">关键词推广报表</span>
+## <span id="keyword-report">搜索推广报表</span>
  >aps-sale-web/new/rep/search_report.htm
+ >/new/report/report_search_list.ftl
  
  Table:
- t_cpc_keyword、 t_cpc_keyword_7days、t_cpc_promotion_type_15days
-1.	数据总览[用户维度]
+ t_cpc_promotion_search、 t_cpc_promotion_search_7days、t_cpc_promotion_search_15days
+1. 数据总览[用户维度]
 2. 时间趋势图[时间维度/COUNT_DATE]
 3. 表格:各关键词数据展示+下载（底部添加合计行）[KEYWORD维度]
  按投放终端区分推广计划类型productType 移动端：2 、PC端：2,4
- 分日详情页面
+4. 分日详情页面[by KEYWORD]
 
-
+## <span id="keyword-report">关键词推广报表</span>
+ Table:
+ t_cpc_keyword、 t_cpc_keyword_7days、t_cpc_promotion_type_15days
+1. 数据总览[用户维度]
+2. 时间趋势图[时间维度/COUNT_DATE]
+3. 表格:各关键词数据展示+下载（底部添加合计行）[KEYWORD维度]
+ 按投放终端区分推广计划类型productType 移动端：2 、PC端：2,4
+4. 分日详情页面[by KEYWORD]
 
 # 表记录
 T_APS_PROMOTION_CUSTOM_BUDGET
