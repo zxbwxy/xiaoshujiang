@@ -1229,7 +1229,7 @@ t_cpc_yxb_promotion_unit_hour、t_cpc_promotion_unit_hour_7day、t_cpc_yxb_promo
 > aps-sale-web/aps/new/report/catalog/overview.htm
 
 Table:
-t_cpc_promotion_type、t_cpc_promotion_type_7days、t_cpc_promotion_type——15days
+t_cpc_promotion_type、t_cpc_promotion_type_7days、t_cpc_promotion_type_15days
 1.	数据总览[用户维度]
 2.	时间趋势图[时间维度]
 
@@ -1239,9 +1239,16 @@ t_cpc_promotion_unit、t_cpc_promotion_unit_7days、t_cpc_promotion_unit_15days
 
  按投放终端区分推广计划类型 移动端：2,5
  
-## <span id="keyword-report">类目推广报表</span>
- aps-sale-web/new/rep/search_report.htm
-
+## <span id="keyword-report">关键词推广报表</span>
+ >aps-sale-web/new/rep/search_report.htm
+ 
+ Table:
+ t_cpc_keyword、 t_cpc_keyword_7days、t_cpc_promotion_type_15days
+ 1.	数据总览[用户维度]
+ 2.时间趋势图[时间维度/COUNT_DATE]
+3.	表格:各关键词数据展示+下载（底部添加合计行）[KEYWORD维度]
+ 按投放终端区分推广计划类型 移动端：2 、PC端：2,4
+ 
 # 表记录
 T_APS_PROMOTION_CUSTOM_BUDGET
 CPC个性化日预算表（指定计划某一天的日预算）
