@@ -1212,7 +1212,7 @@ t_cpc_yxb_promotion_hour、t_cpc_promotion_hour_7day、t_cpc_yxb_promotion_15day
     4.1分时 t_cpc_yxb_promotion
     4.2分日 t_cpc_yxb_promotion_hour
 
-## <span id="promotionDetail">推广单元报表</span>
+## <span id="unit-report">推广单元报表</span>
 从报表平台获取单元数据
 Table:
 t_cpc_yxb_promotion_unit、t_cpc_yxb_promotion_unit_7day、t_cpc_yxb_promotion_unit_15day
@@ -1225,7 +1225,7 @@ t_cpc_yxb_promotion_unit_hour、t_cpc_promotion_unit_hour_7day、t_cpc_yxb_promo
     4.1分时 t_cpc_yxb_promotion_unit
     4.2分日 t_cpc_yxb_promotion_unit_hour
 
-## <span id="promotionDetail">类目推广报表</span>
+## <span id="catalog-report">类目推广报表</span>
 > aps-sale-web/aps/new/report/catalog/overview.htm
 
 Table:
@@ -1235,7 +1235,13 @@ t_cpc_promotion_type、t_cpc_promotion_type_7days、t_cpc_promotion_type——15
 
 t_cpc_promotion_unit、t_cpc_promotion_unit_7days、t_cpc_promotion_unit_15days
 3.	表格:各单元数据展示+下载（底部添加合计行）[计划维度]
-4.	
+详情[by cpcPromotionId]
+
+ 按投放终端区分推广计划类型 移动端：2,5
+ 
+## <span id="keyword-report">类目推广报表</span>
+ aps-sale-web/new/rep/search_report.htm
+
 # 表记录
 T_APS_PROMOTION_CUSTOM_BUDGET
 CPC个性化日预算表（指定计划某一天的日预算）
