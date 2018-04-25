@@ -1315,6 +1315,44 @@ new/report/promotion_unit_rep_type_detail.ftl
 
 
 ----------
+# 生意通工具
+## <span id="keywordAnalysis-tool">关键词分析</span>
+1. 加载下拉框.一级类目
+>select PAGE_NAME, LEVEL, PAGE_CODE, PARENT_CODE from T_APS_PAGE_POSITION WHERE STATUS = 1 AND LEVEL = 1
+
+2.查询类目热门词分析|相关词分析 数据
+关键词分析工具查询方式(1.数据平台)（KEYWORD_TOOLS_METHOD）
+-    数据平台：
+**t_aps_keyword_analysis**
+
+ |column|comment
+ |-----|---
+ |key_id        | 主键
+ |keyword       |关键词
+ |show_num      | 展示量
+ |click_num     |点击量
+ |search_num    |搜索量
+ |compet_num    |竞争度
+ |click_percent |点击率
+ |avg_price     |平均价格
+ |create_date    |创建时间
+ |shop_compet_num|   店铺推广竞争度
+ |shop_avg_price | 店铺推广平均价格  |
+
+- DB2：
+  竞争度:t_aps_promotion_cpc_detail count(keyword) <promotionCount
+  关键词:t_aps_search_keyword.keyword_name 
+  搜索次数:t_aps_keyword_tool_data_front.search_num
+  点击率 :t_aps_keyword_tool_data_front.click_percent
+  平均出价(元):t_aps_keyword_tool_data_front.avg_price
+
+
+2.获取已有关键词模板
+    select template_id as templateId, template_name as templateName
+            from T_APS_TEMPLATE
+            where user_id=:userID
+            order by create_time asc
+
 
 
 
