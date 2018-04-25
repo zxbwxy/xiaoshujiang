@@ -7,7 +7,7 @@ grammar_cjkRuby: true
 [toc]
 
 
-# 流程
+# 商品推广
 ## 推广计划
 ### 1.新建
 | Index  |  Desc    |
@@ -152,10 +152,8 @@ grammar_cjkRuby: true
 
 
 # 投放报表
-## 4.推广计划报表
-| Index  |  Desc    |
-| ---    | ---  |
-|   URL  |  aps/new/report_promotion_plan.htm| 
+## 4.
+|   推广计划报表  | [推广计划报表](#report-promotion)| 
 |   VIEW |  new\cpc\cpc_standard_promotion_list.ftl  |
 |   CODE |   [推广计划_查询](#promotion_report)   |
 
