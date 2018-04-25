@@ -1327,6 +1327,7 @@ t_aps_promotion_item
 t_aps_promotion_cpc_item
 推广单元属性表
 
+## 推广计划表（T_APS_PROMOTION）
 
 |COLUNM|COMMENT
 |----|------
@@ -1352,9 +1353,9 @@ t_aps_promotion_cpc_item
 |THROW_DISCOUNT    |
 |PROMOTION_MODE    | 推广方式，CPM广告位:0实时竞价 1 包段
 |POSITION          | 广告位对应的坑位,热搜词、默认词等管高位需要初始化坑位供投放使用
-[table T_APS_PROMOTION --推广计划表：记录推广计划信息']
 
 
+## cpc广告位控制表（广告位溢价与开关）（T_APS_CPC_POSITION_CONTROL）
 | COLUMN  |COMMENT|
 |---|---|
 |ID            |      主键
@@ -1364,8 +1365,8 @@ t_aps_promotion_cpc_item
 |CONTROL_FLAG  |      是否投放此广告位（0.关闭、1.开启）
 |DISCOUNT      |      该广告位折扣（百分数，例:90==90%）
 |CREATE_DT     |     创建时间
-[T_APS_CPC_POSITION_CONTROL-- cpc广告位控制表（广告位溢价与开关）]
 
+## 冻结明细表（T_APS_FREEZE_UNBIND）
 |COLUNMN|COMMENT
 |---|---
 |FREEZE_UNBIND_ID |冻结明细ID
@@ -1379,21 +1380,6 @@ t_aps_promotion_cpc_item
 |CREATE_DATE      |交易时间
 |PROMOTION_DATE   |投放时间<CPT为null>
 |LEFT_FE_AMOUNT   |剩余冻结金额
-[T_APS_FREEZE_UNBIND--冻结明细表]
 
-
-![推广计划][2]
-
-![计划详情--单元][3]
-
-![新建推广单元--选择商品][4]
-
-![新建推广单元--选择商品图片][5]
-
-![设置投放平台](https://i.loli.net/2018/04/04/5ac49f6baf3da.jpg)
 
   [1]: https://i.loli.net/2018/03/26/5ab85fb16c743.jpg
-  [2]: https://i.loli.net/2018/03/23/5ab4bcdb77a48.jpg
-  [3]: https://i.loli.net/2018/03/23/5ab4bc4f56c1a.jpg
-  [4]: https://i.loli.net/2018/03/23/5ab4e33269d89.jpg
-  [5]: https://i.loli.net/2018/03/26/5ab861ce6b9dc.jpg
