@@ -135,7 +135,7 @@ grammar_cjkRuby: true
 |   CODE |   [开始推广单元](#unitStart) |
 
 
-### 编辑
+### 5.编辑
 | 编辑推广单元  |  Desc    |
 | ---    | ---   |
 |   URL  |加载： new/unit/modifyUnit.htm?cpcPromotionId=16105318&promotionId=16078106 </br></br>提交：ajax/unit/updateUnit.htm| 
@@ -1149,12 +1149,11 @@ SELECT SHOP_START_COUNT FROM T_APS_SHOP_SCORE WHERE  SHOP_ID = :companyCode
 4.有正在进行中的计划任务(TASK_STATUS W,D)或计划(PROMOTION_STATUS:3,STATUS=1)，则设置页面不可编辑
 
 5.获取商品信息 
-- 存在一键优选计划,商品取推广单元中的商品信息（编码和名称）
+	存在一键优选计划,商品取优选计划的单元中的商品信息（编码和名称）
 > SELECT CPC_PROMOTION_ID, GOODS_NAME , GOODS_CODE  FROM T_APS_PROMOTION_CPC
 
-- 不存在优选计划，从数据平台获取数据、过滤出返回数据中的 在推商品编码 ==T_APS_PROMOTION_CPC.GOODS_CODE==
-
-
+不存在一键优选计划,从数据平台获取数据（by 商户编码）、过滤出返回数据中的 在推商品编码 ==T_APS_PROMOTION_CPC.GOODS_CODE==
+<br/>
 **开始、暂停推广** 
 > aps/new/cpc/promotion/onethrow/sendTask.htm
 {"taskType": 1：开始 2：暂停, "dayAmount" : dayAmount, "pricePercent": pricePercent},
