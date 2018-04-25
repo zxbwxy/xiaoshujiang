@@ -1225,6 +1225,8 @@ t_cpc_yxb_promotion_unit_hour、t_cpc_promotion_unit_hour_7day、t_cpc_yxb_promo
     4.1分时 t_cpc_yxb_promotion_unit
     4.2分日 t_cpc_yxb_promotion_unit_hour
 
+## <span id="promotionDetail">类目推广报表</span>
+> aps-sale-web/aps/new/report/catalog/overview.htm
 
 
 # 表记录
