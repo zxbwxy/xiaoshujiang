@@ -1221,8 +1221,17 @@ t_cpc_yxb_promotion_unit、t_cpc_yxb_promotion_unit_7day、t_cpc_yxb_promotion_u
 2.	时间趋势图[时间维度]
 3.	表格:各单元数据展示+下载（底部添加合计行）[计划维度]
 4.	详情[by cpcPromotionId]
-    4.1分时 t_cpc_yxb_promotion_unit
-    4.2分日 t_cpc_yxb_promotion_unit_hour
+5. 分日详情页面[by PROMOTION_UNIT_ID]
+> /new/rep/toDayDetail.htm
+>new/report/promotion_unit_rep_detail.ftl
+
+   时间趋势[by PROMOTION_UNIT_ID, productType=5,COUNT_DATE]
+   表格[GROUPBY PROMOTION_UNIT_ID, productType=5,COUNT_DATE]
+   
+6. 分时详情页面
+ >   /new/rep/toTypeDetail.htm
+new/report/promotion_unit_rep_type_detail.ftl
+   表格[WHERE PROMOTION_UNIT_ID,COUNT_DATE==queryDate GROUPBY  PROMOTION_TYPE]
 
 ## <span id="catalog-report">类目推广报表</span>
 > aps-sale-web/aps/new/report/catalog/overview.htm
@@ -1240,8 +1249,6 @@ t_cpc_promotion_type、t_cpc_promotion_type_7days、t_cpc_promotion_type_15days
 ## <span id="keyword-report">搜索推广报表</span>
  >aps-sale-web/new/rep/search_report.htm
  >/new/report/report_search_list.ftl
- 
- 
  
  Table:
  t_cpc_promotion_search、 t_cpc_promotion_search_7days、t_cpc_promotion_search_15days
