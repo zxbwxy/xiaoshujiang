@@ -1274,9 +1274,11 @@ t_cpc_promotion_type、t_cpc_promotion_type_7days、t_cpc_promotion_type_15days
 1. 数据总览[用户维度userId, productType=5]
 2. 时间趋势图[时间维度/COUNT_DATE, productType=5]
 3. 表格:各单元数据展示+下载（底部添加合计行）[单元维度PROMOTION_UNIT_ID]
-4. 分日详情页面[by KEYWORD]
+4. 分日详情页面[by PROMOTION_UNIT_ID]
 > /new/rep/toDayDetail.htm
 >new/report/promotion_unit_rep_detail.ftl
+
+5. 分时详情页面[by PROMOTION_UNIT_ID]
 
 
 # 表记录
