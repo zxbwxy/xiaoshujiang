@@ -1195,7 +1195,7 @@ IS_OPEN_FOR_ALL|| thirdCataId in THIRD_PAGE_CODE_FOR_TODAY
 **表格数据**
 根据计划ID查询查询计划 当日数据+历史数据,进行合并，同 **计划：查询**
 
-</br>
+
 ----------
 
 
@@ -1226,6 +1226,8 @@ t_cpc_yxb_promotion_unit_hour、t_cpc_promotion_unit_hour_7day、t_cpc_yxb_promo
     4.2分日 t_cpc_yxb_promotion_unit_hour
 
 
+
+# 表记录
 T_APS_PROMOTION_CUSTOM_BUDGET
 CPC个性化日预算表（指定计划某一天的日预算）
 
@@ -1233,6 +1235,7 @@ t_aps_promotion_item
 推广计划属性表[投放时段（1001）、定向地域（1002）]
 t_aps_promotion_cpc_item
 推广单元属性表
+
 
 |COLUNM|COMMENT
 |----|------
