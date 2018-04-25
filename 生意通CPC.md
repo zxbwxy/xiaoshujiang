@@ -1228,7 +1228,14 @@ t_cpc_yxb_promotion_unit_hour、t_cpc_promotion_unit_hour_7day、t_cpc_yxb_promo
 ## <span id="promotionDetail">类目推广报表</span>
 > aps-sale-web/aps/new/report/catalog/overview.htm
 
+Table:
+t_cpc_promotion_type、t_cpc_promotion_type_7days、t_cpc_promotion_type——15days
+1.	数据总览[用户维度]
+2.	时间趋势图[时间维度]
 
+t_cpc_promotion_unit、t_cpc_promotion_unit_7days、t_cpc_promotion_unit_15days
+3.	表格:各单元数据展示+下载（底部添加合计行）[计划维度]
+4.	
 # 表记录
 T_APS_PROMOTION_CUSTOM_BUDGET
 CPC个性化日预算表（指定计划某一天的日预算）
