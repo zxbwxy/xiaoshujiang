@@ -523,7 +523,7 @@ aps/new/cpc_resume_promotion.htm?promotionId=16078106
      kafkaPromotionService.sendResumeUnitKafka(userId, companyCode, userType, unitIdBak, promotionId, productType);
   }
 ```
-## <span id="promotionDetail">关联推广单元</span>
+## <span id="promotionDetail">计划：编辑</span>
 1.获取推广计划信息
 sqlId:standardPromotion.getPromotionByIdAndProductType
 ``` sql
