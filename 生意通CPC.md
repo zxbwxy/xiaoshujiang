@@ -1268,13 +1268,12 @@ t_cpc_promotion_type、t_cpc_promotion_type_7days、t_cpc_promotion_type_15days
 >new/report/promotion_unit_rep.ftl
  
  Table:
- t_cpc_keyword、 t_cpc_keyword_7days、t_cpc_promotion_type_15days
-1. 数据总览[用户维度]
-2. 时间趋势图[时间维度/COUNT_DATE]
-3. 表格:各关键词数据展示+下载（底部添加合计行）[KEYWORD维度]
- 按投放终端区分推广计划类型productType 移动端：2 、PC端：2,4
+ t_cpc_promotion_unit、t_cpc_promotion_unit_7days、t_cpc_promotion_unit_15days
+ productType=5
+1. 数据总览[用户维度userId, productType=5]
+2. 时间趋势图[时间维度/COUNT_DATE, productType=5]
+3. 表格:各单元数据展示+下载（底部添加合计行）[单元维度PROMOTION_UNIT_ID]
 4. 分日详情页面[by KEYWORD]
-new/rep/promotionUnit.htm?reportType=B
 
 
 # 表记录
