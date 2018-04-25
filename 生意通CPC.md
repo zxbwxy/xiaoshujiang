@@ -1284,8 +1284,7 @@ t_cpc_promotion_type、t_cpc_promotion_type_7days、t_cpc_promotion_type_15days
  >   /new/rep/toTypeDetail.htm
 new/report/promotion_unit_rep_type_detail.ftl
 
-
-   表格[WHERE PROMOTION_UNIT_ID, productType=5,COUNT_DATE==queryDate GROUPBY  PROMOTION_TYPE]
+   表格[WHERE PROMOTION_UNIT_ID,COUNT_DATE==queryDate GROUPBY  PROMOTION_TYPE]
 
 # 表记录
 T_APS_PROMOTION_CUSTOM_BUDGET
