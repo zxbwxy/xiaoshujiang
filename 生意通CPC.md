@@ -94,6 +94,13 @@ grammar_cjkRuby: true
 |  TABLE | t_aps_promotion</br>  t_aps_promotion_custom_budget|
 |   CODE |   [计划：修改日限额](#promotionModifyDayCost) |
 
+### 12.一键优选计划
+| 删除推广单元  |  Desc    |
+| ---    | ---   |
+|   URL  |  加载：new/cpc/promotion/onethrow.htm</br>开始、暂停推广： aps/new/cpc/promotion/onethrow/sendTask.htm</br>表格：aps/new/cpc/onethrow/promotionInfo.htm	</br>| 
+|   VIEW |  /new/cpc/cpc_unit_select_product.ftl|
+|   CODE |   [新建推广单元](#unitDel) |
+
 ## 推广单元
 ### 1.新建
 | 选择商品  |  Desc    |
