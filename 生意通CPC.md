@@ -1319,13 +1319,7 @@ new/report/promotion_unit_rep_type_detail.ftl
 
 
 # 表记录
-T_APS_PROMOTION_CUSTOM_BUDGET
-CPC个性化日预算表（指定计划某一天的日预算）
 
-t_aps_promotion_item
-推广计划属性表[投放时段（1001）、定向地域（1002）]
-t_aps_promotion_cpc_item
-推广单元属性表
 
 ## 推广计划表（T_APS_PROMOTION）
 
@@ -1380,6 +1374,13 @@ t_aps_promotion_cpc_item
 |CREATE_DATE      |交易时间
 |PROMOTION_DATE   |投放时间<CPT为null>
 |LEFT_FE_AMOUNT   |剩余冻结金额
+
+## CPC个性化日预算表（指定计划某一天的日预算）（T_APS_PROMOTION_CUSTOM_BUDGET）
+
+
+			
+## 推广计划属性表[投放时段（1001）、定向地域（1002）]（T_APS_PROMOTION_ITEM）
+## 推广单元属性表（T_APS_PROMOTION_CPC_ITEM）
 
 
 
