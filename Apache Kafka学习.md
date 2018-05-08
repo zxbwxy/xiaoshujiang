@@ -34,3 +34,4 @@ grammar_cjkRuby: true
 [Kafka入门教程](https://blog.csdn.net/yuan_xw/article/details/51210954)
 [orchome kafka中文教程](http://www.orchome.com/5)
 [W3school Apache Kafka](https://www.w3cschool.cn/apache_kafka/apache_kafka_basic_operations.html)
+[Kafka设计解析](http://www.jasongj.com/2015/03/10/KafkaColumn1/)
