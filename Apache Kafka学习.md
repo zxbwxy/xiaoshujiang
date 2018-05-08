@@ -5,4 +5,30 @@ grammar_cjkRuby: true
 ---
 
 
-欢迎使用 **{小书匠}(xiaoshujiang)编辑器**，您可以通过 `小书匠主按钮>模板` 里的模板管理来改变新建文章的内容。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[Apache Kafka：下一代分布式消息系统](http://www.infoq.com/cn/articles/apache-kafka)
+[Kafka入门教程](https://blog.csdn.net/yuan_xw/article/details/51210954)
