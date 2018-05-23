@@ -22,8 +22,11 @@ Jboss http://jbossas.jboss.org/downloads/
 
 [root@localhost ~]# systemctl stop httpd.service
 
+cp /opt/jboss/httpd/sbin/apachectl /etc/rc.d/init.d/httpd 
 
 
 [Apache主配置文件httpd.conf 详解](https://www.linuxidc.com/Linux/2015-02/113921.htm)
 
 [centOS 7 Apache服务的安装与配置](http://blog.51cto.com/13525470/2070375)
+
+[Linux中Apache(httpd)安装、配置、加为服务](https://blog.csdn.net/u010297957/article/details/50751656)
