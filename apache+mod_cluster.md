@@ -26,4 +26,4 @@ Jboss http://jbossas.jboss.org/downloads/
 
 [Apache主配置文件httpd.conf 详解](https://www.linuxidc.com/Linux/2015-02/113921.htm)
 
-[entOS 7 Apache服务的安装与配置](http://blog.51cto.com/13525470/2070375)
+[centOS 7 Apache服务的安装与配置](http://blog.51cto.com/13525470/2070375)
