@@ -13,7 +13,11 @@ Jboss http://jbossas.jboss.org/downloads/
 1.安装mod_cluster 和apache
 下载：wget -O mod_cluster-1.3.1.Final-linux2-x64-ssl.tar.gz  http://downloads.jboss.org/mod_cluster//1.3.1.Final/linux-x86_64/mod_cluster-1.3.1.Final-linux2-x64-ssl.tar.gz&& tar -xzvfmod_cluster-1.3.1.Final-linux2-x64-ssl.tar.gz -C /&& rm -rf mod_cluster-1.3.1.Final-linux2-x64-ssl.tar.gz
 校验：
-启动/opt/jboss/httpd/sbin/apachectl start
+
+> /opt/jboss/httpd/sbin/apachectl start
+
+http://192.168.66.130:8366/mod_cluster_manager
+
 
 
 启动和关闭Apache服务
@@ -32,3 +36,4 @@ cp /opt/jboss/httpd/sbin/apachectl /etc/rc.d/init.d/httpd
 [Linux中Apache(httpd)安装、配置、加为服务](https://blog.csdn.net/u010297957/article/details/50751656)
 
 [Jboss7集群配置说明](https://blog.csdn.net/xixixi9988/article/details/21651449)
+[Apache的Rewrite详解](https://www.jianshu.com/p/103742cccaff)
