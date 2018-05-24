@@ -36,5 +36,7 @@ cp /opt/jboss/httpd/sbin/apachectl /etc/rc.d/init.d/httpd
 [Linux中Apache(httpd)安装、配置、加为服务](https://blog.csdn.net/u010297957/article/details/50751656)
 http://middlewaremagic.com/jboss/?p=1952
 
+[JBoss 系列二：使用Apache httpd(mod_cluster)和JBoss构架高可用集群环境](https://blog.csdn.net/kylinsoong/article/details/12292707/)
+
 [Jboss7集群配置说明](https://blog.csdn.net/xixixi9988/article/details/21651449)
 [Apache的Rewrite详解](https://www.jianshu.com/p/103742cccaff)
