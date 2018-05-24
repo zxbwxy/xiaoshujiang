@@ -34,6 +34,7 @@ cp /opt/jboss/httpd/sbin/apachectl /etc/rc.d/init.d/httpd
 [centOS 7 Apache服务的安装与配置](http://blog.51cto.com/13525470/2070375)
 
 [Linux中Apache(httpd)安装、配置、加为服务](https://blog.csdn.net/u010297957/article/details/50751656)
+http://middlewaremagic.com/jboss/?p=1952
 
 [Jboss7集群配置说明](https://blog.csdn.net/xixixi9988/article/details/21651449)
 [Apache的Rewrite详解](https://www.jianshu.com/p/103742cccaff)
