@@ -17,19 +17,12 @@ WildFly
 下载：wget -O mod_cluster-1.3.1.Final-linux2-x64-ssl.tar.gz  http://downloads.jboss.org/mod_cluster//1.3.1.Final/linux-x86_64/mod_cluster-1.3.1.Final-linux2-x64-ssl.tar.gz&& tar -xzvfmod_cluster-1.3.1.Final-linux2-x64-ssl.tar.gz -C /&& rm -rf mod_cluster-1.3.1.Final-linux2-x64-ssl.tar.gz
 校验：
 
-> /opt/jboss/httpd/sbin/apachectl start
+> /opt/jboss/httpd/sbin/apachectl start|stop|restart
 
 http://192.168.66.130:8366/mod_cluster_manager
 
 
 
-启动和关闭Apache服务
-
-[root@localhost ~]# systemctl start httpd.service
-
-[root@localhost ~]# systemctl stop httpd.service
-
-cp /opt/jboss/httpd/sbin/apachectl /etc/rc.d/init.d/httpd 
 
 
 [Apache主配置文件httpd.conf 详解](https://www.linuxidc.com/Linux/2015-02/113921.htm)
