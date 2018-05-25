@@ -73,7 +73,10 @@ http://192.168.66.130:8366/mod_cluster_manager
 ![](./images/1527242837841.jpg)
 
 ###  本机安装wildfly-8.2.1.Final
+**1.下载**
+http://wildfly.org/downloads/
 
+**2.修改配置文件**
 
 ``` xml
 <subsystem xmlns="urn:jboss:domain:modcluster:1.2">
@@ -103,8 +106,9 @@ http://192.168.66.130:8366/mod_cluster_manager
   </interfaces>
 ```
 
+将测试war包放到 ==wildfly-8.2.1.Final\standalone\deployments==目录下，启动wildfly==wildfly-8.2.1.Final\bin\standalone.bat==
 
-
+![](./images/1527246569506.jpg)
 
 
 
