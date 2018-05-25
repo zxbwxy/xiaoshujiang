@@ -20,10 +20,54 @@ WildFly
 
 **修改配置**
 
+$ vim /opt/jboss/httpd/httpd/conf/httpd.conf
 
-Listen 8000 改成 Listen 192.168.66.130:80
-LoadModule rewrite_module /opt/jboss/httpd/lib/httpd/modules/mod_rewrite.so 
+``` xml
+52   Listen 192.168.66.130:80
+
+173  LoadModule rewrite_module /opt/jboss/httpd/lib/httpd/modules/mod_rewrite.so
+
 216 ServerName 192.168.66.130:80
+
+
+222 <Directory />
+223      Options FollowSymLinks
+224      AllowOverride All
+225 </Directory>
+
+488 # Virtual hosts
+489 Include conf/extra/httpd-vhosts.conf
+
+529 # Adjust to you hostname and subnet.
+530 <IfModule manager_module>
+531  Listen 192.168.66.130:8366
+532  ManagerBalancerName mycluster
+533  <VirtualHost *:8366>
+534  
+535    <Location />
+536         Require all granted
+537     </Location> 
+538    KeepAliveTimeout 300
+539    MaxKeepAliveRequests 0
+540    #ServerAdvertise on http://127.0.0.1:6666
+541    AdvertiseFrequency 5
+542    #AdvertiseSecurityKey 1234567890
+543    #AdvertiseGroup 224.0.1.105:23364
+544    EnableMCPMReceive
+545    AllowDisplay On
+546    <Location /mod_cluster_manager>
+547       SetHandler mod_cluster-manager
+548       Require all granted
+549    </Location>
+550  </VirtualHost>
+551 </IfModule>
+```
+
+
+
+
+
+
 
 
 
