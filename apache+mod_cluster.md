@@ -3,7 +3,7 @@ title: apache+mod_cluster
 tags: 
 grammar_cjkRuby: true
 ---
-
+[toc]
 
 ## 开发环境
 Jdk 1.8
@@ -72,9 +72,7 @@ http://192.168.66.130:8366/mod_cluster_manager
 
 ![](./images/1527242837841.jpg)
 
-
-### 本机安装wildfly-8.2.1.Final
-
+###  本机安装wildfly-8.2.1.Final
 
 
 ``` xml
