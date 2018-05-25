@@ -7,10 +7,13 @@ grammar_cjkRuby: true
 
 ## 开发环境
 Jdk 1.8
-Jboss http://jbossas.jboss.org/downloads/
+Centos7
+WildFly
 
-
+概述
 1.安装mod_cluster 和apache
+
+
 下载：wget -O mod_cluster-1.3.1.Final-linux2-x64-ssl.tar.gz  http://downloads.jboss.org/mod_cluster//1.3.1.Final/linux-x86_64/mod_cluster-1.3.1.Final-linux2-x64-ssl.tar.gz&& tar -xzvfmod_cluster-1.3.1.Final-linux2-x64-ssl.tar.gz -C /&& rm -rf mod_cluster-1.3.1.Final-linux2-x64-ssl.tar.gz
 校验：
 
