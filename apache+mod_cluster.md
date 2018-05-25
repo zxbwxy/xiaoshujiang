@@ -10,6 +10,9 @@ Jdk 1.8
 Centos7
 wildfly-8.2.1.Final
 
+apache：192.168.66.130
+本机：192.168.159.1
+
 概述
 ### centos安装mod_cluster 和apache
 
@@ -70,22 +73,41 @@ http://192.168.66.130:8366/mod_cluster_manager
 ![](./images/1527242837841.jpg)
 
 
+### 本机安装wildfly-8.2.1.Final
+
+
+
+``` xml
+<subsystem xmlns="urn:jboss:domain:modcluster:1.2">
+      <mod-cluster-config advertise-socket="modcluster" proxy-list="192.168.66.130:8366" advertise-security-key="1234567890" excluded-contexts="invoker,jbossws,juddi,console" auto-enable-contexts="true" connector="ajp">
+        <dynamic-load-provider>
+          <load-metric type="cpu" />
+          <load-metric type="busyness" />
+        </dynamic-load-provider>
+      </mod-cluster-config>
+    </subsystem>
+	
+	
+	
+  <interfaces>
+    <interface name="management">
+      <inet-address value="${jboss.bind.address.management:192.168.159.1}" />
+    </interface>
+    <interface name="public">
+      <inet-address value="${jboss.bind.address:192.168.159.1}" />
+    </interface>
+    <interface name="unsecure">
+      <inet-address value="${jboss.bind.address.unsecure:192.168.159.1}" />
+    </interface>
+    <interface name="any">
+      <any-ipv4-address />
+    </interface>
+  </interfaces>
+```
 
 
 
 
-
-
-
-
-
-
-
-**启动apache** 
->
-
-
-http://192.168.66.130:8366/mod_cluster_manager
 
 
 
@@ -102,3 +124,4 @@ http://middlewaremagic.com/jboss/?p=1952
 
 [Jboss7集群配置说明](https://blog.csdn.net/xixixi9988/article/details/21651449)
 [Apache的Rewrite详解](https://www.jianshu.com/p/103742cccaff)
+
