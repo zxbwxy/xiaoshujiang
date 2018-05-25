@@ -11,12 +11,27 @@ Centos7
 WildFly
 
 概述
-1.安装mod_cluster 和apache
+### centos安装mod_cluster 和apache
 
-下载:mod_cluster-1.3.1.Final-linux2-x64-ssl.tar.gz ,解压到根目录，自带httpd
+**下载mod_cluster**
+
+将[mod_cluster-1.3.1.Final-linux2-x64-ssl.tar.gz ](http://mod-cluster.jboss.org/mod_cluster/downloads/1-3-1-Final-bin),解压到根目录，自带httpd模块,执行/opt/jboss/httpd/sbin/installhome.sh，生成默认配置文件
 
 
-> /opt/jboss/httpd/sbin/apachectl start|stop|restart
+**修改配置**
+
+
+Listen 8000 改成 Listen 192.168.66.130:80
+LoadModule rewrite_module /opt/jboss/httpd/lib/httpd/modules/mod_rewrite.so 
+216 ServerName 192.168.66.130:80
+
+
+
+
+
+**启动apache** 
+>/opt/jboss/httpd/sbin/apachectl start
+
 
 http://192.168.66.130:8366/mod_cluster_manager
 
