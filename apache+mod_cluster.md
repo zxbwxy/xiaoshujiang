@@ -110,6 +110,23 @@ http://192.168.66.130:8366/mod_cluster_manager
 
 
 
+domain/configuration/host.xml
+
+    <interfaces>
+        <interface name="management">
+            <inet-address value="${jboss.bind.address.management:192.168.159.1}"/>
+        </interface>
+        <interface name="public">
+           <inet-address value="${jboss.bind.address:192.168.159.1}"/>
+        </interface>
+        <interface name="unsecure">
+            <!-- Used for IIOP sockets in the standard configuration.
+                 To secure JacORB you need to setup SSL -->
+            <inet-address value="${jboss.bind.address.unsecure:192.168.159.1}"/>
+        </interface>
+    </interfaces>
+
+
 
 
 
