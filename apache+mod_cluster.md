@@ -73,11 +73,9 @@ http://192.168.66.130:8366/mod_cluster_manager
 ![](./images/1527242837841.jpg)
 
 ###  本机安装wildfly-8.2.1.Final
-**1.下载**
-http://wildfly.org/downloads/
+**用jboss7独立模式(standalone)来检验mod_cluster的配置结果**
 
-**2.修改配置文件**
-
+解压wildfly-8.2.1.Final.rar后，进入standalone\configuration目录，mod_cluster缺省配置都在standalone-full-ha.xml，删除standalone.xml文件，将standalone-full-ha.xml重命名为standalone.xml文件
 ``` xml
 <subsystem xmlns="urn:jboss:domain:modcluster:1.2">
       <mod-cluster-config advertise-socket="modcluster" proxy-list="192.168.66.130:8366" advertise-security-key="1234567890" excluded-contexts="invoker,jbossws,juddi,console" auto-enable-contexts="true" connector="ajp">
@@ -106,7 +104,7 @@ http://wildfly.org/downloads/
   </interfaces>
 ```
 
-将测试war包放到 ==wildfly-8.2.1.Final\standalone\deployments==目录下，启动wildfly==wildfly-8.2.1.Final\bin\standalone.bat==
+将[测试war包](https://github.com/jaysensharma/MiddlewareMagicDemos/blob/master/JBossAS/Cluster/ClusterTest_WebApp/ClusterWebApp.war)放到 ==wildfly-8.2.1.Final\standalone\deployments==目录下，启动wildfly==wildfly-8.2.1.Final\bin\standalone.bat==
 
 ![](./images/1527246569506.jpg)
 
