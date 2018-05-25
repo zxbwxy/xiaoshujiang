@@ -13,12 +13,12 @@ WildFly
 概述
 ### centos安装mod_cluster 和apache
 
-**下载mod_cluster**
+**1.下载mod_cluster**
 
 将[mod_cluster-1.3.1.Final-linux2-x64-ssl.tar.gz ](http://mod-cluster.jboss.org/mod_cluster/downloads/1-3-1-Final-bin),解压到根目录，自带httpd模块,执行/opt/jboss/httpd/sbin/installhome.sh，生成默认配置文件
 
 
-**修改配置**
+**2.修改httpd.conf**
 
 $ vim /opt/jboss/httpd/httpd/conf/httpd.conf
 
