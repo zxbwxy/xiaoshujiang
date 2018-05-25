@@ -8,7 +8,7 @@ grammar_cjkRuby: true
 ## 开发环境
 Jdk 1.8
 Centos7
-WildFly
+wildfly-8.2.1.Final
 
 概述
 ### centos安装mod_cluster 和apache
@@ -62,6 +62,14 @@ $ vim /opt/jboss/httpd/httpd/conf/httpd.conf
 550  </VirtualHost>
 551 </IfModule>
 ```
+**3.启动**
+
+$ /opt/jboss/httpd/sbin/apachectl start
+http://192.168.66.130:8366/mod_cluster_manager
+
+![](./images/1527242837841.jpg)
+
+
 
 
 
@@ -74,7 +82,7 @@ $ vim /opt/jboss/httpd/httpd/conf/httpd.conf
 
 
 **启动apache** 
->/opt/jboss/httpd/sbin/apachectl start
+>
 
 
 http://192.168.66.130:8366/mod_cluster_manager
