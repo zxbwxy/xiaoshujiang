@@ -143,3 +143,4 @@ domain/configuration/host.xml
 
 [CentOS 下安装并且启动 nginx](https://blog.csdn.net/dxk539687357/article/details/53099752)
 
+http://blog.sina.com.cn/s/blog_840dd2830101dgl7.html
