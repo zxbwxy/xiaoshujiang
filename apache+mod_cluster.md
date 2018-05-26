@@ -142,6 +142,7 @@ domain/configuration/host.xml
 
 
 [CentOS 下安装并且启动 nginx](https://blog.csdn.net/dxk539687357/article/details/53099752)
+[Java SpringMVC使用nginx和WildFly实现动静分离](https://blog.csdn.net/computerinbook/article/details/54839742)
 
 http://blog.sina.com.cn/s/blog_840dd2830101dgl7.html
 https://blog.csdn.net/eriloan/article/details/7647919
