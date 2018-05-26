@@ -138,3 +138,8 @@ domain/configuration/host.xml
 [Jboss7集群配置说明](https://blog.csdn.net/xixixi9988/article/details/21651449)
 [Apache的Rewrite详解](https://www.jianshu.com/p/103742cccaff)
 
+
+
+
+[CentOS 下安装并且启动 nginx](https://blog.csdn.net/dxk539687357/article/details/53099752)
+
