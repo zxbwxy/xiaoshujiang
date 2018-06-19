@@ -342,6 +342,13 @@ Topic:topic1    PartitionCount:3        ReplicationFactor:2     Configs:
 
 ### 四、docker
 
+#### 1. 安装docker 及加速器
+https://cr.console.aliyun.com/#/accelerator
+
+https://cr.console.aliyun.com
+
+[在Docker环境下部署Kafka](https://blog.csdn.net/snowcity1231/article/details/54946857)
+
 参考：
 
 https://www.linuxidc.com/Linux/2017-03/141296.htm
