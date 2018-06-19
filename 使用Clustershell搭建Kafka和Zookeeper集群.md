@@ -168,7 +168,7 @@ clush: 1/3
 
 #### ３. 修改zookeeper的[配置文件](https://zookeeper.apache.org/doc/r3.4.12/zookeeperStarted.html)
  
- （1）修改每台主机的zoo.cfg中的zoo.cfg文件,增加集群信息
+##### （1）修改每台主机的zoo.cfg中的zoo.cfg文件,增加集群信息
 ``` vim
 [root@service01 conf]# cd /opt/kafka/zookeeper-3.4.12/conf/
 [root@service01 conf]# cp zoo_sample.cfg zoo.cfg
@@ -179,18 +179,18 @@ server.2=service02:2888:3888
 server.3=service03:2888:3888
 ##注：2888端口是作为leader与follow间通讯的，3888端口是作为leader选举的。
 ```
-（2）同步zookeeper的配置文件
+##### （2）同步zookeeper的配置文件
 
 ``` vim
 [root@service01 conf]# clush -g kafka -c /opt/kafka/zookeeper-3.4.12/conf/zoo.cfg
 ```
-（3）创建zookeeper数据目录
+##### （3）创建zookeeper数据目录
 
 ``` vim
 [root@service01 conf]# clush -g kafka mkdir /tmp/zookeeper
 ```
 
-(4) 在每台机器中建立myid文件
+#####  (4) 在每台机器中建立myid文件
 
 ``` autoit
 主机1执行
@@ -208,7 +208,7 @@ service01: 1
 service03: 3
 service02: 2
 ```
-(5) 启动zookeeper集群，在主机1上执行[需先关闭防火墙]
+#####  (5) 启动zookeeper集群，在主机1上执行[需先关闭防火墙]
 
 
 ``` dts
@@ -224,12 +224,12 @@ service01: Starting zookeeper ... STARTED
 service02: Starting zookeeper ... STARTED
 ```
 
-查看监听的端口状态是否正常
+##### (6) 查看监听的端口状态是否正常
 
 ``` css
 [root@service01 conf]# clush -g kafka lsof -i:2181[2888,3888]
 ```
-#连接第一个主机的zookeeper，建立测试键值进行测试
+　#连接第一个主机的zookeeper，建立测试键值进行测试
 
 ``` less
 [root@service01 zookeeper-3.4.12]# bin/zkCli.sh  -server service01:2181
@@ -246,7 +246,7 @@ Created /test_install
 [test_install, zookeeper]
 ```
 
-#连接第二个主机的zookeeper，查看测试键值是否存在
+　#连接第二个主机的zookeeper，查看测试键值是否存在
 
 ``` less
 [root@service01 zookeeper-3.4.12]# bin/zkCli.sh  -server service02:2181
