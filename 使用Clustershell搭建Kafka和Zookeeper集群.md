@@ -1,6 +1,6 @@
 ---
 title: 2018-6-18未命名文件 
-tags: 新建,模板,小书匠
+tags: zookeeper,kafka,clustershell
 grammar_cjkRuby: true
 ---
  
