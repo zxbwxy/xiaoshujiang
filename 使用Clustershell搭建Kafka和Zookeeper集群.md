@@ -1,5 +1,5 @@
 ---
-title: 2018-6-18未命名文件 
+title: 使用Clustershell搭建Kafka和Zookeeper集群
 tags: zookeeper,kafka,clustershell
 grammar_cjkRuby: true
 ---
