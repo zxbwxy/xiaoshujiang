@@ -127,14 +127,16 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCyYUBSxjPI7QXS3huOdBpOOWahT21vGI6dmh2f1bck
 #### 3.3 设置zookeeper集群
 
 
-1. 在主机1中安装clustershell工具
+##### 1. clustershell工具安装
+
+　只需在主机1中安装，通过clustershell，实现其他服务器的同步。
 
 [操作文档]<http://clustershell.readthedocs.io/en/latest/install.html#red-hat-enterprise-linux-and-CentOS>
 
 	[root@service01 ~]# yum --enablerepo=extras install epel-release
 	[root@service01 ~]# yum install clustershell
 
-2. 在/etc/clustersheel目录下建立groups文件
+　在/etc/clustersheel目录下建立groups文件
 
 ``` vim
 	[root@service01 ~]# cd  /etc/clustersheel
@@ -145,25 +147,26 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCyYUBSxjPI7QXS3huOdBpOOWahT21vGI6dmh2f1bck
 
 
 
-3. 在主机1中下载和解压安装包
+#### ２. zookeeper和kafka软件包安装
+
+　下载并解压
 
 ``` vim
 [root@service01 ~]mkdir /opt/kafka && cd /opt/kafka&&wget -O  kafka_2.11-1.1.0.tgz http://mirrors.tuna.tsinghua.edu.cn/apache/kafka/1.1.0/kafka_2.11-1.1.0.tgz && tar -zxvf kafka_2.11-1.1.0.tgz
 [root@service01 kafka]wget -O  zookeeper-3.4.12.tar.gz  https://mirrors.tuna.tsinghua.edu.cn/apache/zookeeper/zookeeper-3.4.12/zookeeper-3.4.12.tar.gz &&  tar -zxvf zookeeper-3.4.12.tar.gz
 ```
-4. 通过clustershell统一拷贝zookeeper和 kafaka的安装包
+　通过clustershell统一拷贝zookeeper和 kafaka的安装包
 
 ``` vim
 [root@service01 kafka]# clush -g kafka -c /opt/kafka/
 clush: 1/3
 ```
 
-
-5. 验证是否拷贝成功
+　 验证是否拷贝成功
 
 ![](./images/1529306137549.jpg)
 
-6. 修改zookeeper的[配置文件](https://zookeeper.apache.org/doc/r3.4.12/zookeeperStarted.html)
+#### ３. 修改zookeeper的[配置文件](https://zookeeper.apache.org/doc/r3.4.12/zookeeperStarted.html)
  
  （1）修改每台主机的zoo.cfg中的zoo.cfg文件,增加集群信息
 ``` vim
@@ -252,39 +255,39 @@ Created /test_install
 [test_install, zookeeper]
 ```
 
-3.4  建立kafka集群  
+### 3.4  建立kafka集群  
 
-（1） 修改kafka配置
+#### 1.  修改kafka配置
 
-修改第一台主机中kafka目录的config子目录中的server.properties配置文件
+　修改第一台主机中kafka目录的config子目录中的server.properties配置文件
 
 ``` groovy
 zookeeper.connect=service01:2181,service02:2181,service03:2181
 ```
 
 
-将server.properties配置文件分发到其他两台主机中
+　将server.properties配置文件分发到其他两台主机中
 
 ``` lsl
 [root@service01 config]# clush -g kafka -c /opt/kafka/kafka_2.11-1.1.0/config/server.properties
 ```
 
 
-分别修改三台主机的server.properties配置文件，配置不同的broker.id
+分别修改三台主机的server.properties配置文件，配置不同的*broker.id*
 
 第一台主机的broker.id设置为broker.id=1
 第二台主机的broker.id设置为broker.id=2
 第三台主机的broker.id设置为broker.id=3
 
 
-（2）启动kafka集群
+#### ２. 启动kafka集群
 
 ``` lsl
 [root@service01 config]# clush -g kafka /opt/kafka/kafka_2.11-1.1.0/bin/kafka-server-start.sh -daemon /opt/kafka/kafka_2.11-1.1.0/config/server.properties
 ```
 
 
-验证9092端口
+　验证9092端口
 
 
 ``` less
@@ -304,9 +307,9 @@ service03: java    6335 root  162u  IPv6  66174      0t0  TCP service03:XmlIpcRe
 ```
 
 
-（3）测试
+#### 3. 测试
 
-建立测试topic
+　建立测试topic
 
 
 ``` brainfuck
@@ -324,14 +327,14 @@ Topic:topic1    PartitionCount:3        ReplicationFactor:2     Configs:
         Topic: topic1   Partition: 2    Leader: 3       Replicas: 3,1   Isr: 3,1
 ```
 
-订阅topic
+　订阅topic
 
 ``` elixir
 [root@service01 config]# /opt/kafka/kafka_2.11-1.1.0/bin/kafka-console-consumer.sh --zookeeper service01:2181 --topic topic1
 ```
 
 
-生产message
+　生产message
 
 ``` vim
 [root@service02 ~]# /opt/kafka/kafka_2.11-1.1.0/bin/kafka-console-producer.sh  --broker-list service02:9092 --topic topic1
