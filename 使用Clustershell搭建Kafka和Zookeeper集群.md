@@ -17,7 +17,7 @@ grammar_cjkRuby: true
 MobaXterm支持多分屏显示，方便管理多台服务器，并且你可以仅输入一次，让一条命令同时在这些不同的服务器终端执行
 
 
-### 三、搭建zookeeper集群
+### 三、搭建zookeeper、kafka集群
 
 
 
@@ -255,9 +255,9 @@ Created /test_install
 [test_install, zookeeper]
 ```
 
-### 3.4  建立kafka集群  
+#### 3.4  建立kafka集群  
 
-#### 1.  修改kafka配置
+##### 1.  修改kafka配置
 
 　修改第一台主机中kafka目录的config子目录中的server.properties配置文件
 
@@ -280,7 +280,7 @@ zookeeper.connect=service01:2181,service02:2181,service03:2181
 第三台主机的broker.id设置为broker.id=3
 
 
-#### ２. 启动kafka集群
+##### ２. 启动kafka集群
 
 ``` lsl
 [root@service01 config]# clush -g kafka /opt/kafka/kafka_2.11-1.1.0/bin/kafka-server-start.sh -daemon /opt/kafka/kafka_2.11-1.1.0/config/server.properties
@@ -307,7 +307,7 @@ service03: java    6335 root  162u  IPv6  66174      0t0  TCP service03:XmlIpcRe
 ```
 
 
-#### 3. 测试
+##### 3. 测试
 
 　建立测试topic
 
@@ -340,7 +340,7 @@ Topic:topic1    PartitionCount:3        ReplicationFactor:2     Configs:
 [root@service02 ~]# /opt/kafka/kafka_2.11-1.1.0/bin/kafka-console-producer.sh  --broker-list service02:9092 --topic topic1
 ```
 
-
+### 四、docker
 
 参考：
 
